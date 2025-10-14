@@ -20,6 +20,13 @@ public class Regista {
     @OneToMany(mappedBy = "regista")
     private List<Film> film;
 
+    public Regista(String nome, Date dataNascita) {
+        this.nome = nome;
+        this.dataNascita = dataNascita;
+    }
+
+    public Regista() {}
+
     public long getId() {
         return id;
     }

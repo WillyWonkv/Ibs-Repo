@@ -13,8 +13,14 @@ public class Genere {
 
     private String nome;
 
-    @OneToMany(mappedBy = "genere",  fetch = FetchType.LAZY)
-    private List<FilmGenere> film;
+    @ManyToMany(mappedBy = "generi")
+    private List<Film> film;
+
+    public Genere(String nome) {
+        this.nome = nome;
+    }
+
+    public Genere() {}
 
     public long getId() {
         return id;
@@ -32,11 +38,11 @@ public class Genere {
         this.nome = nome;
     }
 
-    public List<FilmGenere> getFilm() {
+    public List<Film> getFilm() {
         return film;
     }
 
-    public void setFilm(List<FilmGenere> film) {
+    public void setFilm(List<Film> film) {
         this.film = film;
     }
 }

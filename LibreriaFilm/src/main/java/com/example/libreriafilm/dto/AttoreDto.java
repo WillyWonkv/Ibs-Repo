@@ -1,7 +1,5 @@
 package com.example.libreriafilm.dto;
 
-import com.example.libreriafilm.entity.FilmAttore;
-
 import java.util.Date;
 import java.util.List;
 

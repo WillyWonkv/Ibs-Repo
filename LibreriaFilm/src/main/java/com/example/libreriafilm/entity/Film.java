@@ -21,17 +21,27 @@ public class Film {
 
     private int durata;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "regista_id")
     private Regista regista;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
-    private List<FilmAttore> attore;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "film_attore",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "attore_id")
+    )
+    private List<Attore> attori;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
-    private List<FilmGenere> genere;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "film_genere",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "genere_id")
+    )
+    private List<Genere> generi;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Prestito> prestito;
 
     public long getId() {
@@ -90,20 +100,18 @@ public class Film {
         this.regista = regista;
     }
 
-    public List<FilmAttore> getAttore() {
-        return attore;
+    public List<Attore> getAttori() {return attori;}
+
+    public void setAttori(List<Attore> attore) {
+        this.attori = attore;
     }
 
-    public void setAttore(List<FilmAttore> attore) {
-        this.attore = attore;
+    public List<Genere> getGeneri() {
+        return generi;
     }
 
-    public List<FilmGenere> getGenere() {
-        return genere;
-    }
-
-    public void setGenere(List<FilmGenere> genere) {
-        this.genere = genere;
+    public void setGeneri(List<Genere> genere) {
+        this.generi = genere;
     }
 
     public List<Prestito> getPrestito() {

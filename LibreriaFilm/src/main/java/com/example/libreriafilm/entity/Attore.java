@@ -17,8 +17,15 @@ public class Attore {
     @Temporal(TemporalType.DATE)
     private Date dataNascita;
 
-    @OneToMany(mappedBy = "attore", fetch = FetchType.LAZY)
-    private List<FilmAttore> film;
+    @ManyToMany(mappedBy = "attori")
+    private List<Film> film;
+
+    public Attore(String nome, Date dataNascita) {
+        this.nome = nome;
+        this.dataNascita = dataNascita;
+    }
+
+    public Attore() {}
 
     public long getId() {
         return id;
@@ -44,11 +51,11 @@ public class Attore {
         this.dataNascita = dataNascita;
     }
 
-    public List<FilmAttore> getFilm() {
+    public List<Film> getFilm() {
         return film;
     }
 
-    public void setFilm(List<FilmAttore> film) {
+    public void setFilm(List<Film> film) {
         this.film = film;
     }
 }
