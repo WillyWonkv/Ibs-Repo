@@ -2,7 +2,6 @@ package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.FilmDto;
 import com.example.libreriafilm.entity.Film;
-import com.example.libreriafilm.entity.Prestito;
 import com.example.libreriafilm.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,9 +69,7 @@ public class FilmController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<FilmDto> deleteFilm(@PathVariable long id){
 
-        ResponseEntity<FilmDto> filmDto = filmService.deleteFilmById(id);
-
-        return filmDto;
+        return filmService.deleteFilmById(id);
 
     }
 
