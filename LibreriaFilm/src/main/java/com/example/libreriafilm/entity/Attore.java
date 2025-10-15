@@ -17,15 +17,8 @@ public class Attore {
     @Temporal(TemporalType.DATE)
     private Date dataNascita;
 
-    @ManyToMany(mappedBy = "attori")
+    @ManyToMany(mappedBy = "attori",  fetch = FetchType.LAZY)
     private List<Film> film;
-
-    public Attore(String nome, Date dataNascita) {
-        this.nome = nome;
-        this.dataNascita = dataNascita;
-    }
-
-    public Attore() {}
 
     public long getId() {
         return id;

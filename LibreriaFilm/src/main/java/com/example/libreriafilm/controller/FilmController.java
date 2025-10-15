@@ -20,54 +20,33 @@ public class FilmController {
     @GetMapping
     public ResponseEntity<List<FilmDto>> getAllFilm(){
 
-        List<FilmDto> filmDto = filmService.getAllFilm();
-
-        if(filmDto.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(filmDto);
+        return filmService.getAllFilm();
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FilmDto> getFilmById(@PathVariable String id){
+    public ResponseEntity<FilmDto> getFilmById(@PathVariable long id){
 
-        FilmDto film = filmService.getFilmById(Long.parseLong(id));
-
-        if(film==null){
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        }
-
-        return ResponseEntity.ok(film);
+        return filmService.getFilmById(id);
 
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Film> saveFilm(@RequestBody FilmDto filmDto){
+    public ResponseEntity<FilmDto> saveFilm(@RequestBody FilmDto filmDto){
 
-        Film filmNew = filmService.addLibro(filmDto);
-
-        if(filmNew==null){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
-
-        return ResponseEntity.ok(filmNew);
+        return filmService.addLibro(filmDto);
 
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<FilmDto> updateFilm(@RequestBody FilmDto filmDto, @PathVariable long id){
 
-        FilmDto filmUpdated = filmService.updateFilm(filmDto, id);
+        return filmService.updateFilm(filmDto, id);
 
-        if(filmUpdated==null){return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();}
-
-        return ResponseEntity.ok(filmUpdated);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<FilmDto> deleteFilm(@PathVariable long id){
+    public ResponseEntity<Film> deleteFilm(@PathVariable long id){
 
         return filmService.deleteFilmById(id);
 

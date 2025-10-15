@@ -7,6 +7,7 @@ import com.example.libreriafilm.dto.RegistaDto;
 import com.example.libreriafilm.entity.*;
 import com.example.libreriafilm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,11 @@ public class FilmService {
     @Autowired
     private PrestitoRepository prestitoRepository;
 
-    public List<FilmDto> getAllFilm(){
+    public ResponseEntity<List<FilmDto>> getAllFilm(){
 
-        return filmRepository.findAll()
+        if(filmRepository.findAll().isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
+
+        return ResponseEntity.ok(filmRepository.findAll()
                 .stream()
                 .map(f -> new FilmDto(
                         f.getId(),
@@ -61,13 +64,15 @@ public class FilmService {
                                 )
                         ).toList(),
                         null
-                )).toList();
+                )).toList());
 
     }
 
-    public FilmDto getFilmById(long id){
+    public ResponseEntity<FilmDto> getFilmById(long id){
 
-        return filmRepository.findById(id)
+        if(filmRepository.findById(id).isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
+
+        return ResponseEntity.ok(filmRepository.findById(id)
                 .map( f -> new FilmDto(
                         f.getId(),
                         f.getTitolo(),
@@ -99,11 +104,11 @@ public class FilmService {
                                         )
                                 ).toList(),
                         null
-                )).orElse(null);
+                )).orElse(null));
 
     }
 
-    public Film addLibro(FilmDto filmDto){
+    public ResponseEntity<FilmDto> addLibro(FilmDto filmDto){
 
         Film film = new Film();
 
@@ -133,7 +138,6 @@ public class FilmService {
                         })));
         film.setAttori(attori);
 
-
         List<Genere> generi = new ArrayList<>();
         filmDto.generi().forEach(a ->
                 generi.add(genereRepository.findByNome((a.nome()))
@@ -146,18 +150,18 @@ public class FilmService {
 
         filmRepository.save(film);
 
-        return film;
+        return ResponseEntity.ok(getFilmById(film.getId()).getBody());
 
 
     }
 
-    public FilmDto updateFilm(FilmDto filmDto, long id){
+    public ResponseEntity<FilmDto> updateFilm(FilmDto filmDto, long id){
 
         Optional<Film> filmOptional = filmRepository.findById(id);
 
-        if(filmOptional.isEmpty()){return null;}
+        if(filmOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
 
-        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){return null;}
+        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();}
 
         Film film = filmOptional.get();
 
@@ -198,11 +202,11 @@ public class FilmService {
 
         filmRepository.save(film);
 
-        return getFilmById(film.getId());
+        return ResponseEntity.ok(getFilmById(film.getId()).getBody());
 
     }
 
-    public ResponseEntity<FilmDto> deleteFilmById(long id){
+    public ResponseEntity<Film> deleteFilmById(long id){
 
         Optional<Film> filmOptional = filmRepository.findById(id);
         if(filmOptional.isEmpty()){return ResponseEntity.notFound().build();}
