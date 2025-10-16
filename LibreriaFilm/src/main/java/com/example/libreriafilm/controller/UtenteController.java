@@ -1,9 +1,16 @@
 package com.example.libreriafilm.controller;
 
+
 import com.example.libreriafilm.dto.UtenteDto;
+import com.example.libreriafilm.entity.AuthRequest;
+import com.example.libreriafilm.service.JwtService;
 import com.example.libreriafilm.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +19,10 @@ public class UtenteController {
 
     @Autowired
     private UtenteService utenteService;
+
+    private JwtService jwtService;
+
+    private AuthenticationManager authenticationManager;
 
     @GetMapping
     public ResponseEntity<Object> getAllUtente(){
@@ -36,6 +47,21 @@ public class UtenteController {
     @GetMapping("/login")
     public ResponseEntity<Object> loginUtente(@RequestParam String username, @RequestParam String password){
         return utenteService.loginUtente(username, password);
+    }
+
+    @PostMapping("/generateToken")
+    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest){
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authRequest.getUsername(), authRequest.getPassword()));
+
+        if (authentication.isAuthenticated()) {
+            return null;
+        }else{
+            throw new UsernameNotFoundException("Invalid username or password");
+        }
+
     }
 
 }
