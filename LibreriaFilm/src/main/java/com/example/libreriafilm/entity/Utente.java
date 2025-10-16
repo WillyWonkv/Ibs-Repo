@@ -20,7 +20,6 @@ public class Utente {
     @Temporal(TemporalType.DATE)
     private Date dataRegistrazione;
 
-
     @OneToMany(mappedBy = "utente", fetch = FetchType.LAZY)
     private List<Prestito> prestito;
 
