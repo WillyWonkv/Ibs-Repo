@@ -79,12 +79,16 @@ public class UtenteService {
 
     }
 
-    /*public ResponseEntity<Object> loginUtente(UtenteDto utenteDto){
+    public ResponseEntity<Object> loginUtente(String email, String password){
 
+        if(utenteRepository.findAll().stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email) && u.getPassword().equals(password))) {
 
+            return ResponseEntity.ok().build();
 
-        return
+        }
 
-    }*/
+        return ResponseEntity.notFound().build();
+
+    }
 
 }

@@ -33,4 +33,9 @@ public class UtenteController {
         return utenteService.deleteUtente(id);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<Object> loginUtente(@RequestParam String username, @RequestParam String password){
+        return utenteService.loginUtente(username, password);
+    }
+
 }

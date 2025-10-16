@@ -35,36 +35,7 @@ public class FilmService {
 
         return ResponseEntity.ok(filmRepository.findAll()
                 .stream()
-                .map(f -> new FilmDto(
-                        f.getId(),
-                        f.getTitolo(),
-                        f.getDescrizione(),
-                        f.getPrezzo(),
-                        f.getAnnoUscita(),
-                        f.getDurata(),
-                        new RegistaDto(
-                                f.getRegista().getId(),
-                                f.getRegista().getNome(),
-                                f.getRegista().getDataNascita(),
-                                null
-                        ),
-                        f.getAttori().stream().map(
-                                a -> new AttoreDto(
-                                        a.getId(),
-                                        a.getNome(),
-                                        a.getDataNascita(),
-                                        null
-                                )
-                        ).toList(),
-                        f.getGeneri().stream().map(
-                                g -> new GenereDto(
-                                        g.getId(),
-                                        g.getNome(),
-                                        null
-                                )
-                        ).toList(),
-                        null
-                )).toList());
+                .map(FilmMapperDto::FilmToFilmDto).toList());
 
     }
 
@@ -73,38 +44,7 @@ public class FilmService {
         if(filmRepository.findById(id).isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
 
         return ResponseEntity.ok(filmRepository.findById(id)
-                .map( f -> new FilmDto(
-                        f.getId(),
-                        f.getTitolo(),
-                        f.getDescrizione(),
-                        f.getPrezzo(),
-                        f.getAnnoUscita(),
-                        f.getDurata(),
-                        new RegistaDto(
-                                f.getRegista().getId(),
-                                f.getRegista().getNome(),
-                                f.getRegista().getDataNascita(),
-                                null
-                        ),
-                        f.getAttori().stream()
-                                .map(
-                                        a -> new AttoreDto(
-                                                a.getId(),
-                                                a.getNome(),
-                                                a.getDataNascita(),
-                                                null
-                                        )
-                                ).toList(),
-                        f.getGeneri().stream()
-                                .map(
-                                        g -> new GenereDto(
-                                                g.getId(),
-                                                g.getNome(),
-                                                null
-                                        )
-                                ).toList(),
-                        null
-                )).orElse(null));
+                .map(FilmMapperDto::FilmToFilmDto).orElse(null));
 
     }
 
