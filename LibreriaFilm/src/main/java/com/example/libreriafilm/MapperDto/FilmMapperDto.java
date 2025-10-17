@@ -1,4 +1,4 @@
-package com.example.libreriafilm.service;
+package com.example.libreriafilm.MapperDto;
 
 import com.example.libreriafilm.dto.AttoreDto;
 import com.example.libreriafilm.dto.FilmDto;
@@ -41,6 +41,19 @@ public class FilmMapperDto {
                                 )
                         ).toList(),
                 null);
+
+    }
+
+    public static Film newFilm(FilmDto filmDto){
+
+        Film film = new Film();
+        film.setTitolo(filmDto.titolo());
+        film.setDescrizione(filmDto.descrizione());
+        film.setPrezzo(filmDto.prezzo());
+        film.setAnnoUscita(filmDto.annoUscita());
+        film.setDurata(filmDto.durata());
+
+        return film;
 
     }
 

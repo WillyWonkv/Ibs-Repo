@@ -1,12 +1,11 @@
 package com.example.libreriafilm.service;
 
-import com.example.libreriafilm.dto.AttoreDto;
-import com.example.libreriafilm.dto.FilmDto;
 import com.example.libreriafilm.dto.GenereDto;
-import com.example.libreriafilm.dto.RegistaDto;
 import com.example.libreriafilm.entity.Genere;
 import com.example.libreriafilm.repository.FilmRepository;
 import com.example.libreriafilm.repository.GenereRepository;
+import com.example.libreriafilm.MapperDto.GenereMapperDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,46 +13,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class GenereService {
 
-    @Autowired
     private GenereRepository genereRepository;
-    @Autowired
     private FilmRepository filmRepository;
+
+    @Autowired
+    public GenereService(GenereRepository genereRepository, FilmRepository filmRepository) {
+        this.genereRepository = genereRepository;
+        this.filmRepository = filmRepository;
+    }
 
     public ResponseEntity<List<GenereDto>>  getAllGeneri() {
 
         if (genereRepository.findAll().isEmpty()) {return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok(genereRepository.findAll().stream()
-                .map(g -> new GenereDto(
-                        g.getId(),
-                        g.getNome(),
-                        g.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        new RegistaDto(
-                                                f.getRegista().getId(),
-                                                f.getRegista().getNome(),
-                                                f.getRegista().getDataNascita(),
-                                                null
-                                        ),
-                                        f.getAttori().stream()
-                                                .map(a -> new AttoreDto(
-                                                        a.getId(),
-                                                        a.getNome(),
-                                                        a.getDataNascita(),
-                                                        null
-                                                )).toList(),
-                                        null,
-                                        null
-                                )).toList()
-                )).toList());
+                .map(GenereMapperDto::genereToGenereDto).toList());
 
     }
 
@@ -62,43 +39,13 @@ public class GenereService {
         if (genereRepository.findById(id).isEmpty()) {return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok(genereRepository.findById(id)
-                .map(g -> new GenereDto(
-                        g.getId(),
-                        g.getNome(),
-                        g.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        new RegistaDto(
-                                                f.getRegista().getId(),
-                                                f.getRegista().getNome(),
-                                                f.getRegista().getDataNascita(),
-                                                null
-                                        ),
-                                        f.getAttori().stream()
-                                                .map(a -> new AttoreDto(
-                                                        a.getId(),
-                                                        a.getNome(),
-                                                        a.getDataNascita(),
-                                                        null
-                                                )).toList(),
-                                        null,
-                                        null
-                                )).toList()
-                )).orElse(null));
+                .map(GenereMapperDto::genereToGenereDto).orElse(null));
 
     }
 
     public ResponseEntity<GenereDto> addGenere(GenereDto genereDto) {
 
-        Genere genere = new Genere();
-        genere.setNome(genereDto.nome());
-
-        genereRepository.save(genere);
+        genereRepository.save(GenereMapperDto.newGenere(genereDto));
 
         return ResponseEntity.ok().build();
 
@@ -108,8 +55,7 @@ public class GenereService {
 
         return genereRepository.findById(id)
                 .map(genere -> {
-                    genere.setNome(genereDto.nome());
-                    genereRepository.save(genere);
+                    genereRepository.save(GenereMapperDto.newGenere(genereDto));
                     return ResponseEntity.ok().build();
                 }
         ).orElseGet(() -> ResponseEntity.notFound().build());

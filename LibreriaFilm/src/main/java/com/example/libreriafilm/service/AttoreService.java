@@ -1,13 +1,12 @@
 package com.example.libreriafilm.service;
 
 import com.example.libreriafilm.dto.AttoreDto;
-import com.example.libreriafilm.dto.FilmDto;
-import com.example.libreriafilm.dto.GenereDto;
-import com.example.libreriafilm.dto.RegistaDto;
 import com.example.libreriafilm.entity.Attore;
 import com.example.libreriafilm.entity.Film;
 import com.example.libreriafilm.repository.AttoreRepository;
 import com.example.libreriafilm.repository.FilmRepository;
+import com.example.libreriafilm.MapperDto.AttoreMapperDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,46 +15,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AttoreService {
 
-    @Autowired
     private AttoreRepository attoreRepository;
-    @Autowired
     private FilmRepository filmRepository;
+
+    @Autowired
+    public AttoreService(AttoreRepository attoreRepository, FilmRepository filmRepository) {
+        this.attoreRepository = attoreRepository;
+        this.filmRepository = filmRepository;
+    }
 
     public ResponseEntity<List<AttoreDto>> getAllAttori() {
 
         if(attoreRepository.findAll().isEmpty()) {return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok(attoreRepository.findAll().stream()
-                .map(a -> new AttoreDto(
-                        a.getId(),
-                        a.getNome(),
-                        a.getDataNascita(),
-                        a.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        new RegistaDto(
-                                                f.getRegista().getId(),
-                                                f.getRegista().getNome(),
-                                                f.getRegista().getDataNascita(),
-                                                null
-                                        ),
-                                        null,
-                                        f.getGeneri().stream()
-                                                .map(g -> new GenereDto(
-                                                        g.getId(),
-                                                        g.getNome(),
-                                                        null
-                                                )).toList(),
-                                        null
-                                )).toList()
-                )).toList());
+                .map(AttoreMapperDto::attoreToAttoreDto).toList());
 
     }
 
@@ -64,63 +41,25 @@ public class AttoreService {
         if(attoreRepository.findById(id).isEmpty()) {return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok(attoreRepository.findById(id)
-                .map(a -> new AttoreDto(
-                        a.getId(),
-                        a.getNome(),
-                        a.getDataNascita(),
-                        a.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        new RegistaDto(
-                                                f.getRegista().getId(),
-                                                f.getRegista().getNome(),
-                                                f.getRegista().getDataNascita(),
-                                                null
-                                        ),
-                                        null,
-                                        f.getGeneri().stream()
-                                                .map(g -> new GenereDto(
-                                                        g.getId(),
-                                                        g.getNome(),
-                                                        null
-                                                )).toList(),
-                                        null
-                                )).toList()
-                )).orElse(null));
+                .map(AttoreMapperDto::attoreToAttoreDto).orElse(null));
 
     }
 
     public ResponseEntity<AttoreDto> addAttore(AttoreDto attoreDto) {
 
-        Attore attore = new Attore();
-
-        attore.setNome(attoreDto.nome());
-        attore.setDataNascita(attoreDto.dataNascita());
-
-        attoreRepository.save(attore);
-        return ResponseEntity.ok(getAttoreById(attore.getId()).getBody());
+        attoreRepository.save(AttoreMapperDto.newAttore(attoreDto));
+        return ResponseEntity.ok().body(attoreDto);
 
     }
 
-    public ResponseEntity<AttoreDto> updateAttore(AttoreDto attoreDto, long id) {
+    public ResponseEntity<Object> updateAttore(AttoreDto attoreDto, long id) {
 
-        Optional<Attore> attore = attoreRepository.findById(id);
-
-        if (attore.isEmpty()) {return ResponseEntity.notFound().build();}
-
-        Attore attoreUpdate = attore.get();
-
-        attoreUpdate.setNome(attoreDto.nome());
-        attoreUpdate.setDataNascita(attoreDto.dataNascita());
-
-        attoreRepository.save(attoreUpdate);
-
-        return ResponseEntity.ok(getAttoreById(attoreUpdate.getId()).getBody());
+        return  attoreRepository.findById(id)
+                .map(attore -> {
+                            attoreRepository.save(AttoreMapperDto.newAttore(attoreDto));
+                            return ResponseEntity.ok().build();
+                        }
+                ).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 

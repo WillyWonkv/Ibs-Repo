@@ -1,29 +1,25 @@
 package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.RegistaDto;
-import com.example.libreriafilm.entity.Regista;
+
 import com.example.libreriafilm.service.RegistaService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/regista")
 public class RegistaController {
 
-    @Autowired
-    private RegistaService registaService;
+    private final RegistaService registaService;
 
     @GetMapping
     public ResponseEntity<List<RegistaDto>> getAllRegisti() {
-
-        return registaService.getAllRegisti();
-
+        return ResponseEntity.ok(registaService.getAllRegisti());
     }
 
     @GetMapping("/{id}")
@@ -41,7 +37,7 @@ public class RegistaController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<RegistaDto> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
+    public ResponseEntity<Object> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
 
         return registaService.updateRegista(registaDto, id);
 

@@ -1,14 +1,12 @@
 package com.example.libreriafilm.service;
 
-import com.example.libreriafilm.dto.AttoreDto;
-import com.example.libreriafilm.dto.FilmDto;
-import com.example.libreriafilm.dto.GenereDto;
 import com.example.libreriafilm.dto.RegistaDto;
 import com.example.libreriafilm.entity.Film;
 import com.example.libreriafilm.entity.Regista;
 import com.example.libreriafilm.repository.FilmRepository;
 import com.example.libreriafilm.repository.RegistaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.libreriafilm.MapperDto.RegistaMapperDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,47 +15,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RegistaService{
 
-    @Autowired
-    private RegistaRepository registaRepository;
-    @Autowired
-    private FilmRepository filmRepository;
+    private final RegistaRepository registaRepository;
+    private final FilmRepository filmRepository;
 
-    public ResponseEntity<List<RegistaDto>> getAllRegisti(){
+    public List<RegistaDto> getAllRegisti(){
 
-        if(registaRepository.findAll().isEmpty()){return ResponseEntity.notFound().build();}
-
-        return ResponseEntity.ok(registaRepository.findAll().stream()
-                .map(r -> new RegistaDto(
-                        r.getId(),
-                        r.getNome(),
-                        r.getDataNascita(),
-                        r.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        null,
-                                        f.getAttori().stream()
-                                                .map(a -> new AttoreDto(
-                                                        a.getId(),
-                                                        a.getNome(),
-                                                        a.getDataNascita(),
-                                                        null
-                                                )).toList(),
-                                        f.getGeneri().stream()
-                                                .map(g -> new GenereDto(
-                                                        g.getId(),
-                                                        g.getNome(),
-                                                        null
-                                                )).toList(),
-                                        null
-                                )).toList()
-                )).toList());
+        List<Regista> registi = registaRepository.findAll();
+        if(registi.isEmpty()){throw new RuntimeException("Registi not found");}
+        return registaRepository.findAll().stream().map(RegistaMapperDto::registaToRegistaDto).toList();
 
     }
 
@@ -66,62 +34,25 @@ public class RegistaService{
         if(registaRepository.findById(id).isEmpty()){return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok(registaRepository.findById(id)
-                .map(r -> new RegistaDto(
-                        r.getId(),
-                        r.getNome(),
-                        r.getDataNascita(),
-                        r.getFilm().stream()
-                                .map(f -> new FilmDto(
-                                        f.getId(),
-                                        f.getTitolo(),
-                                        f.getDescrizione(),
-                                        f.getPrezzo(),
-                                        f.getAnnoUscita(),
-                                        f.getDurata(),
-                                        null,
-                                        f.getAttori().stream()
-                                                .map(a -> new AttoreDto(
-                                                        a.getId(),
-                                                        a.getNome(),
-                                                        a.getDataNascita(),
-                                                        null
-                                                )).toList(),
-                                        f.getGeneri().stream()
-                                                .map(g -> new GenereDto(
-                                                        g.getId(),
-                                                        g.getNome(),
-                                                        null
-                                                )).toList(),
-                                        null
-                                )).toList()
-                )).orElse(null));
+                .map(RegistaMapperDto::registaToRegistaDto).orElse(null));
 
     }
 
     public ResponseEntity<RegistaDto> addRegista(RegistaDto registaDto){
 
-        Regista regista = new Regista();
+        registaRepository.save(RegistaMapperDto.newRegista(registaDto));
+        return ResponseEntity.ok().body(registaDto);
 
-        regista.setNome(registaDto.nome());
-        regista.setDataNascita(registaDto.dataNascita());
-
-        registaRepository.save(regista);
-        return ResponseEntity.ok(getRegistiById(regista.getId()).getBody());
     }
 
-    public ResponseEntity<RegistaDto> updateRegista(RegistaDto registaDto, Long id) {
+    public ResponseEntity<Object> updateRegista(RegistaDto registaDto, Long id) {
 
-        Optional<Regista> registaOptional = registaRepository.findById(id);
-
-        if (registaOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
-
-        Regista regista = registaOptional.get();
-
-        regista.setNome(registaDto.nome());
-        regista.setDataNascita(registaDto.dataNascita());
-        registaRepository.save(regista);
-
-        return ResponseEntity.ok(getRegistiById(regista.getId()).getBody());
+        return registaRepository.findById(id)
+                .map(genere -> {
+                            registaRepository.save(RegistaMapperDto.newRegista(registaDto));
+                            return ResponseEntity.ok().build();
+                        }
+                ).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 

@@ -37,7 +37,7 @@ public class AttoreController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AttoreDto> updateAttore(@RequestBody AttoreDto attoreDto, @PathVariable long id) {
+    public ResponseEntity<Object> updateAttore(@RequestBody AttoreDto attoreDto, @PathVariable long id) {
 
         return attoreService.updateAttore(attoreDto, id);
 

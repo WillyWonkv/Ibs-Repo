@@ -1,109 +1,69 @@
 package com.example.libreriafilm.service;
 
-import com.example.libreriafilm.dto.AttoreDto;
 import com.example.libreriafilm.dto.FilmDto;
-import com.example.libreriafilm.dto.GenereDto;
-import com.example.libreriafilm.dto.RegistaDto;
 import com.example.libreriafilm.entity.*;
 import com.example.libreriafilm.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.example.libreriafilm.MapperDto.AttoreMapperDto;
+import com.example.libreriafilm.MapperDto.FilmMapperDto;
+import com.example.libreriafilm.MapperDto.GenereMapperDto;
+import com.example.libreriafilm.MapperDto.RegistaMapperDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FilmService {
 
-    @Autowired
-    private FilmRepository filmRepository;
-    @Autowired
-    private GenereRepository genereRepository;
-    @Autowired
-    private AttoreRepository attoreRepository;
-    @Autowired
-    private RegistaRepository registaRepository;
-    @Autowired
-    private PrestitoRepository prestitoRepository;
+    private final FilmRepository filmRepository;
+    private final GenereRepository genereRepository;
+    private final AttoreRepository attoreRepository;
+    private final RegistaRepository registaRepository;
+    private final PrestitoRepository prestitoRepository;
 
-    public ResponseEntity<List<FilmDto>> getAllFilm(){
+    public List<FilmDto> getAllFilm(){
 
-        if(filmRepository.findAll().isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
-
-        return ResponseEntity.ok(filmRepository.findAll()
-                .stream()
-                .map(FilmMapperDto::FilmToFilmDto).toList());
+        List<Film> film = filmRepository.findAll();
+        if(film.isEmpty()){throw new RuntimeException("Films not found");}
+        return film.stream().map(FilmMapperDto::FilmToFilmDto).toList();
 
     }
 
-    public ResponseEntity<FilmDto> getFilmById(long id){
+    public FilmDto getFilmById(long id){
 
-        if(filmRepository.findById(id).isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
-
-        return ResponseEntity.ok(filmRepository.findById(id)
-                .map(FilmMapperDto::FilmToFilmDto).orElse(null));
+        Film film = filmRepository.findById(id).orElseThrow(() -> new RuntimeException("Film not found"));
+        return FilmMapperDto.FilmToFilmDto(film);
 
     }
 
-    public ResponseEntity<FilmDto> addLibro(FilmDto filmDto){
+    public FilmDto addFilm(FilmDto filmDto){
 
-        Film film = new Film();
-
-        film.setTitolo(filmDto.titolo());
-        film.setDescrizione(filmDto.descrizione());
-        film.setPrezzo(filmDto.prezzo());
-        film.setAnnoUscita(filmDto.annoUscita());
-        film.setDurata(filmDto.durata());
+        Film film = FilmMapperDto.newFilm(filmDto);
 
         film.setRegista(registaRepository.findByNome(filmDto.regista().nome())
-                .orElseGet(() -> {
-                    Regista reg = new Regista();
-                    reg.setNome(filmDto.regista().nome());
-                    reg.setDataNascita(filmDto.regista().dataNascita());
-                    return reg;
-                }));
-
+                .orElseGet(() -> RegistaMapperDto.newRegista(filmDto.regista())));
 
         List<Attore> attori = new ArrayList<>();
         filmDto.attori().forEach(a ->
                 attori.add(attoreRepository.findByNome(a.nome())
-                        .orElseGet(() -> {
-                            Attore at = new Attore();
-                            at.setNome(a.nome());
-                            at.setDataNascita(a.dataNascita());
-                            return at;
-                        })));
+                        .orElseGet(() -> AttoreMapperDto.newAttore(a))));
         film.setAttori(attori);
 
         List<Genere> generi = new ArrayList<>();
         filmDto.generi().forEach(a ->
                 generi.add(genereRepository.findByNome((a.nome()))
-                        .orElseGet(() -> {
-                            Genere g = new Genere();
-                            g.setNome(a.nome());
-                            return g;
-                        })));
+                        .orElseGet(() -> GenereMapperDto.newGenere(a))));
         film.setGeneri(generi);
 
-        filmRepository.save(film);
-
-        return ResponseEntity.ok(getFilmById(film.getId()).getBody());
-
-
+        return FilmMapperDto.FilmToFilmDto(filmRepository .save(film));
     }
 
-    public ResponseEntity<FilmDto> updateFilm(FilmDto filmDto, long id){
+    public FilmDto updateFilm(FilmDto filmDto, long id){
 
-        Optional<Film> filmOptional = filmRepository.findById(id);
-
-        if(filmOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
-
-        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();}
-
-        Film film = filmOptional.get();
+        Film film = filmRepository.findById(id).orElseThrow(() -> new RuntimeException("Film not found"));
+        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){throw new RuntimeException("Film booked");}
 
         film.setTitolo(filmDto.titolo());
         film.setDescrizione(filmDto.descrizione());
@@ -112,50 +72,30 @@ public class FilmService {
         film.setDurata(filmDto.durata());
 
         film.setRegista(registaRepository.findByNome(filmDto.regista().nome())
-                .orElseGet(() -> {
-                    Regista reg = new Regista();
-                    reg.setNome(filmDto.regista().nome());
-                    reg.setDataNascita(filmDto.regista().dataNascita());
-                    return reg;
-                }));
+                .orElseGet(() -> RegistaMapperDto.newRegista(filmDto.regista())));
 
         List<Attore> attori = new ArrayList<>();
         filmDto.attori().forEach(a ->
                 attori.add(attoreRepository.findByNome(a.nome())
-                        .orElseGet(() -> {
-                            Attore at = new Attore();
-                            at.setNome(a.nome());
-                            at.setDataNascita(a.dataNascita());
-                            return at;
-                        })));
+                        .orElseGet(() -> AttoreMapperDto.newAttore(a))));
         film.setAttori(attori);
 
         List<Genere> generi = new ArrayList<>();
         filmDto.generi().forEach(g ->
                 generi.add(genereRepository.findByNome((g.nome()))
-                        .orElseGet(() -> {
-                            Genere gen = new Genere();
-                            gen.setNome(g.nome());
-                            return gen;
-                        })));
+                        .orElseGet(() -> GenereMapperDto.newGenere(g))));
         film.setGeneri(generi);
 
         filmRepository.save(film);
-
-        return ResponseEntity.ok(getFilmById(film.getId()).getBody());
-
+        return getFilmById(id);
     }
 
-    public ResponseEntity<Film> deleteFilmById(long id){
+    public void deleteFilmById(long id){
 
-        Optional<Film> filmOptional = filmRepository.findById(id);
-        if(filmOptional.isEmpty()){return ResponseEntity.notFound().build();}
+        Film film = filmRepository.findById(id).orElseThrow(() -> new RuntimeException("Film not found"));
+        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){throw new RuntimeException("Film booked");}
 
-        if(!prestitoRepository.findFilmInPrestito(id).isEmpty()){return ResponseEntity.badRequest().build();}
-
-        filmRepository.delete(filmOptional.get());
-
-        return ResponseEntity.ok().build();
+        filmRepository.delete(film);
 
     }
 
