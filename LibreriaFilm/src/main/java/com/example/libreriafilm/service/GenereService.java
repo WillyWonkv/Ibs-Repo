@@ -2,12 +2,9 @@ package com.example.libreriafilm.service;
 
 import com.example.libreriafilm.dto.GenereDto;
 import com.example.libreriafilm.entity.Genere;
-import com.example.libreriafilm.repository.FilmRepository;
 import com.example.libreriafilm.repository.GenereRepository;
 import com.example.libreriafilm.MapperDto.GenereMapperDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,81 +13,56 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenereService {
 
-    private GenereRepository genereRepository;
-    private FilmRepository filmRepository;
+    private final GenereRepository genereRepository;
 
-    @Autowired
-    public GenereService(GenereRepository genereRepository, FilmRepository filmRepository) {
-        this.genereRepository = genereRepository;
-        this.filmRepository = filmRepository;
-    }
+    public List<GenereDto>  getAllGeneri() {
 
-    public ResponseEntity<List<GenereDto>>  getAllGeneri() {
-
-        if (genereRepository.findAll().isEmpty()) {return ResponseEntity.notFound().build();}
-
-        return ResponseEntity.ok(genereRepository.findAll().stream()
-                .map(GenereMapperDto::genereToGenereDto).toList());
+        List<Genere> genere = genereRepository.findAll();
+        if (genere.isEmpty()) {throw new RuntimeException("not found");}
+        return genereRepository.findAll().stream()
+                .map(GenereMapperDto::genereToGenereDto).toList();
 
     }
 
-    public ResponseEntity<GenereDto> getGenereById(long id){
+    public GenereDto getGenereById(long id){
 
-        if (genereRepository.findById(id).isEmpty()) {return ResponseEntity.notFound().build();}
-
-        return ResponseEntity.ok(genereRepository.findById(id)
-                .map(GenereMapperDto::genereToGenereDto).orElse(null));
+        return genereRepository.findById(id)
+                .map(GenereMapperDto::genereToGenereDto).orElseThrow(() -> new RuntimeException("not found"));
 
     }
 
-    public ResponseEntity<GenereDto> addGenere(GenereDto genereDto) {
+    public GenereDto addGenere(GenereDto genereDto) {
 
         genereRepository.save(GenereMapperDto.newGenere(genereDto));
 
-        return ResponseEntity.ok().build();
+        return genereDto;
 
     }
 
-    public ResponseEntity<Object> updateGenere(long id, GenereDto genereDto) {
+    public GenereDto updateGenere(long id, GenereDto genereDto) {
 
         return genereRepository.findById(id)
                 .map(genere -> {
                     genereRepository.save(GenereMapperDto.newGenere(genereDto));
-                    return ResponseEntity.ok().build();
+                    return GenereMapperDto.genereToGenereDto(genere);
                 }
-        ).orElseGet(() -> ResponseEntity.notFound().build());
+        ).orElseThrow(() -> new RuntimeException("not found"));
 
     }
 
-    public ResponseEntity<Object> deleteGenere(long id) {
+    public GenereDto deleteGenere(long id) {
 
         return genereRepository.findById(id).map(genere -> {
 
                     genere.getFilm().forEach(f -> f.getGeneri().remove(genere));
                     genere.getFilm().clear();
                     genereRepository.delete(genere);
-                    return ResponseEntity.ok().build();
+                    return GenereMapperDto.genereToGenereDto(genere);
 
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    public ResponseEntity<Object> setGeneriToFilm(List<Long> generiIds, long filmId) {
 
-        return filmRepository.findById(filmId)
-                .map(film -> {
-
-                    List<Genere> generi = genereRepository.findAllById(generiIds);
-
-                    if(generi.size() != generiIds.size()) {return ResponseEntity.notFound().build();}
-
-                    film.setGeneri(generi);
-                    filmRepository.save(film);
-                    return ResponseEntity.ok().build();
-
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
-
-    }
 
 }

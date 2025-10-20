@@ -25,36 +25,30 @@ public class RegistaController {
     @GetMapping("/{id}")
     public ResponseEntity<RegistaDto> getRegistiById(@PathVariable Long id) {
 
-        return registaService.getRegistiById(id);
+        return ResponseEntity.ok(registaService.getRegistiById(id));
 
     }
 
     @PostMapping("/save")
     public ResponseEntity<RegistaDto> addRegista(@Valid @RequestBody RegistaDto registaDto) {
 
-        return registaService.addRegista(registaDto);
+        return ResponseEntity.ok(registaService.addRegista(registaDto));
 
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
+    public ResponseEntity<RegistaDto> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
 
-        return registaService.updateRegista(registaDto, id);
+        return ResponseEntity.ok(registaService.updateRegista(registaDto, id));
 
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<RegistaDto> deleteRegista(@PathVariable Long id) {
 
-        return registaService.deleteRegista(id);
+        return ResponseEntity.ok(registaService.deleteRegista(id));
 
     }
 
-    @PutMapping("/{idRegista}/film/{idFilm}")
-    public ResponseEntity<Object> setRegistaToFilm(@PathVariable Long idRegista, @PathVariable Long idFilm) {
-
-        return registaService.setRegistaToFilm(idRegista, idFilm);
-
-    }
 
 }

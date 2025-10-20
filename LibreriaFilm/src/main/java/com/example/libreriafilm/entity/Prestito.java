@@ -1,9 +1,17 @@
 package com.example.libreriafilm.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Prestito {
 
@@ -25,43 +33,4 @@ public class Prestito {
     @JoinColumn(name = "utente_id")
     private Utente utente;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getDataPrestito() {
-        return dataPrestito;
-    }
-
-    public void setDataPrestito(Date dataPrestito) {
-        this.dataPrestito = dataPrestito;
-    }
-
-    public Date getDataRestituzione() {
-        return dataRestituzione;
-    }
-
-    public void setDataRestituzione(Date dataRestituzione) {
-        this.dataRestituzione = dataRestituzione;
-    }
-
-    public Film getFilm() {
-        return film;
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
-    }
-
-    public Utente getUtente() {
-        return utente;
-    }
-
-    public void setUtente(Utente utente) {
-        this.utente = utente;
-    }
 }

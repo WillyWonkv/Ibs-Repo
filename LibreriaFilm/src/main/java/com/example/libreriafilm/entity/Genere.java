@@ -1,9 +1,17 @@
 package com.example.libreriafilm.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Genere {
 
@@ -16,33 +24,4 @@ public class Genere {
     @ManyToMany(mappedBy = "generi")
     private List<Film> film;
 
-    public Genere(String nome) {
-        this.nome = nome;
-    }
-
-    public Genere() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public List<Film> getFilm() {
-        return film;
-    }
-
-    public void setFilm(List<Film> film) {
-        this.film = film;
-    }
 }

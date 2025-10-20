@@ -2,7 +2,7 @@ package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.GenereDto;
 import com.example.libreriafilm.service.GenereService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,39 +10,36 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/genere")
+@RequiredArgsConstructor
 public class GenereController {
 
-    @Autowired
-    private GenereService genereService;
+    private final GenereService genereService;
 
     @GetMapping
-    public ResponseEntity<List<GenereDto>> getAllGeneri(){
-        return genereService.getAllGeneri();
+    public ResponseEntity<List<GenereDto>> getAllGeneri() {
+        return ResponseEntity.ok(genereService.getAllGeneri());
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenereDto> getGenereById(@PathVariable long id){
-        return genereService.getGenereById(id);
+        return ResponseEntity.ok(genereService.getGenereById(id));
     }
 
     @PostMapping("/save")
     public ResponseEntity<GenereDto> createGenere(@RequestBody GenereDto genereDto){
-        return genereService.addGenere(genereDto);
+        return ResponseEntity.ok(genereService.addGenere(genereDto));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateGenere(@PathVariable long id, @RequestBody GenereDto genereDto){
-        return genereService.updateGenere(id, genereDto);
+    public ResponseEntity<GenereDto> updateGenere(@PathVariable long id, @RequestBody GenereDto genereDto){
+        return ResponseEntity.ok(genereService.updateGenere(id, genereDto));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteGenere(@PathVariable long id){
-        return genereService.deleteGenere(id);
+    public ResponseEntity<GenereDto> deleteGenere(@PathVariable long id){
+        return ResponseEntity.ok(genereService.deleteGenere(id));
     }
 
-    @PutMapping("/film/{filmId}/generi")
-    public ResponseEntity<Object> setGeneriToFilm(@PathVariable long filmId, @RequestParam List<Long> id){
-        return genereService.setGeneriToFilm(id, filmId);
-    }
 
 }

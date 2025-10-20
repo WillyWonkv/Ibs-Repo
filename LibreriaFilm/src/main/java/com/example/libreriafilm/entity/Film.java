@@ -1,11 +1,17 @@
 package com.example.libreriafilm.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Film {
 
@@ -14,13 +20,9 @@ public class Film {
     private long id;
 
     private String titolo;
-
     private String descrizione;
-
     private double prezzo;
-
     private int annoUscita;
-
     private int durata;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
@@ -45,84 +47,6 @@ public class Film {
 
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Prestito> prestito;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitolo() {
-        return titolo;
-    }
-
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    public double getPrezzo() {
-        return prezzo;
-    }
-
-    public void setPrezzo(double prezzo) {
-        this.prezzo = prezzo;
-    }
-
-    public int getAnnoUscita() {
-        return annoUscita;
-    }
-
-    public void setAnnoUscita(int annoUscita) {
-        this.annoUscita = annoUscita;
-    }
-
-    public int getDurata() {
-        return durata;
-    }
-
-    public void setDurata(int durata) {
-        this.durata = durata;
-    }
-
-    public Regista getRegista() {
-        return regista;
-    }
-
-    public void setRegista(Regista regista) {
-        this.regista = regista;
-    }
-
-    public List<Attore> getAttori() {return attori;}
-
-    public void setAttori(List<Attore> attore) {
-        this.attori = attore;
-    }
-
-    public List<Genere> getGeneri() {
-        return generi;
-    }
-
-    public void setGeneri(List<Genere> genere) {
-        this.generi = genere;
-    }
-
-    public List<Prestito> getPrestito() {
-        return prestito;
-    }
-
-    public void setPrestito(List<Prestito> prestito) {
-        this.prestito = prestito;
-    }
 
 
 }

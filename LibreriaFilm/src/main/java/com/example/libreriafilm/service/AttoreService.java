@@ -4,72 +4,58 @@ import com.example.libreriafilm.dto.AttoreDto;
 import com.example.libreriafilm.entity.Attore;
 import com.example.libreriafilm.entity.Film;
 import com.example.libreriafilm.repository.AttoreRepository;
-import com.example.libreriafilm.repository.FilmRepository;
 import com.example.libreriafilm.MapperDto.AttoreMapperDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
 public class AttoreService {
 
-    private AttoreRepository attoreRepository;
-    private FilmRepository filmRepository;
+    private final AttoreRepository attoreRepository;
 
-    @Autowired
-    public AttoreService(AttoreRepository attoreRepository, FilmRepository filmRepository) {
-        this.attoreRepository = attoreRepository;
-        this.filmRepository = filmRepository;
-    }
+    public List<AttoreDto> getAllAttori() {
 
-    public ResponseEntity<List<AttoreDto>> getAllAttori() {
+        List<Attore> attori = attoreRepository.findAll();
 
-        if(attoreRepository.findAll().isEmpty()) {return ResponseEntity.notFound().build();}
+        if(attori.isEmpty()) {throw new RuntimeException("not found");}
 
-        return ResponseEntity.ok(attoreRepository.findAll().stream()
-                .map(AttoreMapperDto::attoreToAttoreDto).toList());
+        return attori.stream()
+                .map(AttoreMapperDto::attoreToAttoreDto).toList();
 
     }
 
-    public ResponseEntity<AttoreDto> getAttoreById(long id) {
+    public AttoreDto getAttoreById(long id) {
 
-        if(attoreRepository.findById(id).isEmpty()) {return ResponseEntity.notFound().build();}
-
-        return ResponseEntity.ok(attoreRepository.findById(id)
-                .map(AttoreMapperDto::attoreToAttoreDto).orElse(null));
+        return attoreRepository.findById(id)
+                .map(AttoreMapperDto::attoreToAttoreDto).orElseThrow(() -> new RuntimeException("not found"));
 
     }
 
-    public ResponseEntity<AttoreDto> addAttore(AttoreDto attoreDto) {
+    public AttoreDto addAttore(AttoreDto attoreDto) {
 
         attoreRepository.save(AttoreMapperDto.newAttore(attoreDto));
-        return ResponseEntity.ok().body(attoreDto);
+        return attoreDto;
 
     }
 
-    public ResponseEntity<Object> updateAttore(AttoreDto attoreDto, long id) {
+    public AttoreDto updateAttore(AttoreDto attoreDto, long id) {
 
         return  attoreRepository.findById(id)
                 .map(attore -> {
                             attoreRepository.save(AttoreMapperDto.newAttore(attoreDto));
-                            return ResponseEntity.ok().build();
+                            return AttoreMapperDto.attoreToAttoreDto(attore);
                         }
-                ).orElseGet(() -> ResponseEntity.notFound().build());
+                ).orElseThrow(() -> new RuntimeException("not found"));
 
     }
 
-    public ResponseEntity<AttoreDto> deleteAttore(long id) {
+    public AttoreDto deleteAttore(long id) {
 
-        Optional<Attore> attoreOptional = attoreRepository.findById(id);
-
-        if (attoreOptional.isEmpty()) {return ResponseEntity.notFound().build();}
-
-        Attore attore = attoreOptional.get();
+        Attore attore = attoreRepository.findById(id).orElseThrow(() -> new RuntimeException("not found"));
 
         for(Film f : attore.getFilm()) {
             f.getAttori().remove(attore);
@@ -78,24 +64,10 @@ public class AttoreService {
         attore.getFilm().clear();
         attoreRepository.delete(attore);
 
-         return ResponseEntity.ok().build();
+        return AttoreMapperDto.attoreToAttoreDto(attore);
 
     }
 
-    public ResponseEntity<AttoreDto> setAttoriToFilm(List<Long> attoriIds, long filmId) {
 
-        Optional<Film> filmOptional = filmRepository.findById(filmId);
-        List<Attore> attori = attoreRepository.findAllById(attoriIds);
-
-        if(filmOptional.isEmpty() || attori.size() != attoriIds.size()) {return ResponseEntity.notFound().build();}
-
-        Film film = filmOptional.get();
-
-        film.setAttori(attori);
-        filmRepository.save(film);
-
-        return ResponseEntity.ok().build();
-
-    }
 
 }

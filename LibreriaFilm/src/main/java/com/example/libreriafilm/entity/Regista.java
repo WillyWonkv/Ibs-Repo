@@ -1,10 +1,18 @@
 package com.example.libreriafilm.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Regista {
 
@@ -20,42 +28,4 @@ public class Regista {
     @OneToMany(mappedBy = "regista")
     private List<Film> film;
 
-    public Regista(String nome, Date dataNascita) {
-        this.nome = nome;
-        this.dataNascita = dataNascita;
-    }
-
-    public Regista() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Date getDataNascita() {
-        return dataNascita;
-    }
-
-    public void setDataNascita(Date dataNascita) {
-        this.dataNascita = dataNascita;
-    }
-
-    public List<Film> getFilm() {
-        return film;
-    }
-
-    public void setFilm(List<Film> film) {
-        this.film = film;
-    }
 }

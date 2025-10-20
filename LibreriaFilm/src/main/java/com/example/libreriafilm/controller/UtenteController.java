@@ -2,66 +2,48 @@ package com.example.libreriafilm.controller;
 
 
 import com.example.libreriafilm.dto.UtenteDto;
-import com.example.libreriafilm.entity.AuthRequest;
+import com.example.libreriafilm.entity.Utente;
 import com.example.libreriafilm.service.JwtService;
 import com.example.libreriafilm.service.UtenteService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.libreriafilm.service.request.AuthRequest;
+import com.example.libreriafilm.service.request.AuthResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/utente")
 public class UtenteController {
 
-    @Autowired
-    private UtenteService utenteService;
-
-    private JwtService jwtService;
-
-    private AuthenticationManager authenticationManager;
+    private final UtenteService utenteService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping
-    public ResponseEntity<Object> getAllUtente(){
-        return utenteService.getAllUtente();
+    public ResponseEntity<List<UtenteDto>> getAllUtente(){
+        return ResponseEntity.ok(utenteService.getAllUtente());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UtenteDto> getUtenteById(@PathVariable Long id){
-        return utenteService.getUtenteById(id);
+        return ResponseEntity.ok(utenteService.getUtenteById(id));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> registerUtente(@RequestBody UtenteDto utenteDto){
-        return utenteService.registerUtente(utenteDto);
+    public ResponseEntity<AuthResponse> registerUtente(@RequestBody Utente utente){
+        return ResponseEntity.ok(utenteService.registerUtente(utente));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteUtente(@PathVariable Long id){
-        return utenteService.deleteUtente(id);
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> loginUtente(@RequestBody AuthRequest authRequest){
+        return ResponseEntity.ok(utenteService.loginUtente(authRequest));
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<Object> loginUtente(@RequestParam String username, @RequestParam String password){
-        return utenteService.loginUtente(username, password);
-    }
 
-    @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest){
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authRequest.getUsername(), authRequest.getPassword()));
-
-        if (authentication.isAuthenticated()) {
-            return null;
-        }else{
-            throw new UsernameNotFoundException("Invalid username or password");
-        }
-
-    }
 
 }
