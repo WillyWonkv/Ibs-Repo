@@ -1,7 +1,8 @@
 package com.example.libreriafilm.service;
 
 import com.example.libreriafilm.dto.UtenteDto;
-import com.example.libreriafilm.security.Role;
+import com.example.libreriafilm.entity.Ruolo;
+import com.example.libreriafilm.repository.RuoloRepository;
 import com.example.libreriafilm.security.jwt.JwtService;
 import com.example.libreriafilm.security.request.AuthRequest;
 import com.example.libreriafilm.security.request.AuthResponse;
@@ -24,6 +25,8 @@ import java.util.List;
 public class UtenteService {
 
     private final UtenteRepository utenteRepository;
+    private final RuoloRepository ruoloRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -65,8 +68,13 @@ public class UtenteService {
     public AuthResponse registerUtente(Utente utente){
 
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
-        utente.setRole(Role.USER);
         utente.setDataRegistrazione(Date.valueOf(LocalDate.now()));
+
+        Ruolo ruolo = ruoloRepository.findByNome("USER")
+                .orElseThrow(() -> new RuntimeException("user not found"));
+
+        utente.getRuolo().add(ruolo);
+
         utenteRepository.save(utente);
 
         var JwtToken = jwtService.generateToken(utente);

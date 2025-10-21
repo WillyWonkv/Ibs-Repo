@@ -1,13 +1,14 @@
 package com.example.libreriafilm.entity;
 
-import com.example.libreriafilm.security.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -26,13 +27,19 @@ public class Utente {
     private String password;
     private double soldi;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     @Temporal(TemporalType.DATE)
     private Date dataRegistrazione;
 
     @OneToMany(mappedBy = "utente", fetch = FetchType.LAZY)
     private List<Prestito> prestito;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "utente_ruolo",
+            joinColumns = @JoinColumn(name = "utente_id"),
+            inverseJoinColumns = @JoinColumn(name = "ruolo_id")
+    )
+    private Set<Ruolo> ruolo = new HashSet<>();
 
 }

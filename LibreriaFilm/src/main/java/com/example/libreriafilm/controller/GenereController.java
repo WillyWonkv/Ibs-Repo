@@ -4,6 +4,7 @@ import com.example.libreriafilm.dto.GenereDto;
 import com.example.libreriafilm.service.GenereService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class GenereController {
     private final GenereService genereService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<List<GenereDto>> getAllGeneri() {
 
         try {
@@ -28,6 +30,7 @@ public class GenereController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<GenereDto> getGenereById(@PathVariable long id){
 
         try {
@@ -40,11 +43,13 @@ public class GenereController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<GenereDto> createGenere(@RequestBody GenereDto genereDto){
         return ResponseEntity.ok(genereService.addGenere(genereDto));
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<GenereDto> updateGenere(@PathVariable long id, @RequestBody GenereDto genereDto){
 
         try {
@@ -57,6 +62,7 @@ public class GenereController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<GenereDto> deleteGenere(@PathVariable long id){
 
         try {

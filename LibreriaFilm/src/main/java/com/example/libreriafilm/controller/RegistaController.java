@@ -6,6 +6,7 @@ import com.example.libreriafilm.service.RegistaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class RegistaController {
     private final RegistaService registaService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<List<RegistaDto>> getAllRegisti() {
 
         try {
@@ -30,6 +32,7 @@ public class RegistaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<RegistaDto> getRegistiById(@PathVariable Long id) {
 
         try {
@@ -42,6 +45,7 @@ public class RegistaController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<RegistaDto> addRegista(@Valid @RequestBody RegistaDto registaDto) {
 
         return ResponseEntity.ok(registaService.addRegista(registaDto));
@@ -49,6 +53,7 @@ public class RegistaController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<RegistaDto> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
 
         try {
@@ -61,6 +66,7 @@ public class RegistaController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<RegistaDto> deleteRegista(@PathVariable Long id) {
 
         try {

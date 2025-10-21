@@ -1,5 +1,6 @@
 package com.example.libreriafilm.security.jwt;
 
+import com.example.libreriafilm.entity.Ruolo;
 import com.example.libreriafilm.entity.Utente;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +23,8 @@ public class JwtService {
 
     public String generateToken(Utente utente){
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", utente.getRole().name());
+        claims.put("role", utente.getRuolo());
+        claims.put("permission", utente.getRuolo().stream().map(Ruolo::getPermesso));
         return createToken(claims, utente.getEmail());
     }
 
@@ -68,10 +70,6 @@ public class JwtService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
-
-    public String extractRole(String token) {
-        return extractAllClaim(token).get("role", String.class);
     }
 
 }

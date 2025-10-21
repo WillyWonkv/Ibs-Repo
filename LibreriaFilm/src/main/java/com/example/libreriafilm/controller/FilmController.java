@@ -4,6 +4,7 @@ import com.example.libreriafilm.dto.FilmDto;
 import com.example.libreriafilm.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class FilmController {
     private final FilmService filmService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<List<FilmDto>> getAllFilm(){
 
         try {
@@ -28,6 +30,7 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<FilmDto> getFilmById(@PathVariable long id){
 
         try {
@@ -40,12 +43,14 @@ public class FilmController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<FilmDto> saveFilm(@RequestBody FilmDto filmDto){
 
         return ResponseEntity.ok(filmService.addFilm(filmDto));
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<FilmDto> updateFilm(@RequestBody FilmDto filmDto, @PathVariable long id){
 
         try {
@@ -58,6 +63,7 @@ public class FilmController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<Void> deleteFilm(@PathVariable long id){
 
         try{

@@ -4,6 +4,7 @@ import com.example.libreriafilm.dto.AttoreDto;
 import com.example.libreriafilm.service.AttoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class AttoreController {
     private final AttoreService attoreService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<List<AttoreDto>> getAllAttori() {
 
         try {
@@ -28,6 +30,7 @@ public class AttoreController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<AttoreDto> getAttoreById(@PathVariable long id) {
 
         try {
@@ -40,6 +43,7 @@ public class AttoreController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<AttoreDto> saveAttore(@RequestBody AttoreDto attoreDto) {
 
         return ResponseEntity.ok(attoreService.addAttore(attoreDto));
@@ -47,6 +51,7 @@ public class AttoreController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<AttoreDto> updateAttore(@RequestBody AttoreDto attoreDto, @PathVariable long id) {
 
         try {
@@ -59,6 +64,7 @@ public class AttoreController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<AttoreDto> deleteAttore(@PathVariable long id) {
 
         try {
