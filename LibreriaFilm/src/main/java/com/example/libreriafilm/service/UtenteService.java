@@ -1,9 +1,10 @@
 package com.example.libreriafilm.service;
 
 import com.example.libreriafilm.dto.UtenteDto;
-import com.example.libreriafilm.entity.Role;
-import com.example.libreriafilm.service.request.AuthRequest;
-import com.example.libreriafilm.service.request.AuthResponse;
+import com.example.libreriafilm.security.Role;
+import com.example.libreriafilm.security.jwt.JwtService;
+import com.example.libreriafilm.security.request.AuthRequest;
+import com.example.libreriafilm.security.request.AuthResponse;
 import com.example.libreriafilm.entity.Utente;
 import com.example.libreriafilm.repository.PrestitoRepository;
 import com.example.libreriafilm.repository.UtenteRepository;

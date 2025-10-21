@@ -1,6 +1,6 @@
 package com.example.libreriafilm.config;
 
-import com.example.libreriafilm.filter.JwtAuthFilter;
+import com.example.libreriafilm.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

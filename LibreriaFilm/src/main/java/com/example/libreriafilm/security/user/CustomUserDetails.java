@@ -1,6 +1,7 @@
-package com.example.libreriafilm.entity;
+package com.example.libreriafilm.security.user;
 
-import lombok.*;
+import com.example.libreriafilm.entity.Utente;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,13 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Data
 public class CustomUserDetails implements UserDetails {
 
     private final Utente utente;
-
-    public CustomUserDetails(Utente utente) {
-        this.utente = utente;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,4 +48,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

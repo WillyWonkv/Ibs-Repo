@@ -1,4 +1,4 @@
-package com.example.libreriafilm.service.request;
+package com.example.libreriafilm.security.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
+public class AuthResponse {
 
-    private String email;
-    private String password;
+    private String token;
 
 }

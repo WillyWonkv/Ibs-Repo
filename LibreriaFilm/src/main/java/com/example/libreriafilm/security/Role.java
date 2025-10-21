@@ -1,4 +1,4 @@
-package com.example.libreriafilm.entity;
+package com.example.libreriafilm.security;
 
 public enum Role {
 

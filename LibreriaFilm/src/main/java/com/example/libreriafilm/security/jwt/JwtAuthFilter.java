@@ -1,6 +1,5 @@
-package com.example.libreriafilm.filter;
+package com.example.libreriafilm.security.jwt;
 
-import com.example.libreriafilm.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

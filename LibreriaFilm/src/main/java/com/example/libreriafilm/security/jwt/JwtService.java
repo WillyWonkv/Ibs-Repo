@@ -1,4 +1,4 @@
-package com.example.libreriafilm.service;
+package com.example.libreriafilm.security.jwt;
 
 import com.example.libreriafilm.entity.Utente;
 import io.jsonwebtoken.Claims;
