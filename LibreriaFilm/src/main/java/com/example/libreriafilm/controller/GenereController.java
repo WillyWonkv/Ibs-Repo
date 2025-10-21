@@ -17,13 +17,26 @@ public class GenereController {
 
     @GetMapping
     public ResponseEntity<List<GenereDto>> getAllGeneri() {
-        return ResponseEntity.ok(genereService.getAllGeneri());
+
+        try {
+            List<GenereDto> generes = genereService.getAllGeneri();
+            return ResponseEntity.ok(generes);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenereDto> getGenereById(@PathVariable long id){
-        return ResponseEntity.ok(genereService.getGenereById(id));
+
+        try {
+            GenereDto genere = genereService.getGenereById(id);
+            return ResponseEntity.ok(genere);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
     @PostMapping("/save")
@@ -33,12 +46,26 @@ public class GenereController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<GenereDto> updateGenere(@PathVariable long id, @RequestBody GenereDto genereDto){
-        return ResponseEntity.ok(genereService.updateGenere(id, genereDto));
+
+        try {
+            GenereDto genere = genereService.updateGenere(id, genereDto);
+            return ResponseEntity.ok(genere);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<GenereDto> deleteGenere(@PathVariable long id){
-        return ResponseEntity.ok(genereService.deleteGenere(id));
+
+        try {
+            GenereDto genere = genereService.deleteGenere(id);
+            return ResponseEntity.ok(genere);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
 

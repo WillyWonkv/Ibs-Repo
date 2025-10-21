@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,14 +33,18 @@ public class SecurityConfig {
 
         return http.csrf(AbstractHttpConfigurer::disable)
 
+                .httpBasic(Customizer.withDefaults())
+
                 //Configurazione endpoints
         .authorizeHttpRequests(auth -> auth
 
                 //endpoints pubblici
                 .requestMatchers("/utente/register", "/utente/login").permitAll()
 
+                .requestMatchers("/film").hasAnyRole("ADMIN", "USER")
+
                 //endpoints con autenticazione
-                .anyRequest().authenticated()
+                .anyRequest().hasRole("ADMIN")
         )
 
                 //Jwt

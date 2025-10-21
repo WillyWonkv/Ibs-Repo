@@ -20,7 +20,8 @@ public class RegistaService{
 
         List<Regista> registi = registaRepository.findAll();
         if(registi.isEmpty()){throw new RuntimeException("not found");}
-        return registaRepository.findAll().stream().map(RegistaMapperDto::registaToRegistaDto).toList();
+        return registaRepository.findAll().stream()
+                .map(RegistaMapperDto::registaToRegistaDto).toList();
 
     }
 

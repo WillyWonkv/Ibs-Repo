@@ -19,13 +19,25 @@ public class RegistaController {
 
     @GetMapping
     public ResponseEntity<List<RegistaDto>> getAllRegisti() {
-        return ResponseEntity.ok(registaService.getAllRegisti());
+
+        try {
+            List<RegistaDto> registi = registaService.getAllRegisti();
+            return ResponseEntity.ok(registi);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RegistaDto> getRegistiById(@PathVariable Long id) {
 
-        return ResponseEntity.ok(registaService.getRegistiById(id));
+        try {
+            RegistaDto regista = registaService.getRegistiById(id);
+            return ResponseEntity.ok(regista);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
 
     }
 
@@ -39,14 +51,24 @@ public class RegistaController {
     @PutMapping("/update/{id}")
     public ResponseEntity<RegistaDto> updateRegista(@RequestBody RegistaDto registaDto, @PathVariable Long id) {
 
-        return ResponseEntity.ok(registaService.updateRegista(registaDto, id));
+        try {
+            RegistaDto regista = registaService.updateRegista(registaDto, id);
+            return ResponseEntity.ok(regista);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<RegistaDto> deleteRegista(@PathVariable Long id) {
 
-        return ResponseEntity.ok(registaService.deleteRegista(id));
+        try {
+            RegistaDto registaDto = registaService.deleteRegista(id);
+            return ResponseEntity.ok(registaDto);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 

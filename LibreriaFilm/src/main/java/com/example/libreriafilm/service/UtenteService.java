@@ -9,7 +9,6 @@ import com.example.libreriafilm.repository.PrestitoRepository;
 import com.example.libreriafilm.repository.UtenteRepository;
 import com.example.libreriafilm.MapperDto.UtenteMapperDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +30,9 @@ public class UtenteService {
     private final PrestitoRepository prestitoRepository;
 
     public List<UtenteDto> getAllUtente(){
+
+        List<Utente> utenti = utenteRepository.findAll();
+        if(utenti.isEmpty()){throw new RuntimeException("No Users");}
         return utenteRepository.findAll().stream()
                 .map(UtenteMapperDto::utenteToUtenteDto).toList();
     }
@@ -43,6 +43,24 @@ public class UtenteService {
                 .orElseThrow(() -> new RuntimeException("not found"));
     }
 
+    public UtenteDto deleteUtente(long id){
+
+        return utenteRepository.findById(id).map(utente -> {
+
+                    if(utente.getPrestito().stream().anyMatch(prestito -> prestito.getDataRestituzione() == null)){
+                        throw new RuntimeException("Bad Request");
+                    }
+
+                    prestitoRepository.deleteAll(utente.getPrestito());
+
+                    utenteRepository.delete(utente);
+                    return UtenteMapperDto.utenteToUtenteDto(utente);
+
+                })
+                .orElseThrow(() -> new RuntimeException("not found"));
+
+    }
+
     public AuthResponse registerUtente(Utente utente){
 
         utente.setPassword(passwordEncoder.encode(utente.getPassword()));
@@ -50,7 +68,7 @@ public class UtenteService {
         utente.setDataRegistrazione(Date.valueOf(LocalDate.now()));
         utenteRepository.save(utente);
 
-        var JwtToken = jwtService.GenerateToken(utente.getEmail());
+        var JwtToken = jwtService.generateToken(utente);
 
         return AuthResponse.builder().token(JwtToken).build();
 
@@ -66,27 +84,7 @@ public class UtenteService {
         );
 
         var user = utenteRepository.findByEmail(utente.getEmail()).orElseThrow();
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("role", Role.USER);
-        return AuthResponse.builder().token(jwtService.createToken(claims ,user.getEmail())).build();
-
-    }
-
-    public ResponseEntity<Object> deleteUtente(long id){
-
-        return utenteRepository.findById(id).map(utente -> {
-
-            if(utente.getPrestito().stream().anyMatch(prestito -> prestito.getDataRestituzione() == null)){
-                return ResponseEntity.badRequest().build();
-            }
-
-            prestitoRepository.deleteAll(utente.getPrestito());
-
-            utenteRepository.delete(utente);
-            return ResponseEntity.ok().build();
-
-        })
-        .orElseGet(() -> ResponseEntity.notFound().build());
+        return AuthResponse.builder().token(jwtService.generateToken(user)).build();
 
     }
 

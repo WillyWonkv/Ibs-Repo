@@ -26,14 +26,15 @@ public class FilmService {
     public List<FilmDto> getAllFilm(){
 
         List<Film> film = filmRepository.findAll();
-        if(film.isEmpty()){throw new RuntimeException("Films not found");}
+        if(film.isEmpty()){throw new RuntimeException("Film not found");}
         return film.stream().map(FilmMapperDto::FilmToFilmDto).toList();
 
     }
 
     public FilmDto getFilmById(long id){
 
-        Film film = filmRepository.findById(id).orElseThrow(() -> new RuntimeException("Film not found"));
+        Film film = filmRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Film not found"));
         return FilmMapperDto.FilmToFilmDto(film);
 
     }
@@ -57,7 +58,7 @@ public class FilmService {
                         .orElseGet(() -> GenereMapperDto.newGenere(a))));
         film.setGeneri(generi);
 
-        return FilmMapperDto.FilmToFilmDto(filmRepository .save(film));
+        return FilmMapperDto.FilmToFilmDto(filmRepository.save(film));
     }
 
     public FilmDto updateFilm(FilmDto filmDto, long id){

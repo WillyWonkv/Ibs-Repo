@@ -3,13 +3,11 @@ package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.UtenteDto;
 import com.example.libreriafilm.entity.Utente;
-import com.example.libreriafilm.service.JwtService;
 import com.example.libreriafilm.service.UtenteService;
 import com.example.libreriafilm.service.request.AuthRequest;
 import com.example.libreriafilm.service.request.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,17 +18,41 @@ import java.util.List;
 public class UtenteController {
 
     private final UtenteService utenteService;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
 
     @GetMapping
     public ResponseEntity<List<UtenteDto>> getAllUtente(){
-        return ResponseEntity.ok(utenteService.getAllUtente());
+
+        try{
+            List<UtenteDto> utenti = utenteService.getAllUtente();
+            return ResponseEntity.ok(utenti);
+        }catch(Exception e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UtenteDto> getUtenteById(@PathVariable Long id){
-        return ResponseEntity.ok(utenteService.getUtenteById(id));
+
+        try {
+            UtenteDto utenteDto = utenteService.getUtenteById(id);
+            return ResponseEntity.ok(utenteDto);
+        }catch(Exception e){
+            return ResponseEntity.noContent().build();
+        }
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<UtenteDto> deleteUtenteById(@PathVariable Long id){
+
+        try {
+            UtenteDto utenteDto = utenteService.deleteUtente(id);
+            return ResponseEntity.ok(utenteDto);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/register")
@@ -42,8 +64,6 @@ public class UtenteController {
     public ResponseEntity<AuthResponse> loginUtente(@RequestBody AuthRequest authRequest){
         return ResponseEntity.ok(utenteService.loginUtente(authRequest));
     }
-
-
 
 
 }

@@ -18,14 +18,24 @@ public class AttoreController {
     @GetMapping
     public ResponseEntity<List<AttoreDto>> getAllAttori() {
 
-        return ResponseEntity.ok(attoreService.getAllAttori());
+        try {
+            List<AttoreDto> attori = attoreService.getAllAttori();
+            return ResponseEntity.ok(attori);
+        }catch (RuntimeException e){
+            return ResponseEntity.noContent().build();
+        }
 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AttoreDto> getAttoreById(@PathVariable long id) {
 
-        return ResponseEntity.ok(attoreService.getAttoreById(id));
+        try {
+            AttoreDto attore = attoreService.getAttoreById(id);
+            return ResponseEntity.ok(attore);
+        }catch (RuntimeException e){
+            return ResponseEntity.noContent().build();
+        }
 
     }
 
@@ -39,14 +49,24 @@ public class AttoreController {
     @PutMapping("/update/{id}")
     public ResponseEntity<AttoreDto> updateAttore(@RequestBody AttoreDto attoreDto, @PathVariable long id) {
 
-        return ResponseEntity.ok(attoreService.updateAttore(attoreDto, id));
+        try {
+            AttoreDto attore = attoreService.updateAttore(attoreDto, id);
+            return ResponseEntity.ok(attore);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<AttoreDto> deleteAttore(@PathVariable long id) {
 
-        return ResponseEntity.ok(attoreService.deleteAttore(id));
+        try {
+            AttoreDto attore = attoreService.deleteAttore(id);
+            return ResponseEntity.ok(attore);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 

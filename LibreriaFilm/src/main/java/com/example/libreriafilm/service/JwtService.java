@@ -1,5 +1,6 @@
 package com.example.libreriafilm.service;
 
+import com.example.libreriafilm.entity.Utente;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,9 +20,10 @@ public class JwtService {
 
     public static final String SECRET = "fdf09601a22121d9ee1f69a6d7ad19e35bc1a8fa70ce5791e90d2feb53b3eccf";
 
-    public String GenerateToken(String email){
+    public String generateToken(Utente utente){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, email);
+        claims.put("role", utente.getRole().name());
+        return createToken(claims, utente.getEmail());
     }
 
     public String createToken(Map<String, Object> claims, String email){
@@ -66,6 +68,10 @@ public class JwtService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String extractRole(String token) {
+        return extractAllClaim(token).get("role", String.class);
     }
 
 }
