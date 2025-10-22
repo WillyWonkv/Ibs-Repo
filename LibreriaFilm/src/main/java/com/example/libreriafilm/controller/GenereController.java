@@ -2,6 +2,7 @@ package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.GenereDto;
 import com.example.libreriafilm.service.GenereService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,13 +45,20 @@ public class GenereController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<GenereDto> createGenere(@RequestBody GenereDto genereDto){
-        return ResponseEntity.ok(genereService.addGenere(genereDto));
+    public ResponseEntity<GenereDto> createGenere(@RequestBody @Valid GenereDto genereDto){
+
+        try {
+            GenereDto genere = genereService.addGenere(genereDto);
+            return ResponseEntity.ok(genere);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('UPDATE')")
-    public ResponseEntity<GenereDto> updateGenere(@PathVariable long id, @RequestBody GenereDto genereDto){
+    public ResponseEntity<GenereDto> updateGenere(@PathVariable @Valid long id, @RequestBody GenereDto genereDto){
 
         try {
             GenereDto genere = genereService.updateGenere(id, genereDto);

@@ -8,12 +8,17 @@ select * from film;
 select * from genere;
 select * from regista;
 select * from attore;
-select * from utente;
 select * from prestito;
 select * from film_attore;
 select * from film_genere;
 
-INSERT INTO regista (id, nome, data_nascita) VALUES
+select * from utente;
+select * from ruolo;
+select * from permesso;
+select * from ruolo_permesso;
+select * from utente_ruolo;
+
+INSERT INTO regista (id, nome, dataNascita) VALUES
 (1, 'Christopher Nolan', '1970-07-30'),
 (2, 'Francis Ford Coppola', '1939-04-07'),
 (3, 'Quentin Tarantino', '1963-03-27'),
@@ -23,7 +28,7 @@ INSERT INTO regista (id, nome, data_nascita) VALUES
 (7, 'Ridley Scott', '1937-11-30'),
 (8, 'Peter Jackson', '1961-10-31');
 
-INSERT INTO attore (id, nome, data_nascita) VALUES
+INSERT INTO attore (id, nome, dataNascita) VALUES
 (1, 'Leonardo DiCaprio', '1974-11-11'),
 (2, 'Matthew McConaughey', '1969-11-04'),
 (3, 'Al Pacino', '1940-04-25'),
@@ -53,7 +58,7 @@ INSERT INTO genere (id, nome) VALUES
 (10, 'Animazione'),
 (11, 'Documentario');
 
-INSERT INTO film (id, titolo, descrizione, anno_uscita, durata, prezzo, regista_id) VALUES
+INSERT INTO film (id, titolo, descrizione, annoUscita, durata, prezzo, regista_id) VALUES
 (1, 'Inception', 'Un ladro che ruba segreti dai sogni', 2010, 148, 4.99, 1),
 (2, 'Interstellar', 'Un viaggio oltre le stelle per salvare l\'umanità', 2014, 169, 5.99, 1),
 (3, 'Il Padrino', 'La storia di una famiglia mafiosa', 1972, 175, 3.99, 2),
@@ -97,18 +102,53 @@ INSERT INTO film_genere (film_id, genere_id) VALUES
 (9, 5),  -- Django Unchained → Thriller
 (10, 1); -- Saving Private Ryan → Azione
 
-INSERT INTO utente (id, nome, cognome, email, password, data_registrazione, soldi) VALUES
-(1, 'Marco', 'Rossi', 'marco.rossi@email.com', 'password123', '2025-01-10', 25.50),
-(2, 'Giulia', 'Bianchi', 'giulia.bianchi@email.com', 'securePass', '2025-02-05', 40.00),
-(3, 'Luca', 'Verdi', 'luca.verdi@email.com', 'qwerty123', '2025-03-12', 10.00),
-(4, 'Anna', 'Neri', 'anna.neri@email.com', 'annaPass456', '2025-04-20', 15.00),
-(5, 'Marco', 'Gialli', 'marco.gialli@email.com', 'gialliPass789', '2025-05-15', 60.75);
+/*INSERT INTO utente (id, nome, cognome, email, password, dataRegistrazione, soldi) VALUES
+(1, 'Marco', 'Rossi', 'MarcoUser', '$2a$10$3qwR/ZCKuV8JTKC8GMAIq.YNoNVhtYEzWzqIxs2XtiMzSOdK76DZS', '2025-01-10', 25.50),
+(2, 'Giulia', 'Bianchi', 'GiuliaUser', '$2a$10$3qwR/ZCKuV8JTKC8GMAIq.YNoNVhtYEzWzqIxs2XtiMzSOdK76DZS', '2025-02-05', 40.00),
+(3, 'Luca', 'Verdi', 'LucaUser', '$2a$10$3qwR/ZCKuV8JTKC8GMAIq.YNoNVhtYEzWzqIxs2XtiMzSOdK76DZS', '2025-03-12', 10.00),
+(4, 'Anna', 'Neri', 'AnnaUser', '$2a$10$3qwR/ZCKuV8JTKC8GMAIq.YNoNVhtYEzWzqIxs2XtiMzSOdK76DZS', '2025-04-20', 15.00),
+(5, 'Marco', 'Gialli', 'MarcoUser', '$2a$10$3qwR/ZCKuV8JTKC8GMAIq.YNoNVhtYEzWzqIxs2XtiMzSOdK76DZS', '2025-05-15', 60.75);
 
-INSERT INTO prestito (id, data_prestito, data_restituzione, film_id, utente_id) VALUES
+INSERT INTO prestito (id, dataPrestito, dataRestituzione, film_id, utente_id) VALUES
 (1, '2025-09-01', '2025-09-10', 1, 1),
 (2, '2025-09-05', NULL, 2, 2),
 (3, '2025-09-10', '2025-09-15', 3, 3),
 (4, '2025-09-15', NULL, 4, 4),
 (5, '2025-09-20', '2025-09-25', 5, 5),
 (6, '2025-10-01', NULL, 6, 1),
-(7, '2025-10-05', NULL, 7, 2);
+(7, '2025-10-05', NULL, 7, 2);*/
+
+INSERT INTO ruolo (nome) VALUES ('ADMIN'), ('USER'), ('MANAGER');
+
+INSERT INTO permesso (nome) VALUES 
+('VIEW'),
+('CREATE'),
+('UPDATE'),
+('DELETE');
+
+-- Associa permessi al ruolo ADMIN
+INSERT INTO ruolo_permesso (ruolo_id, permesso_id)
+VALUES 
+(1, 1), -- ADMIN -> FILM_VIEW
+(1, 2), -- ADMIN -> FILM_CREATE
+(1, 3), -- ADMIN -> FILM_UPDATE
+(1, 4); -- ADMIN -> FILM_DELETE
+
+-- Associa permessi al ruolo USER
+INSERT INTO ruolo_permesso (ruolo_id, permesso_id)
+VALUES 
+(2, 1); -- USER -> FILM_VIEW
+
+INSERT INTO ruolo_permesso (ruolo_id, permesso_id)
+VALUES
+(3, 1),
+(3, 2),
+(3, 3);
+
+-- Associa ruoli agli utenti
+INSERT INTO utente_ruolo (utente_id, ruolo_id)
+VALUES 
+(1, 1),
+(2, 2);
+
+

@@ -2,6 +2,7 @@ package com.example.libreriafilm.controller;
 
 import com.example.libreriafilm.dto.AttoreDto;
 import com.example.libreriafilm.service.AttoreService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,15 +45,20 @@ public class AttoreController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<AttoreDto> saveAttore(@RequestBody AttoreDto attoreDto) {
+    public ResponseEntity<AttoreDto> saveAttore(@RequestBody @Valid AttoreDto attoreDto) {
 
-        return ResponseEntity.ok(attoreService.addAttore(attoreDto));
+        try {
+            AttoreDto attore = attoreService.addAttore(attoreDto);
+            return ResponseEntity.ok(attore);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('UPDATE')")
-    public ResponseEntity<AttoreDto> updateAttore(@RequestBody AttoreDto attoreDto, @PathVariable long id) {
+    public ResponseEntity<AttoreDto> updateAttore(@RequestBody @Valid AttoreDto attoreDto, @PathVariable long id) {
 
         try {
             AttoreDto attore = attoreService.updateAttore(attoreDto, id);

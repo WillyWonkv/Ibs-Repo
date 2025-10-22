@@ -19,10 +19,18 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String titolo;
+
+    @Column(nullable = false)
     private String descrizione;
+
     private double prezzo;
+
+    @Column(nullable = false)
     private int annoUscita;
+
+    @Column(nullable = false)
     private int durata;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

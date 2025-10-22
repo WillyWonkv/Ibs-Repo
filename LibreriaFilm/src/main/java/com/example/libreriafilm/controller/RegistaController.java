@@ -46,9 +46,14 @@ public class RegistaController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<RegistaDto> addRegista(@Valid @RequestBody RegistaDto registaDto) {
+    public ResponseEntity<RegistaDto> addRegista(@RequestBody @Valid RegistaDto registaDto) {
 
-        return ResponseEntity.ok(registaService.addRegista(registaDto));
+        try {
+            RegistaDto regista = registaService.addRegista(registaDto);
+            return ResponseEntity.ok(regista);
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
 
     }
 

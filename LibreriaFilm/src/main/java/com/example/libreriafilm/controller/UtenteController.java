@@ -6,6 +6,7 @@ import com.example.libreriafilm.entity.Utente;
 import com.example.libreriafilm.service.UtenteService;
 import com.example.libreriafilm.security.request.AuthRequest;
 import com.example.libreriafilm.security.request.AuthResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,8 +57,15 @@ public class UtenteController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> registerUtente(@RequestBody Utente utente){
-        return ResponseEntity.ok(utenteService.registerUtente(utente));
+    public ResponseEntity<AuthResponse> registerUtente(@RequestBody @Valid Utente utente){
+
+        try {
+            AuthResponse authResponse = utenteService.registerUtente(utente);
+            return ResponseEntity.ok(authResponse);
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/login")

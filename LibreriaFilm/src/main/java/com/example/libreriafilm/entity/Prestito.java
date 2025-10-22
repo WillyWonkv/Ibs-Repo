@@ -20,6 +20,7 @@ public class Prestito {
     private long id;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date dataPrestito;
 
     @Temporal(TemporalType.DATE)

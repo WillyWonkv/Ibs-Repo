@@ -19,6 +19,7 @@ public class Genere {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String nome;
 
     @ManyToMany(mappedBy = "generi")

@@ -20,6 +20,7 @@ public class Regista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String nome;
 
     @Temporal(TemporalType.DATE)

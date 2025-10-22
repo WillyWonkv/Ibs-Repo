@@ -21,11 +21,19 @@ public class Utente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private String cognome;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
-    private double soldi;
+
+    private double soldi = 0;
 
     @Temporal(TemporalType.DATE)
     private Date dataRegistrazione;
@@ -33,8 +41,7 @@ public class Utente {
     @OneToMany(mappedBy = "utente", fetch = FetchType.LAZY)
     private List<Prestito> prestito;
 
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "utente_ruolo",
             joinColumns = @JoinColumn(name = "utente_id"),

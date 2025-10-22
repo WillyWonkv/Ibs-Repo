@@ -71,7 +71,7 @@ public class UtenteService {
         utente.setDataRegistrazione(Date.valueOf(LocalDate.now()));
 
         Ruolo ruolo = ruoloRepository.findByNome("USER")
-                .orElseThrow(() -> new RuntimeException("user not found"));
+                .orElseThrow(() -> new RuntimeException("Role not found"));
 
         utente.getRuolo().add(ruolo);
 

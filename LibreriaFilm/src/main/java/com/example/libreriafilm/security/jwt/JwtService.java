@@ -1,5 +1,6 @@
 package com.example.libreriafilm.security.jwt;
 
+import com.example.libreriafilm.entity.Permesso;
 import com.example.libreriafilm.entity.Ruolo;
 import com.example.libreriafilm.entity.Utente;
 import io.jsonwebtoken.Claims;
@@ -14,7 +15,9 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -23,8 +26,14 @@ public class JwtService {
 
     public String generateToken(Utente utente){
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", utente.getRuolo());
-        claims.put("permission", utente.getRuolo().stream().map(Ruolo::getPermesso));
+        claims.put("role", utente.getRuolo().stream()
+                .map(Ruolo::getNome)
+                .collect(Collectors.toSet()));
+        claims.put("permission", utente.getRuolo().stream()
+                .map(Ruolo::getPermesso)
+                .flatMap(Set::stream)
+                .map(Permesso::getNome)
+                .toList());
         return createToken(claims, utente.getEmail());
     }
 
