@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="386a6288-b1d2-403e-8930-e8c34d96d294" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/banner.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/security/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/security/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/film-service/src/main/resources/banner.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/LibreriaFilmApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/MapperDto/AttoreMapperDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/mapperDto/AttoreMapperDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/MapperDto/FilmMapperDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/mapperDto/FilmMapperDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/MapperDto/GenereMapperDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/mapperDto/GenereMapperDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/MapperDto/RegistaMapperDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/mapperDto/RegistaMapperDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/MapperDto/UtenteMapperDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/mapperDto/UtenteMapperDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/AttoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/AttoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/FilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/FilmController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/GenereController.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/GenereController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/PrestitoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/RegistaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/RegistaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/controller/UtenteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/controller/UtenteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/AttoreDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/dto/AttoreDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/FilmDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/dto/FilmDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/GenereDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/dto/GenereDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/PrestitoDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/RegistaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/dto/RegistaDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/dto/UtenteDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/dto/UtenteDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Attore.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/entity/Attore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/entity/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Genere.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/entity/Genere.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Permesso.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Permesso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Prestito.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Regista.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/entity/Regista.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Ruolo.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Ruolo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/entity/Utente.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Utente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/AttoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/AttoreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/FilmRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/FilmRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/GenereRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/GenereRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/PrestitoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/RegistaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/RegistaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/RuoloRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/repository/RuoloRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/repository/UtenteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/repository/UtenteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/jwt/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/jwt/JwtAuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/jwt/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/jwt/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/request/AuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/request/AuthRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/request/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/request/AuthResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/user/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/user/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/security/user/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/security/user/CustomUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/AttoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/AttoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/FilmService.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/FilmService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/GenereService.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/GenereService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/PrestitoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/RegistaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/RegistaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/libreriafilm/service/UtenteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/service/UtenteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DATA.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/libreriafilm/LibreriaFilmApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="package-info" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="33rhgZYffCwbl0cvUm5N4A4VKUT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.FilmServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.LibreriaFilmApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Documents/AndreaPiccirillo/Ibs-Repo/LibreriaFilm&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\AndreaPiccirillo\Ibs-Repo\LibreriaFilm\film-service\src\main\resources" />
+      <recent name="C:\Users\User\Documents\AndreaPiccirillo\Ibs-Repo\LibreriaFilm" />
+      <recent name="C:\Users\User\Documents\AndreaPiccirillo\Ibs-Repo\LibreriaFilm\src\main\java\com\example\libreriafilm" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="AuthServiceApplication" value="STOPPED" />
+              <entry key="FilmServiceApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FilmServiceApplication">
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="auth-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="auth_service.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FilmServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="film-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="film_service.FilmServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="386a6288-b1d2-403e-8930-e8c34d96d294" name="Changes" comment="" />
+      <created>1760081213628</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760081213628</updated>
+      <workItem from="1760081215175" duration="20277000" />
+      <workItem from="1760425801372" duration="28356000" />
+      <workItem from="1760512216298" duration="26377000" />
+      <workItem from="1760599021968" duration="20734000" />
+      <workItem from="1760623136680" duration="5310000" />
+      <workItem from="1760685747774" duration="17018000" />
+      <workItem from="1760707952355" duration="734000" />
+      <workItem from="1760944385501" duration="28684000" />
+      <workItem from="1761030955291" duration="27677000" />
+      <workItem from="1761118172616" duration="21634000" />
+      <workItem from="1761147269627" duration="917000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
