@@ -30,12 +30,25 @@ public class FilmController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<FilmDto> getFilmById(@PathVariable long id){
 
         try {
             FilmDto filmDto = filmService.getFilmById(id);
+            return ResponseEntity.ok(filmDto);
+        }catch (RuntimeException e){
+            return ResponseEntity.noContent().build();
+        }
+
+    }
+
+    @GetMapping("/{ricerca}")
+    @PreAuthorize("hasAuthority('VIEW')")
+    public ResponseEntity<List<FilmDto>> getFilmByNome(@PathVariable String ricerca){
+
+        try {
+            List<FilmDto> filmDto = filmService.ricercaFilm(ricerca);
             return ResponseEntity.ok(filmDto);
         }catch (RuntimeException e){
             return ResponseEntity.noContent().build();

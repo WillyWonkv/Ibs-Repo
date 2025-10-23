@@ -1,5 +1,6 @@
 package film_service.service;
 
+import film_service.Specification.FilmSpecification;
 import film_service.dto.FilmDto;
 import film_service.mapperDto.AttoreMapperDto;
 import film_service.mapperDto.FilmMapperDto;
@@ -37,6 +38,14 @@ public class FilmService {
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Film not found"));
         return FilmMapperDto.FilmToFilmDto(film);
+
+    }
+
+    public List<FilmDto> ricercaFilm(String ricerca){
+
+        List<Film> film = filmRepository.findAll(FilmSpecification.totalSearch(ricerca));
+        if(film.isEmpty()){throw new RuntimeException("Film not found");}
+        return film.stream().map(FilmMapperDto::FilmToFilmDto).toList();
 
     }
 

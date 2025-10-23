@@ -10,7 +10,7 @@ select * from attore;
 select * from film_attore;
 select * from film_genere;
 
-INSERT INTO regista (id, nome, dataNascita) VALUES
+INSERT INTO regista (id, nome, data_nascita) VALUES
 (1, 'Christopher Nolan', '1970-07-30'),
 (2, 'Francis Ford Coppola', '1939-04-07'),
 (3, 'Quentin Tarantino', '1963-03-27'),
@@ -20,7 +20,7 @@ INSERT INTO regista (id, nome, dataNascita) VALUES
 (7, 'Ridley Scott', '1937-11-30'),
 (8, 'Peter Jackson', '1961-10-31');
 
-INSERT INTO attore (id, nome, dataNascita) VALUES
+INSERT INTO attore (id, nome, data_nascita) VALUES
 (1, 'Leonardo DiCaprio', '1974-11-11'),
 (2, 'Matthew McConaughey', '1969-11-04'),
 (3, 'Al Pacino', '1940-04-25'),
@@ -50,7 +50,7 @@ INSERT INTO genere (id, nome) VALUES
 (10, 'Animazione'),
 (11, 'Documentario');
 
-INSERT INTO film (id, titolo, descrizione, annoUscita, durata, prezzo, regista_id) VALUES
+INSERT INTO film (id, titolo, descrizione, anno_uscita, durata, prezzo, regista_id) VALUES
 (1, 'Inception', 'Un ladro che ruba segreti dai sogni', 2010, 148, 4.99, 1),
 (2, 'Interstellar', 'Un viaggio oltre le stelle per salvare l\'umanità', 2014, 169, 5.99, 1),
 (3, 'Il Padrino', 'La storia di una famiglia mafiosa', 1972, 175, 3.99, 2),
