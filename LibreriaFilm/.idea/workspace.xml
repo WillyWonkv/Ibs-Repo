@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="386a6288-b1d2-403e-8930-e8c34d96d294" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/Specification/AttoreSpecification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/Specification/FilmSpecification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/Specification/GenereSpecification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/Specification/RegistaSpecification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/FilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/controller/FilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/AttoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/AttoreRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/FilmRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/FilmRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/GenereRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/GenereRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/RegistaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/repository/RegistaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/FilmService.java" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/java/film_service/service/FilmService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/film-service/src/main/resources/DATAFILM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/film-service/src/main/resources/DATAFILM.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +163,7 @@
       <workItem from="1761118172616" duration="21634000" />
       <workItem from="1761147269627" duration="917000" />
       <workItem from="1761148242386" duration="6000" />
-      <workItem from="1761203502317" duration="13598000" />
+      <workItem from="1761203502317" duration="15682000" />
     </task>
     <servers />
   </component>
