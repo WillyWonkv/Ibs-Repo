@@ -33,7 +33,7 @@ public class JwtService {
         claims.put("role", utente.getRuolo().stream()
                 .map(Ruolo::getNome)
                 .collect(Collectors.toSet()));
-        claims.put("permission", utente.getRuolo().stream()
+        claims.put("permissions", utente.getRuolo().stream()
                 .map(Ruolo::getPermesso)
                 .flatMap(Set::stream)
                 .map(Permesso::getNome)

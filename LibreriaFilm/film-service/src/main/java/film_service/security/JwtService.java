@@ -5,14 +5,18 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
+@SuppressWarnings("unchecked")
 @Service
 public class JwtService {
 
@@ -32,9 +36,9 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public List<String> extractRoles(String token) {
+    public List<String> extractRole(String token) {return extractAllClaim(token).get("role", List.class);}
 
-        return extractAllClaim(token).get("authorities", List.class);}
+    public List<String> extractPermissions(String token) {return extractAllClaim(token).get("permissions", List.class);}
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaim(token);
@@ -48,13 +52,18 @@ public class JwtService {
                 .parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
+    public Set<GrantedAuthority> getAuthorities(String token) {
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        List<String> roles = extractRole(token);
+        List<String> permissions = extractPermissions(token);
+
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role)));
+        permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
+
+        return authorities;
+
     }
 
 }
