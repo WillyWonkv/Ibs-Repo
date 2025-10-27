@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esempi display CSS</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  .box {
+    border: 2px solid black;
+    padding: 20px;
+    margin: 10px 0;
+    text-align: center;
+    color: white;
+  }
+
+  /* Block */
+  .block {
+    display: block;
+    background-color: #0078ff;
+  }
+
+  /* Inline */
+  .inline {
+    display: inline;
+    background-color: #ff7f50;
+    margin: 0 5px;
+  }
+
+  /* Inline-block */
+  .inline-block {
+    display: inline-block;
+    background-color: #32cd32;
+    margin: 0 5px;
+  }
+
+  /* Flex */
+  .flex-container {
+    display: flex;
+    background-color: #6a5acd;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
+  .flex-item {
+    background-color: #ffa500;
+    padding: 10px;
+    color: black;
+  }
+
+  /* Grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background-color: #20b2aa;
+    padding: 10px;
+  }
+
+  .grid-item {
+    background-color: #ff6347;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+
+  /* None */
+  .hidden {
+    display: none;
+  }
+
+  /* Contents */
+  .contents-wrapper {
+    display: contents;
+  }
+
+  .contents-item {
+    background-color: #ff69b4;
+    padding: 10px;
+    margin: 5px 0;
+    color: white;
+  }
+
+</style>
+</head>
+<body>
+
+<h2>Block</h2>
+<div class="box block">Sono un elemento block</div>
+<div class="box block">Anch’io sono block e vado a capo</div>
+
+<h2>Inline</h2>
+<span class="box inline">Inline 1</span>
+<span class="box inline">Inline 2</span>
+<span class="box inline">Inline 3</span>
+
+<h2>Inline-block</h2>
+<div class="box inline-block">Inline-block 1</div>
+<div class="box inline-block">Inline-block 2</div>
+<div class="box inline-block">Inline-block 3</div>
+
+<h2>Flex</h2>
+<div class="flex-container">
+  <div class="flex-item">Item 1</div>
+  <div class="flex-item">Item 2</div>
+  <div class="flex-item">Item 3</div>
+</div>
+
+<h2>Grid</h2>
+<div class="grid-container">
+  <div class="grid-item">Item 1</div>
+  <div class="grid-item">Item 2</div>
+  <div class="grid-item">Item 3</div>
+  <div class="grid-item">Item 4</div>
+  <div class="grid-item">Item 5</div>
+</div>
+
+<h2>Display none</h2>
+<div class="box hidden">Non mi vedi perché ho display: none</div>
+
+<h2>Display contents</h2>
+<div class="contents-wrapper">
+  <div class="contents-item">Figlio 1</div>
+  <div class="contents-item">Figlio 2</div>
+</div>
+
+</body>
+</html>
