@@ -4,37 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>youtube</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesHead.css">
+    <link rel="stylesheet" href="stylesBody.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body>
-    <div class="head">
+    <div class="flex head">
+        <a href="" class="logoYT">
+            <i class="fa-brands fa-youtube"></i>
+            <span class="YT">YouTube</span>
+        </a>
 
-        <div class="start">
-            <a href="">
-                <img src="/css_course/project_2/resources/youtube-new-logo-removebg-preview.png"class="logo_yt"></img>
+        <div class="search_bar flex">
+            <input class="search_input" type="text" placeholder="Search..">
+            <a class="button flex" href="">
+                <i class="fa-solid fa-magnifying-glass lente"></i>
             </a>
         </div>
 
-        <div class="center">
-            <div class="search_bar">
-                <input class="input" type="text" placeholder="Search..">
-                <a class="button" href="">
-                    <img  class="lente" src="/css_course/project_2/resources/png-clipart-magnifying-glass-computer-icons-magnifying-glass-glass-art-521553269-removebg-preview.png"></img>
-                </a>
+        <a href="" class="logoSignin flex">
+            <i class="fa-regular fa-circle-user"></i>
+            <b class="signin">Sign in</b>         
+        </a>
+    </div>
+
+    <div class="body flex">
+
+        <div class="main">
+            <div class="playercontainer">
+                <iframe class="player" 
+                src="https://www.youtube.com/embed/sAWF5u3T3G8?si=59l-nPSaG1MpS79S" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
+
+            <h1 class="titolovideo">Unstoppable Beauty of 4K Videos | 4K HDR 120fps | Dolby Vision</h1>
+
         </div>
 
-        <div class="end">
-            <a href="" class="logindiv">
-                <img class="logo_utente" src="/css_course/project_2/resources/user-profile-icon.png">Sign in</img>          
-            </a>
+
+        <div class="sidebar">
+
+            
+
         </div>
+
     </div>
 
-    <div class="body">
-        <div class="player"></div>
-        <div class="sidebar"></div>
-    </div>
 
 </body>
 </html>
