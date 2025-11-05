@@ -11,19 +11,19 @@
 </head>
 <body>
     <div class="flex head">
-        <a href="" class="logoYT">
+        <a href="#" class="logoYT">
             <i class="fa-brands fa-youtube"></i>
             <span class="YT">YouTube</span>
         </a>
 
         <div class="search_bar flex">
             <input class="search_input" type="text" placeholder="Search..">
-            <a class="button flex" href="">
+            <a class="button flex" href="#">
                 <i class="fa-solid fa-magnifying-glass lente"></i>
             </a>
         </div>
 
-        <a href="" class="logoSignin flex">
+        <a href="#" class="logoSignin flex">
             <i class="fa-regular fa-circle-user"></i>
             <b class="signin">Sign in</b>         
         </a>
@@ -36,34 +36,36 @@
                 <iframe class="player" 
                 src="https://www.youtube.com/embed/sAWF5u3T3G8?si=59l-nPSaG1MpS79S" 
                 title="YouTube video player" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen
+                id="player"
+                ></iframe>
             </div>
 
-            <h1 class="titolovideo fontYT">Unstoppable Beauty of 4K Videos | 4K HDR 120fps | Dolby Vision</h1>
+            <h1 class="titolovideo fontYT" id="titoloVideo">Unstoppable Beauty of 4K Videos | 4K HDR 120fps | Dolby Vision</h1>
             
             <div class="divprofilo flex">
-                <a href="">
-                    <img class="fotoprofilo" src="/css_course/project_2/resources/channels4_profile.jpg" alt="">
+                <a href="#">
+                    <img class="fotoprofilo" src="/css_course/project_2/resources/channels4_profile.jpg" id="fotoprofilo">
                 </a>
 
-                <span class="fontYT" style="font-weight: 600;"> 
-                    <a href="" style="text-decoration: none;" class="fontYT">
+                <span class="fontYT" style="font-weight: 600;">
+                    <a href="#" style="text-decoration: none;" class="fontYT" id="nomeProfilo">
                         4K Video ULTRA HD
-                    </a> 
+                    </a>
                     <br>
                     <span class="authorstyle fontYT">100.000 iscritti</span>
                 </span>
 
-                <a href="" class="actionbutton flex" style="background-color: white;">
+                <a href="#" class="actionbutton flex" style="background-color: white;">
                     <span class="textaction fontYT">Iscriviti</span>
                 </a>
 
                 <div class="likedislike flex">
-                    <a href="" class="buttonlike flex">
+                    <a href="#" class="buttonlike flex">
                         <i class="fa-solid fa-thumbs-up" style="color: white;"></i>
                         <span class="numerolike fontYT">9845</span>
                     </a>
-                    <a href="" class="buttondislike flex">
+                    <a href="#" class="buttondislike flex">
                         <i class="fa-solid fa-thumbs-down" style="color: white;"></i>
                     </a>
                 </div>
@@ -102,31 +104,41 @@
             </div>
             
 
+            <!-- <div class="commenticontainer">
+                <div class="boxcommento flex">
+                    <img class="fotoprofilo" src="/css_course/project_2/resources/unnamed.jpg" alt="">
+
+                    <span class="fontYT">aa</span>
+                </div>
+            </div>-->
+
         </div>
 
 
         <div class="sidebar flex">
 
-            <a href="" class="boxsidebar flex">
+            <a href="#" class="boxsidebar flex">
 
                 <div class="videopreview">
                     <img src="/css_course/project_2/resources/hq720.webp">
                 </div>
 
                 <div class="infovideo">
-                    <span class="titlestyle fontYT">DTmF Bad Bunny | ALBUM 2025 DeBÍ TiRAR MáS FOToS NUEVA YoL VOY A LLeVARTE PA PR BAILE INoLVIDABLE PERFuMITO NUEVO WELTiTA VeLDÁ EL CLúB KE TU Te CRÉ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        56 Mln di visualizzazioni
+                    <span class="titlestyle fontYT">
+                        DtMF
                     </span>
+                    
+                    <span class="authorstyle fontYT autoreSide">Bad Bunny
+                    </span>
+                    <br>
+                    <span class="authorstyle fontYT"> 56 Mln di visualizzazioni </span> 
                 </div>
                 
             </a>
 
             
 
-            <a href="" class="boxsidebar flex">
+            <a href="#" class="boxsidebar flex">
 
                 <div class="videopreview">
                     <img src="/css_course/project_2/resources/hqdefault.webp">
@@ -134,16 +146,14 @@
 
                 <div class="infovideo">
                     <span class="titlestyle fontYT">MOJABI GHOST</span>
-                    
-                    <span class="authorstyle fontYT">Tainy
-                        <br>
-                        51 Mln di visualizzazioni
-                    </span>
+                    <span class="authorstyle fontYT autoreSide">Tainy</span>
+                    <br>
+                    <span class="authorstyle fontYT"> 51 Mln di visualizzazioni</span> 
                 </div>
                 
             </a>
 
-            <a href="" class="boxsidebar flex">
+            <a href="#" class="boxsidebar flex">
 
                 <div class="videopreview">
                     <img src="/css_course/project_2/resources/hq720.webp">
@@ -152,15 +162,14 @@
                 <div class="infovideo">
                     <span class="titlestyle fontYT">KLOuFRENS</span>
                     
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        36 Mln di visualizzazioni
-                    </span>
+                    <span class="authorstyle fontYT autoreSide">Bad Bunny</span>
+                    <br>
+                    <span class="authorstyle fontYT">36 Mln di visualizzazioni</span>
                 </div>
                 
             </a>
 
-            <a href="" class="boxsidebar flex">
+            <a href="#" class="boxsidebar flex">
 
                 <div class="videopreview">
                     <img src="/css_course/project_2/resources/hq720.webp">
@@ -168,120 +177,130 @@
 
                 <div class="infovideo">
                     <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
+                    <span class="authorstyle fontYT autoreSide">Bad Bunny
                     </span>
+                    <br>
+                    <span class="authorstyle fontYT">32 Mln di visualizzazioni </span> 
                 </div>
                 
             </a>
 
-            <a href="" class="boxsidebar flex">
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/titi.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Tití Me Preguntó</span>
+                    <span class="authorstyle fontYT autoreSide">Bad Bunny</span>
+                    <br>
+                    <span class="authorstyle fontYT">45 Mln di visualizzazioni</span>
+                </div>
+            </a>
 
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/despa.jpg">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Despacito</span>
+                    <span class="authorstyle fontYT autoreSide">Luis Fonsi</span>
+                    <br>
+                    <span class="authorstyle fontYT">7.8 Mld di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hqdefault.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Hawái</span>
+                    <span class="authorstyle fontYT autoreSide">Maluma</span>
+                    <br>
+                    <span class="authorstyle fontYT">1.2 Mld di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
                 <div class="videopreview">
                     <img src="/css_course/project_2/resources/hq720.webp">
                 </div>
-
                 <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
+                    <span class="titlestyle fontYT">Blinding Lights</span>
+                    <span class="authorstyle fontYT autoreSide">The Weeknd</span>
+                    <br>
+                    <span class="authorstyle fontYT">2.3 Mld di visualizzazioni</span>
                 </div>
-                
             </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hqdefault.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Peaches</span>
+                    <span class="authorstyle fontYT autoreSide">Justin Bieber</span>
+                    <br>
+                    <span class="authorstyle fontYT">340 Mln di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hq720.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Levitating</span>
+                    <span class="authorstyle fontYT autoreSide">Dua Lipa</span>
+                    <br>
+                    <span class="authorstyle fontYT">1.1 Mld di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hqdefault.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Montero (Call Me By Your Name)</span>
+                    <span class="authorstyle fontYT autoreSide">Lil Nas X</span>
+                    <br>
+                    <span class="authorstyle fontYT">850 Mln di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hq720.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Stay</span>
+                    <span class="authorstyle fontYT autoreSide">The Kid LAROI</span>
+                    <br>
+                    <span class="authorstyle fontYT">500 Mln di visualizzazioni</span>
+                </div>
+            </a>
+
+            <a href="#" class="boxsidebar flex">
+                <div class="videopreview">
+                    <img src="/css_course/project_2/resources/hqdefault.webp">
+                </div>
+                <div class="infovideo">
+                    <span class="titlestyle fontYT">Industry Baby</span>
+                    <span class="authorstyle fontYT autoreSide">Lil Nas X </span>
+                    <br>
+                    <span class="authorstyle fontYT">600 Mln di visualizzazioni</span>
+                </div>
+            </a>
+
+
             
-                        <a href="" class="boxsidebar flex">
 
-                <div class="videopreview">
-                    <img src="/css_course/project_2/resources/hq720.webp">
-                </div>
-
-                <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
-                </div>
-                
-            </a>
-
-                        <a href="" class="boxsidebar flex">
-
-                <div class="videopreview">
-                    <img src="/css_course/project_2/resources/hq720.webp">
-                </div>
-
-                <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
-                </div>
-                
-            </a>
-
-                        <a href="" class="boxsidebar flex">
-
-                <div class="videopreview">
-                    <img src="/css_course/project_2/resources/hq720.webp">
-                </div>
-
-                <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
-                </div>
-                
-            </a>
-
-                        <a href="" class="boxsidebar flex">
-
-                <div class="videopreview">
-                    <img src="/css_course/project_2/resources/hq720.webp">
-                </div>
-
-                <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
-                </div>
-                
-            </a>
-
-                        <a href="" class="boxsidebar flex">
-
-                <div class="videopreview">
-                    <img src="/css_course/project_2/resources/hq720.webp">
-                </div>
-
-                <div class="infovideo">
-                    <span class="titlestyle fontYT">VeLDÁ</span>
-                    
-                    <span class="authorstyle fontYT">Bad Bunny
-                        <br>
-                        32 Mln di visualizzazioni
-                    </span>
-                </div>
-                
-            </a>
+            
         </div>
 
     </div>
 
-
+    <script src="scripts.js"></script>
 </body>
 </html>

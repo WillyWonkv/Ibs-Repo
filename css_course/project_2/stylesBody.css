@@ -30,10 +30,9 @@
 
 .titolovideo{
     font-size: 1.3rem;
-    line-height: 2.8rem;
+    line-height: 1.5rem;
     font-weight: 700;
     white-space: normal;
-    margin: 0;
 }
 
 .fontYT{
@@ -123,6 +122,17 @@
     font-size: 0.9rem;
     font-weight: 540;
     line-height: 1.3rem;
+}
+
+.commenticontainer{
+    border: 1px solid white;
+    width: 100%;
+    height: 100vh;
+}
+
+.boxcommento{
+    border: 1px solid white;
+    
 }
 
 @media(max-width:992px){
