@@ -11,15 +11,15 @@
 </head>
 <body>
     <div class="flex head">
-        <a href="#" class="logoYT">
+        <a href="index.html" class="logoYT">
             <i class="fa-brands fa-youtube"></i>
             <span class="YT">YouTube</span>
         </a>
 
-        <div class="search_bar flex">
-            <input class="search_input" type="text" placeholder="Search..">
-            <a class="button flex" href="#">
-                <i class="fa-solid fa-magnifying-glass lente"></i>
+        <div class="search_bar flex" id="searchbardiv">
+            <input class="search_input" type="text" placeholder="Search.." id="searchbar">
+            <a class="button flex" href="#" id="searchbutton">
+                <i class="fa-solid fa-magnifying-glass lente" id="lente"></i>
             </a>
         </div>
 
@@ -32,7 +32,7 @@
     <div class="body flex">
 
         <div class="main">
-            <div class="playercontainer">
+            <div class="playercontainer" id="playercontainer">
                 <iframe class="player" 
                 src="https://www.youtube.com/embed/sAWF5u3T3G8?si=59l-nPSaG1MpS79S" 
                 title="YouTube video player" 
@@ -73,7 +73,7 @@
             </div>
             
             <div class="descrizionecontainer">
-                <span class="descrizionetext fontYT">
+                <span class="descrizionetext fontYT" id="descrizione">
                     Unstoppable Beauty of 4K Videos | 4K HDR 120fps | Dolby Vision (8K / 4K TV TEST),
                     featuring Meditation music and relaxing background music for stress relief,
                     study and work, soothing, and deep sleep. You can also use our content to test your screen devices,
@@ -135,8 +135,6 @@
                 </div>
                 
             </a>
-
-            
 
             <a href="#" class="boxsidebar flex">
 
@@ -292,10 +290,6 @@
                     <span class="authorstyle fontYT">600 Mln di visualizzazioni</span>
                 </div>
             </a>
-
-
-            
-
             
         </div>
 
