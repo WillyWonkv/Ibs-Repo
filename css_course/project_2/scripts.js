@@ -129,6 +129,189 @@ searchbar.addEventListener("blur", function(event){
 
 });
 
+//like dislike button on side
+videoSide.forEach(video =>{
+
+    const videopreview = video.querySelector(".videopreview");
+
+    videopreview.addEventListener("mouseleave", function(event){
+
+        event.preventDefault();
+        const likecontainer = videopreview.querySelector(".likecontainer");
+        const dislikecontainer = videopreview.querySelector(".dislikecontainer");
+        if(likecontainer && dislikecontainer) {
+            likecontainer.remove();
+            dislikecontainer.remove();
+        }
+
+    });
+
+    videopreview.addEventListener("mouseenter", function(event){
+
+        event.preventDefault();
+
+        if(!videopreview.querySelector(".likecontainer") && !videopreview.querySelector(".dislikecontainer")){
+
+            videopreview.style.position = "relative";
+
+            const likecontainer = document.createElement("a");
+            likecontainer.className = "likecontainer flex";
+            likecontainer.href = "#";
+            likecontainer.style.backgroundColor = "rgba(0, 0, 0, 0.34)";
+            likecontainer.style.borderRadius = "50px"
+            likecontainer.style.width = "30px";
+            likecontainer.style.height = "30px";
+            likecontainer.style.position = "absolute";
+            likecontainer.style.top = "10%";
+            likecontainer.style.left = "80%";
+            likecontainer.style.zIndex = "2";
+            likecontainer.style.alignItems = "center";
+            likecontainer.style.justifyContent = "center";
+
+
+            const dislikecontainer = document.createElement("a");
+            dislikecontainer.className = "dislikecontainer flex";
+            dislikecontainer.href = "#";
+            dislikecontainer.style.backgroundColor = "rgba(0, 0, 0, 0.34)";
+            dislikecontainer.style.borderRadius = "50px"
+            dislikecontainer.style.width = "30px";
+            dislikecontainer.style.height = "30px";
+            dislikecontainer.style.position = "absolute";
+            dislikecontainer.style.top = "calc(10% + 40px)";
+            dislikecontainer.style.left = "80%";
+            dislikecontainer.style.zIndex = "2";
+            dislikecontainer.style.alignItems = "center";
+            dislikecontainer.style.justifyContent = "center";
+
+            const likebutton = document.createElement("i");
+            likebutton.style.position = "absolute";
+            likebutton.className = "fa-solid fa-thumbs-up";
+            likebutton.style.color = "white";
+            likebutton.style.transform = "tranlate(-50%, -50%)";
+            likebutton.style.fontSize = "15px";
+
+            const dislikebutton = document.createElement("i");
+            dislikebutton.style.position = "absolute";
+            dislikebutton.className = "fa-solid fa-thumbs-down";
+            dislikebutton.style.color = "white";
+            dislikebutton.style.transform = "tranlate(-50%, -50%)";
+            dislikebutton.style.fontSize = "15px";
+
+            videopreview.appendChild(likecontainer);
+            videopreview.appendChild(dislikecontainer);
+
+            likecontainer.appendChild(likebutton);
+            dislikecontainer.appendChild(dislikebutton);
+
+            likecontainer.addEventListener("click", function(event){
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                console.log("click like");
+
+            })
+
+            dislikebutton.addEventListener("click", function(event){
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                console.log("click dislike");
+
+            });
+
+        }
+
+    });
+
+});
+
+//aggiunta like video
+const buttonlike = document.getElementById("buttonlike");
+const numerolike = document.getElementById("numerolike");
+let numero = parseInt(numerolike.textContent);
+
+buttonlike.addEventListener("click", function(event){
+
+    event.stopPropagation();
+    event.preventDefault();
+    numero++;
+    numerolike.textContent = numero;
+
+});
+
+//diminuzione like video
+const buttondislike = document.getElementById("buttondislike");
+buttondislike.addEventListener("click", function(event){
+
+    event.stopPropagation();
+    event.preventDefault();
+    numero--;
+    numerolike.textContent = numero;
+
+})
+
+//iscritto
+const iscrivitibutton = document.getElementById("iscrivitibutton");
+iscrivitibutton.addEventListener("click", function(event){
+
+    event.preventDefault();
+
+    const numeroiscritti = document.getElementById("numeroiscritti");
+    const iscrivititext = document.getElementById("iscrivititext");
+    let numeroiscrittiint = parseInt(numeroiscritti.textContent);
+    
+    if(iscrivititext.textContent.trim().toLowerCase() === "iscriviti"){
+        
+        numeroiscrittiint++;
+        numeroiscritti.textContent = numeroiscrittiint;
+        iscrivititext.innerText = "Iscritto";
+        iscrivititext.style.color = "white";
+        iscrivitibutton.style.backgroundColor = "rgba(73, 73, 73, 1)"
+        iscrivititext.style.paddingRight = "0px";
+
+        if(!document.getElementById("bell")){
+            //<i class="fa-solid fa-bell"></i>
+            const bell = document.createElement("i");
+            bell.className = "fa-solid fa-bell";
+            bell.style.color = "white";
+            bell.id = "bell";
+            bell.style.padding = "5px";
+            iscrivititext.after(bell);
+
+            const anim = bell.animate([
+                {transform: 'scale(1.5)'}
+
+            ],{
+                duration: 500,
+                iterations: 1,
+            });
+
+            anim.play();
+            
+        }
+
+
+    }else{
+
+        numeroiscrittiint--;
+        numeroiscritti.textContent = numeroiscrittiint;
+        iscrivititext.innerText = "Iscriviti";
+        iscrivititext.style.color = "";
+        iscrivitibutton.style.backgroundColor = "";
+
+        document.getElementById("bell").remove();
+        iscrivititext.style.paddingRight = "";
+
+    }
+
+});
+
+//
+
+
+//vede se trova il titolo del video ricercato e lo sostituisce
 function searchHandler(search) {
     
     videoSide.forEach(video => {
@@ -188,6 +371,6 @@ function changeVideo(video){
 
 }
 
-//TODO : hover sui video della side
+
 
 
