@@ -7,6 +7,7 @@
 .videopreview{
     min-width: 168px;
     min-height: 94.5px;
+    max-width: 168px;
     overflow: hidden;
     border-radius: 10px;
 }

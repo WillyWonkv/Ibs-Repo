@@ -1,0 +1,18 @@
+.boxsidebar{
+
+    max-height: 94.5px;
+    width: 100%;
+    text-decoration: none;
+    overflow: hidden;
+    gap: 5px;
+
+}
+
+
+@media(max-width:992px){
+    .boxsidebar{
+        min-width: 30vw;
+        max-height: fit-content;
+        flex-direction: column;
+    }
+}

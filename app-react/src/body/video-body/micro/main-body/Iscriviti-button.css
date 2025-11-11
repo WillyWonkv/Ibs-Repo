@@ -1,0 +1,17 @@
+.actionbutton{
+    border-radius: 50px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-left: 20px;
+    background-color: white;
+}
+
+.textaction{
+    padding-left: 15px;
+    padding-right: 15px;
+    color: black;
+    font-weight: 600;
+    font-size: 0.9rem;
+}

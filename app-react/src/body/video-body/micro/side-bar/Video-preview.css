@@ -1,0 +1,58 @@
+.videopreview{
+    min-width: 168px;
+    min-height: 94.5px;
+    max-width: 168px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.videopreview img{
+
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+
+}
+
+.videopreview.enter{
+
+    position: relative;
+
+}
+
+.likedislikecontainer{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.34);
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+.l-c-p{
+    top: 10%;
+    left: 80%;
+}
+
+.d-c-p{
+    top: calc(10% + 40px);
+    left: 80%;
+}
+
+.buttonlikevideo{
+    position: absolute;
+    color: white;
+    font-size: 15px;
+}
+
+@media(max-width:992px){
+
+    .videopreview{
+        min-width: 100%;
+        max-height: fit-content;
+    }
+
+}

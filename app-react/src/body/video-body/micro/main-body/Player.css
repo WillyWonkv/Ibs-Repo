@@ -1,0 +1,16 @@
+.playercontainer{
+    position: relative;
+    min-width: 640px;
+    min-height: 360px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.player{
+    position:absolute;
+    border-radius: 12px;
+    height: 100%;
+    width: 100%;
+    border: none;
+}

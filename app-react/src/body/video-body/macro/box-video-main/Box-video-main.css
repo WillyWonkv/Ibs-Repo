@@ -1,0 +1,24 @@
+.main{
+    width: 70%;
+    max-width: 70%;
+}
+
+.titolovideo{
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    white-space: normal;
+}
+
+.divprofilo{
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+@media(max-width:992px){
+    .main{
+        width: 100%;
+        max-width: 100%;
+    }
+}

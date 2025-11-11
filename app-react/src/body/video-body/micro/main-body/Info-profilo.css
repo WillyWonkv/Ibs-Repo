@@ -1,0 +1,16 @@
+.infoprofilo{
+    font-weight: 600;
+}
+
+.nomeprofilo{
+    text-decoration: none;
+}
+
+.authorstyle{
+
+    color: rgb(170, 170, 170);
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+
+}

@@ -1,0 +1,41 @@
+.likedislike{
+    margin-left: auto;
+}
+
+.buttonlike{
+    height: 30px;
+    background-color: rgb(73, 73, 73);
+    align-items: center;
+    justify-content: center;
+    padding-left: 15px;
+    padding-right: 5px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    text-decoration: none;
+}
+
+.buttondislike{
+
+    height: 30px;
+    background-color: rgb(73, 73, 73);
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 15px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-decoration: none; 
+    border-left: 1px solid black;
+}
+
+.colorlike{
+    color: white;
+}
+
+
+.numerolike{
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-left: 3px;
+}

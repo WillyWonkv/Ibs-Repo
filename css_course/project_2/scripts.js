@@ -110,7 +110,7 @@ searchbar.addEventListener("focus", function(event){
     lenteBar.style.color = "white";
     lenteBar.style.top = "50%";
     lenteBar.style.left = "15px";
-    lenteBar.style.transform = "translateY(-50%)"
+    lenteBar.style.transform = "translateY(-50%)";
 
     document.getElementById("searchbardiv").appendChild(lenteBar);
 
