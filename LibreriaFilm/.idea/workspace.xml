@@ -5,9 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="386a6288-b1d2-403e-8930-e8c34d96d294" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../css_course/project_2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../css_course/project_2/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../css_course/project_2/stylesBody.css" beforeDir="false" afterPath="$PROJECT_DIR$/../css_course/project_2/stylesBody.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../css_course/project_2/stylesSidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/../css_course/project_2/stylesSidebar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/Permission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/PermissionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/RoleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/jwt/JwtAuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/service/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/service/JwtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/service/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Utente.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Utente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app-react/src/body/video-body/macro/box-video-side/Box-video-side.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-react/src/body/video-body/macro/box-video-side/Box-video-side.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +83,9 @@
     &quot;Spring Boot.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.FilmServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.LibreriaFilmApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Documents/AndreaPiccirillo/Ibs-Repo/LibreriaFilm&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -79,6 +99,7 @@
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -106,20 +127,8 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
-    <option name="configurationStatuses">
-      <map>
-        <entry key="SpringBootApplicationConfigurationType">
-          <value>
-            <map>
-              <entry key="AuthServiceApplication" value="STOPPED" />
-              <entry key="FilmServiceApplication" value="STOPPED" />
-            </map>
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.FilmServiceApplication">
+  <component name="RunManager" selected="Spring Boot.AuthServiceApplication">
     <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="auth-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="auth_service.AuthServiceApplication" />
@@ -167,6 +176,9 @@
       <workItem from="1761148242386" duration="6000" />
       <workItem from="1761203502317" duration="15682000" />
       <workItem from="1762332808081" duration="165000" />
+      <workItem from="1763023704115" duration="148000" />
+      <workItem from="1763025081492" duration="94000" />
+      <workItem from="1763038868500" duration="3830000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,48 @@
+.userpasscontainer{
+
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 20px;
+
+}
+
+.inputcontainer{
+    position: relative;
+    width: 250px;
+}
+
+.inputbox{
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(140, 0, 255);
+    height: 40px;
+    width: calc(100% - 27px);
+    outline: 0;
+    background-color: transparent;
+    padding: 0px 0px 0px 27px;
+}
+
+.inputbox:focus{
+    border-bottom: 2px solid rgb(140, 0, 255);
+}
+
+.inputbox::placeholder{
+
+    font-family: monospace;
+    font-weight: 600;
+
+}
+
+
+.logo{
+
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+
+}
+

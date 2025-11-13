@@ -26,7 +26,7 @@ const BoxVideoSide = ({idVideo, idAutore, src, titolo, autore, numVisual, clickH
         const autoreObj = AutoriList.find(a => a.id === idAutore);
         const videoObj = VideoList.find(v => v.id === idVideo);
         clickHandler({
-            id : videoObj ? videoObj.id : 0,
+            id : videoObj?.id ?? 0,
             srcVideo: videoObj ? videoObj.srcVideo : "",
             titoloVideo: titolo,
             autoreVideo: autore,
