@@ -4,6 +4,7 @@ import com.example.LoginProject.entity.User;
 import com.example.LoginProject.security.request.AuthRequest;
 import com.example.LoginProject.security.request.AuthResponse;
 import com.example.LoginProject.service.LoginService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid User user) {
         return ResponseEntity.ok(loginService.registerUser(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest authRequest) {
         return ResponseEntity.ok(loginService.loginUser(authRequest));
     }
 

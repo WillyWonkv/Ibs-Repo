@@ -1,12 +1,18 @@
 import React from "react";
-import { Props } from "../../App";
 import "./Button.css"
 
-export const Button = ({textButton} : Props) => {
+interface Props{
+
+    textButton : string;
+    onclick : () => void
+
+}
+
+export const Button = ({textButton, onclick} : Props) => {
 
     return(
 
-        <a href="#" className="button color">{textButton}</a>
+        <button type="submit" className="button color" onClick={onclick}>{textButton}</button>
 
     );
 
