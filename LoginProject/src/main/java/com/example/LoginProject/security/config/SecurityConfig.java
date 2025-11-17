@@ -1,6 +1,7 @@
 package com.example.LoginProject.security.config;
 
 import com.example.LoginProject.security.jwt.JwtAuthFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,9 +37,9 @@ public class SecurityConfig {
 
         return http.csrf(AbstractHttpConfigurer::disable)
                 //.httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth.
+                .authorizeHttpRequests(auth -> auth
 
-                        requestMatchers("/user/login", "/user/register").permitAll()
+                        .requestMatchers("/user/login", "/user/register").permitAll()
                         .anyRequest().authenticated()
 
                 )

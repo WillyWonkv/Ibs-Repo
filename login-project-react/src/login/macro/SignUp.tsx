@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./StyleForm.css";
 import { Container } from "../micro/Container";
 import axios from "axios";
+import api from "../axios";
 
 export const SignUp = () => {
 
@@ -10,15 +11,17 @@ export const SignUp = () => {
 
     const handleRegister = async () => {
 
-            axios
-        .post("http://localhost:8080/user/register", {username, password})
-        .then(response => {
-            alert("Registered");
-        })
-        .catch(error => {
-            console.error(error);
-            alert("User already registered")
-        })
+        localStorage.removeItem("token")
+
+        api
+            .post("/user/register", {username, password})
+            .then(resp => {
+                alert("Registered");
+            })
+            .catch(err => {
+                console.error(err);
+                alert("User already registered")
+            })
 
     }
 

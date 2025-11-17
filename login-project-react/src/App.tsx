@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
 import './App.css';
+import { Button } from './login/micro/Button';
 import { SignIn } from './login/macro/SingIn';
 import { SignUp } from './login/macro/SignUp';
-import { Button } from './login/micro/Button';
 
 const App = () => {
 
-  const [view, setView] = useState<"login" | "register" | null> (null);
+  const [view, setView] = useState<"home" | "login" | "register">("home");
 
-  if(!view){
-    return (
-      <div className='homebutton flex'>
-        <Button textButton={'Register'} onclick={() => setView("register")}></Button>
-        <Button textButton={'Login'} onclick={() => setView("login")}></Button>
-      </div>
-    );
-  }
-
-  return(
-    <div>
-      {view === "login" && <SignIn/>}
-      {view === "register" && <SignUp/>}
-    </div>
-
-  );
+  return (
+    <>
+      {view === "home" && (
+        <div className='homebutton flex'>
+          <Button textButton={'Register'} onclick={() => {setView("register")}}></Button>
+          <Button textButton={'Login'} onclick={() => {setView("login")}}></Button>
+        </div>
+      )}
+      {view === "login" && <SignIn></SignIn>}
+      {view === "register" && <SignUp></SignUp>}
+    </>
+  ); //ReactRouter da fare
 
 }
 

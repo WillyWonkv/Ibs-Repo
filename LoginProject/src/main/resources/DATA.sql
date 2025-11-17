@@ -29,5 +29,5 @@ VALUES
 (1, 4), -- ADMIN -> DELETE
 (2, 1), -- USER -> VIEW
 (3, 1),	-- MANAGER -> VIEW 
-(3, 2); -- MANAGER -> CREATE
+(3, 2), -- MANAGER -> CREATE
 (3, 3); -- MANAGER -> UPDATE

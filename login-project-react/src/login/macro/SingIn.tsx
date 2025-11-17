@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import "./StyleForm.css";
 import { Container } from "../micro/Container";
-import axios from "axios";
-import { error } from "console";
+import api from "../axios";
 
 export const SignIn = () => {
 
@@ -11,23 +10,23 @@ export const SignIn = () => {
 
     const handleLogin = async () => {
 
-        axios
-            .post("http://localhost:8080/user/login", {username, password})
-            .then(response => {
+        localStorage.removeItem("token");
 
+        api
+            .post("/user/login", {username, password})
+            .then(response => {
                 const token = response.data.token;
                 localStorage.setItem("token", token);
-                alert("Logged in");
+                console.log("Logged in", token);
             })
             .catch(error => {
                 console.error(error);
-                alert("Login not successful")
-            })
+                alert("Login not successful");
+            });
 
     }
 
     return(
-
         <div className="flex body">
             <Container 
                 textTitle='SIGN IN' 
@@ -36,7 +35,6 @@ export const SignIn = () => {
                 onUsernameChange={setUsername}
                 onPasswordChange={setPassword}></Container>
         </div>
-
     );
 
 
