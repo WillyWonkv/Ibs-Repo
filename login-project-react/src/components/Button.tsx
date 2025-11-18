@@ -4,7 +4,7 @@ import "./Button.css"
 interface Props{
 
     textButton : string;
-    onclick : () => void
+    onclick?: () => void
 
 }
 

@@ -1,6 +1,4 @@
 package com.example.LoginProject.controller;
-
-import com.example.LoginProject.entity.User;
 import com.example.LoginProject.security.request.AuthRequest;
 import com.example.LoginProject.security.request.AuthResponse;
 import com.example.LoginProject.service.LoginService;
@@ -20,7 +18,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody @Valid User user) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthRequest user) {
         return ResponseEntity.ok(loginService.registerUser(user));
     }
 

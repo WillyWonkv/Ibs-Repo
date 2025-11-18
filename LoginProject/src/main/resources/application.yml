@@ -4,12 +4,12 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/login_project
     username: root
-    password: admin
+    password: admi
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -20,3 +20,6 @@ server:
 
 jwt:
   secret: iAjCJiI6NRVnx2mn4N/IiRvcF9YRluaSmH8RsnO6dto=
+
+cors:
+  allowed: http://localhost:3000, http://localhost:3001

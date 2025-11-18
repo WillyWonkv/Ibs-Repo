@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./StyleForm.css"
-import api from "../axios";
+import api from "../service/AxiosSettings";
 
 interface User{
         id : number;
@@ -8,7 +8,7 @@ interface User{
         password : string;
 }
 
-export const ShowUser = () => {
+export const ShowUserForm = () => {
 
     const [user, setUser] = useState<User[]>([]);
 

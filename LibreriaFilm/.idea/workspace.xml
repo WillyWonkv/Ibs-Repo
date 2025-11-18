@@ -5,27 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="386a6288-b1d2-403e-8930-e8c34d96d294" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/Permission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/PermissionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/jwt/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/service/CustomUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/service/LoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/exception/DatabaseErrorException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/exception/EmptyFieldException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/exception/LoginExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/exception/UsernameAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LoginProject/src/main/resources/application-and.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Utente.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/auth_service/entity/Utente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app-react/src/body/video-body/macro/box-video-side/Box-video-side.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-react/src/body/video-body/macro/box-video-side/Box-video-side.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/jwt/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/jwt/JwtAuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/security/request/AuthRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/java/com/example/LoginProject/service/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginProject/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginProject/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../login-project-react/src/login/macro/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../login-project-react/src/login/macro/SignUp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../login-project-react/src/login/macro/SingIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../login-project-react/src/login/macro/SingIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../login-project-react/src/login/micro/InputUserPass.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../login-project-react/src/login/micro/InputUserPass.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,6 +173,7 @@
       <workItem from="1763023704115" duration="148000" />
       <workItem from="1763025081492" duration="94000" />
       <workItem from="1763038868500" duration="3830000" />
+      <workItem from="1763471008115" duration="568000" />
     </task>
     <servers />
   </component>

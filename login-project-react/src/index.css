@@ -8,3 +8,7 @@ html, body {
 .flex{
     display: flex;
 }
+
+.color{
+    color: rgb(140, 0, 255);
+}

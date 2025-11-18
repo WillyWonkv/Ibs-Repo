@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Button } from './login/micro/Button';
-import { SignIn } from './login/macro/SingIn';
-import { SignUp } from './login/macro/SignUp';
+import { SignInForm } from './pages/SingInForm';
+import { SignUpForm } from './pages/SignUpForm';
+import { Route, Routes } from 'react-router-dom';
+import { Home } from './pages/Home';
 
 const App = () => {
 
-  const [view, setView] = useState<"home" | "login" | "register">("home");
-
   return (
-    <>
-      {view === "home" && (
-        <div className='homebutton flex'>
-          <Button textButton={'Register'} onclick={() => {setView("register")}}></Button>
-          <Button textButton={'Login'} onclick={() => {setView("login")}}></Button>
-        </div>
-      )}
-      {view === "login" && <SignIn></SignIn>}
-      {view === "register" && <SignUp></SignUp>}
-    </>
-  ); //ReactRouter da fare
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/register' element={<SignUpForm />} />
+      <Route path='/login' element={<SignInForm />} />
+    </Routes>
+  );
+
+  //fare pagina getallusers, sitemare il path del back e capire cosa fa navigate
 
 }
 
