@@ -20,8 +20,8 @@ public class UserContoller {
 
     private final UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @GetMapping("/getall")
     public ResponseEntity<List<User>> getAllUsers() {
 
         return ResponseEntity.ok(userService.getAllUsers());

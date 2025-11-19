@@ -61,8 +61,6 @@ public class LoginService {
             throw e;
         }
 
-
-
     }
 
     public AuthResponse loginUser(AuthRequest user) {
@@ -88,8 +86,6 @@ public class LoginService {
             log.error("Error while login user", e);
             throw e;
         }
-
-
 
     }
 

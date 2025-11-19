@@ -1,36 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./StyleForm.css"
-import api from "../service/AxiosSettings";
-
-interface User{
-        id : number;
-        username: string;
-        password : string;
-}
+import { getUsers, User } from "../service/UsersService";
 
 export const ShowUserForm = () => {
 
     const [user, setUser] = useState<User[]>([]);
 
-    const getUsers = () => {
-
-        api
-            .get<User[]>("/user/all")
-            .then(resp =>{
-                setUser(resp.data);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-    }
+    getUsers()
+        .then(resp => setUser(resp))
+        .catch(error => console.error(error))
 
     return(
-        user.map(u => {
-
-
-
-        })
+        <div>
+            {user.map(u => (
+                <div key={u.username}>
+                    <p>Username: {u.username}</p>
+                    <p>Password: {u.password}</p>
+                </div>
+            ))}
+        </div>
     );
 
 
