@@ -33,14 +33,14 @@ public class LoginService {
         try {
 
             if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-                throw new UsernameAlreadyExistsException();
+                throw new UsernameAlreadyExistsException("Username already exists");
             }
 
             User user = new User();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             Role role = roleRepository.findByName("USER")
-                    .orElseThrow(RoleNotFoundException::new);
+                    .orElseThrow(() -> new RoleNotFoundException("Role not found"));
 
             user.getRoles().add(role);
 

@@ -14,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,17 +23,23 @@ import java.util.Map;
 @Slf4j
 public class LoginExceptionHandler extends ResponseEntityExceptionHandler {
 
+    String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
+
+    private Map<String, Object> bodyBuilder(String error, String message){
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", error);
+        body.put("message", message);
+        body.put("timestamp", timestamp);
+        return body;
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneralExceptions(Exception e){
 
         log.error(e.getMessage());
 
-        Map<String,Object> body = new HashMap<>();
-        body.put("error", "INTERNAL SERVER ERROR");
-        body.put("message",e.getMessage());
-        body.put("timestamp",LocalDateTime.now());
-
-        return ResponseEntity.internalServerError().body(body);
+        return ResponseEntity.internalServerError()
+                .body(bodyBuilder("INTERNAL SERVER ERROR",e.getMessage()));
     }
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
@@ -40,12 +47,8 @@ public class LoginExceptionHandler extends ResponseEntityExceptionHandler {
 
         log.error(ex.getMessage());
 
-        Map<String,Object> body = new HashMap<>();
-        body.put("error","USERNAME ALREADY EXISTS");
-        body.put("message",ex.getMessage());
-        body.put("timestamp", LocalDateTime.now().toString());
-
-        return ResponseEntity.badRequest().body(body);
+        return ResponseEntity.badRequest()
+                .body(bodyBuilder("USERNAME ALREADY EXISTS",ex.getMessage()));
 
     }
 
@@ -54,12 +57,8 @@ public class LoginExceptionHandler extends ResponseEntityExceptionHandler {
 
         log.error(ex.getMessage());
 
-        Map<String,Object> body = new HashMap<>();
-        body.put("error","ROLE NOT FOUND");
-        body.put("message",ex.getMessage());
-        body.put("timestamp", LocalDateTime.now().toString());
-
-        return ResponseEntity.badRequest().body(body);
+        return ResponseEntity.badRequest()
+                .body(bodyBuilder("ROLE NOT FOUND",ex.getMessage()));
     }
 
     @Override
@@ -70,26 +69,9 @@ public class LoginExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull WebRequest request){
 
         log.error(ex.getMessage());
-        Map<String,Object> body = new HashMap<>();
-        body.put("error","VALIDATION FAILED");
-        body.put("message","Empty Fields");
-        body.put("timestamp", LocalDateTime.now().toString());
-        return ResponseEntity.badRequest().body(body);
+
+        return ResponseEntity.badRequest()
+                .body(bodyBuilder("VALIDATION FAILED", "Email OR Password DOES NOT MATCH"));
     }
-
-    @ExceptionHandler(DatabaseErrorException.class)
-    public ResponseEntity<Object> handleDatabaseError(DatabaseErrorException ex){
-
-        log.error(ex.getMessage());
-
-        Map<String,Object> body = new HashMap<>();
-        body.put("error","DATABASE ERROR");
-        body.put("message",ex.getMessage());
-        body.put("timestamp", LocalDateTime.now().toString());
-
-        return ResponseEntity.badRequest().body(body);
-
-    }
-
 
 }
