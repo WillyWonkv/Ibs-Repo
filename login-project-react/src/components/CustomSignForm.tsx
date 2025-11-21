@@ -9,7 +9,6 @@ interface Props{
     onclick : () => void
     onUsernameChange: (username: string) => void;
     onPasswordChange: (password: string) => void;
-
 }
 
 export const Container = ({textTitle, textButton, onclick, onUsernameChange, onPasswordChange} : Props) => {

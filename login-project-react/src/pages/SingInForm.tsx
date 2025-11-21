@@ -21,7 +21,8 @@ export const SignInForm = () => {
                 textButton='Login' 
                 onclick={() => handleLogin(username,password,navigate)}
                 onUsernameChange={setUsername}
-                onPasswordChange={setPassword}></Container>
+                onPasswordChange={setPassword}
+            ></Container>
         </div>
     );
 

@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "./AxiosSettings";
 import { jwtDecode } from "jwt-decode";
-import { error } from "console";
-import { transcode } from "buffer";
 
 interface TokenPayload {
   role: string[];
@@ -20,7 +18,7 @@ export interface User{
 export const handleLogin = async (
     username : string,
     password : string,
-    navigate : (path : string) => void
+    navigate : (path : string) => void,
 ) => {
 
     if(!username.trim() || !password.trim()){
@@ -37,7 +35,7 @@ export const handleLogin = async (
             navigate("/dashboard");
         })
         .catch(error => {
-            console.error(error.response.data.message);
+            console.error(error);
             alert("Login not successful");
         });
 

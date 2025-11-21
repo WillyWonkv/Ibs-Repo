@@ -5,20 +5,30 @@ import { getUsers, User } from "../service/UsersService";
 export const ShowUserForm = () => {
 
     const [user, setUser] = useState<User[]>([]);
+    const [isPending, setIsPending] = useState(true);
 
-    getUsers()
-        .then(resp => setUser(resp))
-        .catch(error => console.error(error))
+    useEffect(() => {
+        getUsers()
+            .then(resp => {
+                setUser(resp)
+                setIsPending(false)
+            })
+            .catch(error => console.error(error.message))
+    }, [])
 
     return(
-        <div>
-            {user.map(u => (
-                <div key={u.username}>
-                    <p>Username: {u.username}</p>
-                    <p>Password: {u.password}</p>
-                </div>
-            ))}
-        </div>
+        <>
+            {isPending && <div>Loading...</div>}
+
+            <div>
+                {user.map(u => (
+                    <div key={u.username}>
+                        <p>Username: {u.username}</p>
+                        <p>Password: {u.password}</p>
+                    </div>
+                ))}
+            </div>
+        </>
     );
 
 
