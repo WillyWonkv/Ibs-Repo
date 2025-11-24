@@ -1,17 +1,35 @@
 import React from "react";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
-import { handleUsersClick } from "../service/UsersService";
+import { Grid, Layout } from "antd";
+import { Content, Header } from "antd/es/layout/layout";
+import { TopBar } from "../components/TopBar";
 
 export const Dashboard = () => {
 
-    const navigate = useNavigate();
+    const screens = Grid.useBreakpoint();
+
+    const contentStyle: React.CSSProperties = {
+        backgroundColor:'#444444',
+        margin:"0",
+        padding:"0",
+        marginTop:"64px",
+        height:"200vh"
+    }
+
+    const headerStyle: React.CSSProperties = {
+        position:"fixed",
+        width:"100%"
+    }
 
     return(
-        <div className="homebutton flex">
-            <Button textButton={"Users"} onclick={() => handleUsersClick(navigate)}></Button>
-        </div>
+        <Layout>
+            <Header style={headerStyle}>
+                <TopBar/>    
+            </Header>
+            <Content style={contentStyle}>
+                
+            </Content>
+        </Layout>
     );
 
 }

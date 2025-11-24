@@ -1,0 +1,11 @@
+.userbutton:hover{
+    background-color: #464646 !important;
+}
+
+.menubutton:hover{
+    transform: translateY(-2px);
+}
+
+.menubutton:active{
+    transform: translateY(0);
+}

@@ -2,13 +2,4 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: rgb(56, 56, 56);
-}
-
-.flex{
-    display: flex;
-}
-
-.color{
-    color: rgb(140, 0, 255);
 }
