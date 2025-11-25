@@ -1,29 +1,48 @@
-import React, { useState } from "react";
-import "./StyleForm.css";
-import { Container } from "../components/CustomSignForm";
-import { handleLogin } from "../service/UsersService";
+import { Flex } from "antd";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+
+const pageStyle : React.CSSProperties = {
+
+    backgroundColor:"rgba(46, 46, 46, 1)",
+    height:"100vh",
+    alignItems:"center",
+    justifyContent:"center"
+}
+
+const containerStyle : React.CSSProperties = {
+
+    flexDirection:"column",
+    backgroundColor:"white",
+    borderRadius:"15px",
+    padding:"15px",
+    width:"300px",
+    height:"400px"
+}
+
+const titleStyle : React.CSSProperties = {
+
+    fontFamily: "'Poppins', sans-serif",
+    letterSpacing: "0.5px",
+    fontWeight: "800",
+    fontSize: "30px",
+    color:"rgb(140, 0, 255)",
+    textAlign:"center",
+    width:"100%",
+
+}
 
 export const SignInForm = () => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-
-    if(localStorage.getItem("token")){
-        localStorage.removeItem("token");
-    }
-
     return(
-        <div className="flex body">
-            <Container
-                textTitle='SIGN IN' 
-                textButton='Login' 
-                onclick={() => handleLogin(username,password,navigate)}
-                onUsernameChange={setUsername}
-                onPasswordChange={setPassword}
-            ></Container>
-        </div>
+        <Flex style={pageStyle}>
+            
+            <Flex style={containerStyle}>
+                <span style={titleStyle}>LOGIN</span>
+
+            </Flex>
+
+        </Flex>
     );
 
 

@@ -2,6 +2,7 @@ import { HomeFilled, UserOutlined, YoutubeFilled } from "@ant-design/icons";
 import { Button, Flex } from "antd";
 import  "../components/TopBar.css"
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const buttonStyle: React.CSSProperties = {
 
@@ -16,7 +17,13 @@ const topBarStyle: React.CSSProperties = {
     width:"100%"
 }
 
-export const TopBar = () => {
+interface topBarProps{
+    profiletext? : string,
+}
+
+export const TopBar = ({profiletext} : topBarProps) => {
+
+    const navigate = useNavigate();
 
     return(
 
@@ -71,7 +78,10 @@ export const TopBar = () => {
                     style={{
                         color:"white"
                     }}
-                    icon={<UserOutlined/>}>Sign In</Button>
+                    icon={<UserOutlined/>}
+                    onClick={() => {navigate("/users/login")}}
+                    ><span>{profiletext}</span> 
+                </Button>
             </Flex>
 
         </Flex>

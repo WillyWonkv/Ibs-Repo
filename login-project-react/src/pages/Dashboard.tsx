@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import { Grid, Layout } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { TopBar } from "../components/TopBar";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
 
-    const screens = Grid.useBreakpoint();
+    const [profiletext, setProfiletext] = useState("Sign in");
+
+    //const screens = Grid.useBreakpoint();
 
     const contentStyle: React.CSSProperties = {
         backgroundColor:'#444444',
@@ -24,7 +27,7 @@ export const Dashboard = () => {
     return(
         <Layout>
             <Header style={headerStyle}>
-                <TopBar/>    
+                <TopBar profiletext={profiletext}/>     
             </Header>
             <Content style={contentStyle}>
                 

@@ -3,8 +3,6 @@ import './App.css';
 import { SignInForm } from './pages/SingInForm';
 import { SignUpForm } from './pages/SignUpForm';
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { ShowUserForm } from './pages/ShowUser';
 import { Dashboard } from './pages/Dashboard';
 import { PrivateRoute } from './service/PrivateRoute';
 
@@ -17,20 +15,12 @@ const App = () => {
         element={<Dashboard />} 
       />
       <Route 
-        path='/register' 
+        path='/users/register' 
         element={<SignUpForm />} 
       />
       <Route 
-        path='/login' 
+        path='/users/login' 
         element={<SignInForm />} 
-      />
-      <Route 
-        path='/users/getall' 
-        element={
-          <PrivateRoute>
-            <ShowUserForm />
-          </PrivateRoute>
-        } 
       />
     </Routes>
   );
