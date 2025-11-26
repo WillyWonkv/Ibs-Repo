@@ -1,44 +1,84 @@
-import { Flex } from "antd";
-import React from "react";
+import { Button, Checkbox, Flex, Form, Input } from "antd";
+import React, { useState } from "react";
+import "./Form.css";
 import { useNavigate } from "react-router-dom";
+import { handleLogin } from "../service/UsersService";
 
-const pageStyle : React.CSSProperties = {
-
-    backgroundColor:"rgba(46, 46, 46, 1)",
-    height:"100vh",
-    alignItems:"center",
-    justifyContent:"center"
-}
-
-const containerStyle : React.CSSProperties = {
-
-    flexDirection:"column",
-    backgroundColor:"white",
-    borderRadius:"15px",
-    padding:"15px",
-    width:"300px",
-    height:"400px"
-}
-
-const titleStyle : React.CSSProperties = {
-
-    fontFamily: "'Poppins', sans-serif",
-    letterSpacing: "0.5px",
-    fontWeight: "800",
-    fontSize: "30px",
-    color:"rgb(140, 0, 255)",
-    textAlign:"center",
-    width:"100%",
-
+type FiledType = {
+    username: string;
+    password: string;
+    remember?: boolean;
 }
 
 export const SignInForm = () => {
 
+    const navigate = useNavigate();
+
+    const[loading,setLoading] = useState<boolean>(false);
+
     return(
-        <Flex style={pageStyle}>
+        <Flex className="pagestyle">
             
-            <Flex style={containerStyle}>
-                <span style={titleStyle}>LOGIN</span>
+            <Flex className="formcontainer">
+
+                <span className="title">LOGIN</span>
+
+                <Form
+                    className="form"
+                    name="basic"
+                    labelCol={{span:24}}
+                    wrapperCol={{span:24}}
+                    autoComplete="off"
+                    initialValues={{remember: false}}
+                    onFinish={async (values: FiledType) =>  {
+                        setLoading(true)
+                        await handleLogin(values.username,values.password,navigate)
+                        setLoading(false)
+                    }}
+                    onFinishFailed={() => console.log("Failed")}
+                    >
+                
+                    <Form.Item<FiledType>
+                        className="inputname"
+                        label="USERNAME"
+                        name="username"
+                        rules={[{required:true, message: "Please input your username!"}]}                        
+                    >
+                        <Input className="inputbox" placeholder="username"/>
+                    </Form.Item>
+
+                    <Form.Item<FiledType>
+                        className="inputname"
+                        label="PASSWORD"
+                        name="password"
+                        rules={[{required:true, message: "Please input your password!"}]}
+                    >
+                        <Input.Password className="inputbox" placeholder="••••••••"/>    
+                    </Form.Item>
+
+                    <Form.Item<FiledType>
+                        name="remember"  
+                        valuePropName="checked"
+                        label={null}  
+                    >
+                        <Checkbox className="inputname">Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item label={null}>
+                        <Button className="submitbutton" htmlType="submit" loading={loading}>
+                            SIGN IN
+                        </Button>
+                    </Form.Item>
+
+                </Form>
+
+                <span className="footer">
+                    Don't have an account?
+                    <Button 
+                        type="link"
+                        onClick={() => (navigate("/users/register"))}
+                        >Sign up</Button>    
+                </span>
 
             </Flex>
 

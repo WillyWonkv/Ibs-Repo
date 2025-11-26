@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import "./Home.css";
 import { Grid, Layout } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { TopBar } from "../components/TopBar";
-import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
 
@@ -12,7 +10,6 @@ export const Dashboard = () => {
     //const screens = Grid.useBreakpoint();
 
     const contentStyle: React.CSSProperties = {
-        backgroundColor:'#444444',
         margin:"0",
         padding:"0",
         marginTop:"64px",
@@ -27,7 +24,7 @@ export const Dashboard = () => {
     return(
         <Layout>
             <Header style={headerStyle}>
-                <TopBar profiletext={profiletext}/>     
+                <TopBar/>     
             </Header>
             <Content style={contentStyle}>
                 

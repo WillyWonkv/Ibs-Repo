@@ -1,8 +1,11 @@
-import { HomeFilled, UserOutlined, YoutubeFilled } from "@ant-design/icons";
-import { Button, Flex } from "antd";
+import { DownOutlined, HomeFilled, UserOutlined, YoutubeFilled } from "@ant-design/icons";
+import { Button, Dropdown, Flex, Menu, MenuProps, Space } from "antd";
 import  "../components/TopBar.css"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
+
 
 const buttonStyle: React.CSSProperties = {
 
@@ -17,13 +20,59 @@ const topBarStyle: React.CSSProperties = {
     width:"100%"
 }
 
-interface topBarProps{
-    profiletext? : string,
+const menuTextStyle: React.CSSProperties = {
+    fontFamily:"sans-serif",
+    fontWeight:1000
 }
 
-export const TopBar = ({profiletext} : topBarProps) => {
+export const TopBar = () => {
 
     const navigate = useNavigate();
+    const [username,setUsername] = useState<string|null>(null);
+
+    type JwtPayload = {
+        role: string[]
+        permissions: string[]
+        sub: string
+        iat: number
+        exp: number
+    }
+
+    useEffect(() => {
+            const token = localStorage.getItem("token")
+            if(token){
+                const payload : JwtPayload = jwtDecode(token)
+                setUsername(payload.sub) 
+            }
+    },[])
+
+    const items: MenuProps["items"] = [
+        {
+            key:"profile",
+            label:(<Button className="userbutton" type="text" onClick={() => {alert("profile")}}>Profile</Button>)
+        },
+        {
+            key:"profile",
+            label:(<Button className="userbutton" type="text" onClick={() => {alert("settings")}}>Setting</Button>)
+        },
+        {
+            type:"divider"
+        },
+        {
+            key:"logout",
+            label:(<Button 
+                className="userbutton" 
+                type="text" 
+                onClick={() => {
+                    localStorage.removeItem("token");
+                    setUsername(null);
+                    navigate("/")
+                }}
+            >Logout</Button>)
+        }
+
+    ]
+
 
     return(
 
@@ -70,18 +119,35 @@ export const TopBar = ({profiletext} : topBarProps) => {
             </Flex>
 
             <Flex style={{marginLeft: "auto"}}>
-                <Button 
-                    shape="round"
-                    type="text"
-                    iconPlacement="start"
-                    className="userbutton"
-                    style={{
-                        color:"white"
-                    }}
-                    icon={<UserOutlined/>}
-                    onClick={() => {navigate("/users/login")}}
-                    ><span>{profiletext}</span> 
-                </Button>
+
+                {username ? (
+                    <Dropdown 
+                        menu={{items}} 
+                        placement="bottom" 
+                        trigger={["click"]}
+                        >
+                            <Button
+                                shape="round"
+                                type="text"
+                                className="userbutton"
+                                icon={<UserOutlined/>}
+                                style={{color:"white"}}
+                            >{username}</Button>
+                    </Dropdown>
+                    ):(
+                        <Button 
+                            shape="round"
+                            type="text"
+                            iconPlacement="start"
+                            className="userbutton"
+                            style={{color:"white"}}
+                            icon={<UserOutlined/>}
+                            onClick={() => {navigate("/users/login")}}
+                            ><span>Sign in</span> 
+                        </Button>
+                    )
+                }
+
             </Flex>
 
         </Flex>

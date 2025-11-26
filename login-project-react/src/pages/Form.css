@@ -1,0 +1,128 @@
+.pagestyle *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+}
+
+.pagestyle{
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    
+}
+
+.formcontainer {
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 40px 30px;
+    background-color: white;
+    box-shadow: 8px 8px 0px black;
+    position: relative;
+}
+
+.formcontainer::before{
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: -6px;
+    bottom: -6px;
+    border: 1px solid black;
+    z-index: -1;
+    border-radius: 12px;
+}
+
+.title{
+    color: black;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+}
+
+.form{
+    max-width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.inputname {
+    width: 100%;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: black;
+}
+
+.inputbox.ant-input,
+.inputbox.ant-input-password{
+    width: 100%;
+    border-radius: 0px;
+    padding: 12px 15px;
+    border: 2px solid black;
+    background-color: white;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.inputbox.ant-input,
+.inputbox.ant-input-password input{
+    font-family: 'Courier New', monospace;
+}
+
+.inputbox.ant-input:focus,
+.inputbox.ant-input-affix-wrapper-focused{
+    box-shadow: 4px 4px 0px black
+}
+
+.inputbox.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled){
+    border-width: 2px;
+}
+
+.submitbutton{
+    width: 100%;
+    padding: 12px;
+    background-color: #FF5E5B;
+    color: white;
+    border: 2px solid black;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+.submitbutton:hover{
+    box-shadow: 4px 4px 0px black;
+    transform: translate(-2px, -2px);
+}
+
+.submitbutton.ant-btn.ant-btn-variant-outlined{
+    --ant-btn-border-color-hover:black;
+    --ant-btn-border-color-active:black;
+    --ant-btn-text-color-hover:white;
+    --ant-btn-text-color-active:black;
+    --ant-btn-bg-color: #FF5E5B;
+    border-width: 2px!important;
+    border-radius: 0;
+    height: 53.15px;
+}
+
+.footer{
+    text-align: center;
+    color: black;
+}
+
+.footer Button {
+    padding: 5px;
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+}

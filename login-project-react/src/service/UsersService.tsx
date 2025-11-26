@@ -18,48 +18,43 @@ export interface User{
 export const handleLogin = async (
     username : string,
     password : string,
-    navigate : (path : string) => void,
-) => {
+    navigate : (path : string) => void
+):Promise<boolean> => {
 
-    if(!username.trim() || !password.trim()){
-        alert("Fill all the fields");
-        return;
+    try{
+        const resp = await api.post("/user/login", {username, password})
+        const token = resp.data.token;
+        localStorage.setItem("token", token);
+        console.log("Logged in", token);
+        navigate("/");
+        return true;
+    }catch(err){
+        console.log(err);
+        alert("Error")
+        return false
     }
-
-    api
-        .post("/user/login", {username, password})
-        .then(response => {
-            const token = response.data.token;
-            localStorage.setItem("token", token);
-            console.log("Logged in", token);
-            navigate("/dashboard");
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Login not successful");
-        });
 
 }
 
-export const handleRegister = async (username : string, password : string) => {
+export const handleRegister = async (
+    username : string,
+    password : string,
+    navigate : (path : string) => void
+):Promise<boolean> => {
 
     localStorage.removeItem("token")
 
-    if(!username.trim() || !password.trim()){
-        alert("Fill all the fields");
-        return;
+    try{
+        await api.post("/user/register", {username, password})
+        console.log("User registered");
+        alert("Registered");
+        navigate("/users/login");
+        return true;
+    }catch(err){
+        console.error(err);
+        alert("Error");
+        return false;
     }
-
-    api
-        .post("/user/register", {username, password})
-        .then(resp => {
-            console.log("User registered")
-            alert("Registered");
-        })
-        .catch(err => {
-            console.error(err.response.data.message);
-            alert("User already registered")
-        })
 
 }
 
