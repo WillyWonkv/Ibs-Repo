@@ -1,35 +1,23 @@
-import { DownOutlined, HomeFilled, UserOutlined, YoutubeFilled } from "@ant-design/icons";
-import { Button, Dropdown, Flex, Menu, MenuProps, Space } from "antd";
+import { ControlOutlined, DownOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutlined, YoutubeFilled } from "@ant-design/icons";
+import { Button, Dropdown, Flex, Menu, MenuProps, Space, theme } from "antd";
 import  "../components/TopBar.css"
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Search from "antd/es/input/Search";
 
-
-
-const buttonStyle: React.CSSProperties = {
-
-    color:"white",
-    fontFamily:"sans-serif",
-    fontWeight:600  
-
-}
-
-const topBarStyle: React.CSSProperties = {
-    height: "100%", 
-    width:"100%"
-}
-
-const menuTextStyle: React.CSSProperties = {
-    fontFamily:"sans-serif",
-    fontWeight:1000
-}
 
 export const TopBar = () => {
-
+    
     const navigate = useNavigate();
     const [username,setUsername] = useState<string|null>(null);
+    const [loading,setLoading] = useState<boolean>(false) 
 
+    const buttonStyle: React.CSSProperties = {
+        color:"white",
+        fontWeight:600  
+    }
+    
     type JwtPayload = {
         role: string[]
         permissions: string[]
@@ -40,20 +28,44 @@ export const TopBar = () => {
 
     useEffect(() => {
             const token = localStorage.getItem("token")
-            if(token){
-                const payload : JwtPayload = jwtDecode(token)
-                setUsername(payload.sub) 
+            if(token){                
+                try{
+                    const payload : JwtPayload = jwtDecode(token)
+                    const isExpired = payload.exp * 1000 < Date.now()
+                    if(isExpired){
+                        console.log("Token expired");
+                        localStorage.removeItem("token");
+                        setUsername(null);
+                        navigate("/", {replace:true});
+                        return
+                    }
+                    setUsername(payload.sub)
+                }catch(err){
+                    console.log("Token not valid", err);
+                    localStorage.removeItem("token");
+                    setUsername(null);
+                }
             }
     },[])
 
     const items: MenuProps["items"] = [
         {
             key:"profile",
-            label:(<Button className="userbutton" type="text" onClick={() => {alert("profile")}}>Profile</Button>)
+            label:(<Button 
+                    className="dropbutton" 
+                    type="text" 
+                    icon={<UserOutlined/>}
+                    onClick={() => {alert("profile")}}>Profile</Button>
+            ) 
         },
         {
-            key:"profile",
-            label:(<Button className="userbutton" type="text" onClick={() => {alert("settings")}}>Setting</Button>)
+            key:"settings",
+            label:(<Button 
+                    className="dropbutton" 
+                    type="text" 
+                    icon={<ControlOutlined />}
+                    onClick={() => {alert("settings")}}>Settings</Button>
+            )
         },
         {
             type:"divider"
@@ -61,8 +73,9 @@ export const TopBar = () => {
         {
             key:"logout",
             label:(<Button 
-                className="userbutton" 
+                className="dropbutton" 
                 type="text" 
+                icon={<LogoutOutlined />}
                 onClick={() => {
                     localStorage.removeItem("token");
                     setUsername(null);
@@ -76,7 +89,7 @@ export const TopBar = () => {
 
     return(
 
-        <Flex style={topBarStyle} gap={"middle"} align="center">
+        <Flex className="topbar" gap={"middle"} align="center">
 
             <Flex>
                 <Button
@@ -92,7 +105,6 @@ export const TopBar = () => {
             </Flex>
 
             <Flex justify="flex-start">
-                
                     <Button
                         type="link"
                         style={buttonStyle}
@@ -117,22 +129,41 @@ export const TopBar = () => {
                     >TV SERIES</Button>
 
             </Flex>
+            
+            <Flex  flex={1} justify="flex-start">
+                <Search 
+                    className="searchbar"
+                    placeholder="Search..."
+                    enterButton
+                    loading={loading}
+                    size="middle"
+                    onSearch={() => (console.log("click search"))}
+                    style={{width:"100%", maxWidth:"400px"}}
+                />                      
+            </Flex>
 
-            <Flex style={{marginLeft: "auto"}}>
-
+            <Flex >
                 {username ? (
                     <Dropdown 
                         menu={{items}} 
                         placement="bottom" 
                         trigger={["click"]}
+                        popupRender={(menu) => (
+                            <div className="contentStyle">
+                                <div className="menuStyle">
+                                    {menu}
+                                </div>
+                            </div>
+                        )}
                         >
-                            <Button
-                                shape="round"
-                                type="text"
-                                className="userbutton"
-                                icon={<UserOutlined/>}
-                                style={{color:"white"}}
-                            >{username}</Button>
+                        <Button
+                            shape="round"
+                            type="text"
+                            className="userbutton"
+                            icon={<EllipsisOutlined />}
+                            iconPlacement="end"
+                            style={{color:"white"}}
+                            >{username.toUpperCase()}</Button>
                     </Dropdown>
                     ):(
                         <Button 

@@ -4,7 +4,6 @@ import { SignInForm } from './pages/SingInForm';
 import { SignUpForm } from './pages/SignUpForm';
 import { Route, Routes } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard';
-import { PrivateRoute } from './service/PrivateRoute';
 
 const App = () => {
 
