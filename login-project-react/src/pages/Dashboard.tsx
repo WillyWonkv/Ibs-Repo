@@ -15,12 +15,19 @@ export const Dashboard = () => {
         width:"100%"
     }
 
+    const bodyStyle:React.CSSProperties = {
+    margin:"64px 0 0 0",
+    padding:"20px 50px 0 50px",
+    height: "calc(100vh - 64px)",
+    backgroundColor:"#464646" 
+    }
+
     return(
         <Layout>
             <Header style={headerStyle}>
                 <TopBar/>     
             </Header>
-            <Content>
+            <Content style={bodyStyle}>
                 <Body/>
             </Content>
         </Layout>
