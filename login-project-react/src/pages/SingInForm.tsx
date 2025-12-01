@@ -1,8 +1,9 @@
 import { Button, Checkbox, Flex, Form, Input } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
-import { handleLogin } from "../service/UsersService";
+import { handleLoginService } from "../service/UsersService";
+import { AppStoreContext } from "../App";
 
 type FiledType = {
     username: string;
@@ -14,7 +15,30 @@ export const SignInForm = () => {
 
     const navigate = useNavigate();
 
+    const {setStore,store} = useContext(AppStoreContext);
+
     const[loading,setLoading] = useState<boolean>(false);
+
+    const handleLogin =  ({username,password}:{
+        username: string;
+        password: string;
+    }) => {
+            setLoading(true);
+            handleLoginService(username,password)
+            .then(response => {
+                localStorage.setItem("token",response.token);
+                setStore((prev) => ({
+                    ...prev,
+                    token: response.token
+                }));
+                navigate("/", {replace:true});
+            }).catch(err => {
+                console.error("Login failed", err);
+                alert("Login failed");
+            }).finally(() => {
+                setLoading(false);
+            });
+    }   
 
     return(
         <Flex className="pagestyle">
@@ -30,11 +54,7 @@ export const SignInForm = () => {
                     wrapperCol={{span:24}}
                     autoComplete="off"
                     initialValues={{remember: false}}
-                    onFinish={async (values: FiledType) =>  {
-                        setLoading(true)
-                        await handleLogin(values.username,values.password,navigate)
-                        setLoading(false)
-                    }}
+                    onFinish={handleLogin}
                     onFinishFailed={() => console.log("Failed")}
                     >
                 

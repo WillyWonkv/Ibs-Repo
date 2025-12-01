@@ -1,17 +1,19 @@
 import { ControlOutlined, DownOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutlined, YoutubeFilled } from "@ant-design/icons";
 import { Button, Dropdown, Flex, Menu, MenuProps, Space, theme } from "antd";
 import  "../components/TopBar.css"
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { replace, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Search from "antd/es/input/Search";
+import { AppStoreContext } from "../App";
 
 
 export const TopBar = () => {
     
     const navigate = useNavigate();
     const [username,setUsername] = useState<string|null>(null);
-    const [loading,setLoading] = useState<boolean>(false) 
+    const [loading,setLoading] = useState<boolean>(false);
+    const {setStore,store} = useContext(AppStoreContext);
 
     const buttonStyle: React.CSSProperties = {
         color:"white",
@@ -24,6 +26,12 @@ export const TopBar = () => {
         sub: string
         iat: number
         exp: number
+    }
+    const logout =()=>{
+        localStorage.removeItem("token");
+        setStore({token:""});
+        setUsername(null); 
+        navigate("/", {replace:true});
     }
 
     useEffect(() => {
@@ -76,11 +84,7 @@ export const TopBar = () => {
                 className="dropbutton" 
                 type="text" 
                 icon={<LogoutOutlined />}
-                onClick={() => {
-                    localStorage.removeItem("token");
-                    setUsername(null);
-                    navigate("/")
-                }}
+                onClick={logout}
             >Logout</Button>)
         }
 

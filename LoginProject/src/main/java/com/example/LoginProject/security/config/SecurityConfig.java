@@ -1,11 +1,11 @@
 package com.example.LoginProject.security.config;
 
 import com.example.LoginProject.security.jwt.JwtAuthFilter;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -44,7 +44,13 @@ public class SecurityConfig {
                 //.httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/user/login", "/user/register").permitAll()
+                        .requestMatchers(
+                                "/user/login",
+                                "/user/register"
+                                ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/film/**"
+                                ).permitAll()
                         .anyRequest().authenticated()
 
                 )

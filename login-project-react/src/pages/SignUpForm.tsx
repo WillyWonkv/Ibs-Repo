@@ -2,7 +2,7 @@ import { Button, Checkbox, Flex, Form, Input } from "antd";
 import React, { useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
-import { handleLogin, handleRegister } from "../service/UsersService";
+import { handleRegister } from "../service/UsersService";
 
 type FiledType = {
     username: string;

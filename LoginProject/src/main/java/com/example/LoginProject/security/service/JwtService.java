@@ -34,7 +34,7 @@ public class JwtService {
 
         Map<String,Object> claims = new HashMap<>();
 
-        claims.put("role", user.getRoles().stream()
+        claims.put("roles", user.getRoles().stream()
                 .map(Role::getName)
                 .collect(Collectors.toSet()));
 
