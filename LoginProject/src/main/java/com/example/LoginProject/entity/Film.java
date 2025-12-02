@@ -22,7 +22,10 @@ public class Film {
 
     private String coverSrc;
     private String title;
+
+    @Lob
     private String description;
+
     private int duration;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

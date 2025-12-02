@@ -2,7 +2,7 @@ import { Button, Checkbox, Flex, Form, Input } from "antd";
 import React, { useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
-import { handleRegister } from "../service/UsersService";
+import { handleRegisterService } from "../service/UsersService";
 
 type FiledType = {
     username: string;
@@ -15,6 +15,26 @@ export const SignUpForm = () => {
     const navigate = useNavigate();
 
     const[loading,setLoading] = useState<boolean>(false);
+
+    const handleRegister = ({username,password}:{
+        username: string;
+        password: string;
+    }) => {
+        setLoading(true);
+        handleRegisterService(username,password)
+        .then(() => {
+            console.log("Registration successful");
+            alert("Registration successful");
+            navigate("/users/login");
+        })
+        .catch((err) => {
+            console.error("Registration failed", err);
+            alert("Registration failed");
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }
 
     return(
         <Flex className="pagestyle">
@@ -29,11 +49,7 @@ export const SignUpForm = () => {
                     labelCol={{span:24}}
                     wrapperCol={{span:24}}
                     autoComplete="off"
-                    onFinish={async (values: FiledType) =>  {
-                        setLoading(true);
-                        await handleRegister(values.username,values.password,navigate)
-                        setLoading(false);
-                    }}
+                    onFinish={handleRegister}
                     onFinishFailed={() => console.log("Failed")}
                     >
                 

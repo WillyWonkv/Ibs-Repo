@@ -3,7 +3,8 @@ import React, { useContext, useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
 import { handleLoginService } from "../service/UsersService";
-import { AppStoreContext } from "../App";
+import { AppContext } from "../App";
+import { loginResponse } from "../types";
 
 type FiledType = {
     username: string;
@@ -14,22 +15,23 @@ type FiledType = {
 export const SignInForm = () => {
 
     const navigate = useNavigate();
-
-    const {setStore,store} = useContext(AppStoreContext);
-
     const[loading,setLoading] = useState<boolean>(false);
+    const {setStore,store} = useContext(AppContext);
 
-    const handleLogin =  ({username,password}:{
+    const handleLogin = ({username,password}:{
         username: string;
         password: string;
     }) => {
             setLoading(true);
             handleLoginService(username,password)
             .then(response => {
-                localStorage.setItem("token",response.token);
-                setStore((prev) => ({
+                localStorage.setItem("token",response.token || "");
+                setStore((prev: loginResponse) => ({
                     ...prev,
-                    token: response.token
+                    token: response.token,
+                    username: response.username,
+                    roles: response.roles,
+                    permissions: response.permissions,
                 }));
                 navigate("/", {replace:true});
             }).catch(err => {

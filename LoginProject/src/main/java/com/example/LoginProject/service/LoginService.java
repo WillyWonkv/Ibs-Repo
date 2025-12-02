@@ -6,16 +6,19 @@ import com.example.LoginProject.exception.RoleNotFoundException;
 import com.example.LoginProject.exception.UsernameAlreadyExistsException;
 import com.example.LoginProject.repository.RoleRepository;
 import com.example.LoginProject.repository.UserRepository;
+import com.example.LoginProject.security.request.AuthResponse;
 import com.example.LoginProject.security.service.JwtService;
 import com.example.LoginProject.security.request.AuthRequest;
-import com.example.LoginProject.security.request.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -77,8 +80,24 @@ public class LoginService {
             var userDb = userRepository.findByUsername(user.getUsername())
                     .orElseThrow(() -> new UsernameNotFoundException(user.getUsername()));
 
+            List<String> roles = userDb.getAuthorities().stream()
+                    .filter(a -> a.getAuthority().startsWith("ROLE_"))
+                            .map(a -> a.getAuthority().substring(5))
+                                    .toList();
+
+            List<String> permissions = userDb.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                                .filter(authority -> !authority.startsWith("ROLE_"))
+                                        .toList();
+
             log.info("User {} logged in successfully", user.getUsername());
-            return AuthResponse.builder().token(jwtService.generateToken(userDb)).build();
+            return AuthResponse
+                    .builder()
+                    .token(jwtService.generateToken(userDb))
+                    .username(userDb.getUsername())
+                    .roles(roles)
+                    .permissions(permissions)
+                    .build();
 
         }catch (UsernameNotFoundException e) {
             throw e;

@@ -1,60 +1,34 @@
-import { ControlOutlined, DownOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutlined, YoutubeFilled } from "@ant-design/icons";
-import { Button, Dropdown, Flex, Menu, MenuProps, Space, theme } from "antd";
+import { ControlOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutlined, YoutubeFilled } from "@ant-design/icons";
+import { Button, Dropdown, Flex, MenuProps } from "antd";
 import  "../components/TopBar.css"
 import React, { useContext, useEffect, useState } from "react";
 import { replace, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import Search from "antd/es/input/Search";
-import { AppStoreContext } from "../App";
+import { AppContext } from "../App";
 
 
 export const TopBar = () => {
     
     const navigate = useNavigate();
-    const [username,setUsername] = useState<string|null>(null);
     const [loading,setLoading] = useState<boolean>(false);
-    const {setStore,store} = useContext(AppStoreContext);
+    const {setStore,store} = useContext(AppContext);
 
     const buttonStyle: React.CSSProperties = {
         color:"white",
-        fontWeight:600  
+        fontWeight:700 
     }
     
-    type JwtPayload = {
-        role: string[]
-        permissions: string[]
-        sub: string
-        iat: number
-        exp: number
-    }
     const logout =()=>{
         localStorage.removeItem("token");
-        setStore({token:""});
-        setUsername(null); 
+        setStore({
+            token:"",
+            username:"",
+            roles:[],
+            permissions:[]
+        });
         navigate("/", {replace:true});
     }
 
-    useEffect(() => {
-            const token = localStorage.getItem("token")
-            if(token){                
-                try{
-                    const payload : JwtPayload = jwtDecode(token)
-                    const isExpired = payload.exp * 1000 < Date.now()
-                    if(isExpired){
-                        console.log("Token expired");
-                        localStorage.removeItem("token");
-                        setUsername(null);
-                        navigate("/", {replace:true});
-                        return
-                    }
-                    setUsername(payload.sub)
-                }catch(err){
-                    console.log("Token not valid", err);
-                    localStorage.removeItem("token");
-                    setUsername(null);
-                }
-            }
-    },[])
 
     const items: MenuProps["items"] = [
         {
@@ -89,8 +63,6 @@ export const TopBar = () => {
         }
 
     ]
-
-
     return(
 
         <Flex className="topbar" gap={"middle"} align="center">
@@ -146,8 +118,8 @@ export const TopBar = () => {
                 />                      
             </Flex>
 
-            <Flex >
-                {username ? (
+            <Flex>
+                {store.username ? (
                     <Dropdown 
                         menu={{items}} 
                         placement="bottom" 
@@ -167,9 +139,9 @@ export const TopBar = () => {
                             icon={<EllipsisOutlined />}
                             iconPlacement="end"
                             style={{color:"white"}}
-                            >{username.toUpperCase()}</Button>
+                            >{store.username.toUpperCase()}</Button>
                     </Dropdown>
-                    ):(
+                    ) : (
                         <Button 
                             shape="round"
                             type="text"

@@ -5,7 +5,7 @@ import { SignUpForm } from './pages/SignUpForm';
 import { Route, Routes } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard';
 
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { loginResponse } from './types';
 
 interface contextInterface {
@@ -13,22 +13,31 @@ interface contextInterface {
   setStore: React.Dispatch<React.SetStateAction<loginResponse>>
 }
 
-export const AppStoreContext = createContext<contextInterface>({
-  store: {token:""},
+export const AppContext = createContext<contextInterface>({
+  store: {
+    token:"",
+    username:"",
+    roles:[],
+    permissions:[]
+  },
   setStore: () => {}
 });
 
 const App = () => {
-   const [store, setStore] = useState<loginResponse>({
-    token:""
-   });
 
+  const [store, setStore] = useState<loginResponse>({
+    token:"",
+    username:"",
+    roles:[],
+    permissions:[]
+  });
+  
   return ( 
-    <AppStoreContext.Provider value={{store,setStore}}>
+    <AppContext.Provider value={{store,setStore}}>
         <Routes>
           <Route 
             path='/' 
-            element={<Dashboard />} 
+            element={<Dashboard />}
           />
           <Route 
             path='/users/register' 
@@ -39,7 +48,7 @@ const App = () => {
             element={<SignInForm />} 
           />
         </Routes>
-    </AppStoreContext.Provider>
+    </AppContext.Provider>
   );
 
 }

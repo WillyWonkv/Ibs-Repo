@@ -33,3 +33,11 @@ export const handleDeleteFilm = async (id: number): Promise<boolean> => {
         return false;
     }
 };
+
+export const handleUpdateFilm = async (film: Film) => {
+    try {
+        await api.put(`/film/${film.id}`, film);
+    } catch (err) {
+        console.error(err);
+    }
+}
