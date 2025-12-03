@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
 import { handleRegisterService } from "../service/UsersService";
+import { openNotification } from "../App";
 
 type FiledType = {
     username: string;
@@ -24,12 +25,12 @@ export const SignUpForm = () => {
         handleRegisterService(username,password)
         .then(() => {
             console.log("Registration successful");
-            alert("Registration successful");
+            openNotification("success","Registration successful","You can now log in with your credentials.");
             navigate("/users/login");
         })
         .catch((err) => {
             console.error("Registration failed", err);
-            alert("Registration failed");
+            openNotification("error","Registration failed","Please try again later.");
         })
         .finally(() => {
             setLoading(false);

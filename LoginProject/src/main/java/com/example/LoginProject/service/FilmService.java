@@ -12,9 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,8 +59,10 @@ public class FilmService {
             film.setTitle(filmDTO.getTitle());
             film.setDescription(filmDTO.getDescription());
             film.setDuration(filmDTO.getDuration());
-            Set<Genre> genres = new HashSet<>(genreRepository.findAllById(filmDTO.getGenresIds()));
-            film.setGenres(genres);
+            film.setGenres(filmDTO.getGenres().stream()
+                    .map(g -> genreRepository.findById(g.getId())
+                            .orElseThrow(() -> new RuntimeException("Genre not found")))
+                    .collect(Collectors.toSet()));
 
             Film saved = filmRepository.save(film);
             log.info("Film saved successfully with id {}", saved.getId());
@@ -106,8 +107,10 @@ public class FilmService {
             film.setTitle(filmDTO.getTitle());
             film.setDescription(filmDTO.getDescription());
             film.setDuration(filmDTO.getDuration());
-            Set<Genre> genres = new HashSet<>(genreRepository.findAllById(filmDTO.getGenresIds()));
-            film.setGenres(genres);
+            film.setGenres(filmDTO.getGenres().stream()
+                    .map(g -> genreRepository.findById(g.getId())
+                            .orElseThrow(() -> new RuntimeException("Genre not found")))
+            .collect(Collectors.toSet()));
 
             log.info("Film modified successfully with id {}", filmDTO.getId());
             return filmRepository.save(film);

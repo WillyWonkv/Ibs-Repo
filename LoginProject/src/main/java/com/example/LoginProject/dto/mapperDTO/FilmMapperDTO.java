@@ -1,6 +1,7 @@
 package com.example.LoginProject.dto.mapperDTO;
 
 import com.example.LoginProject.dto.FilmDTO;
+import com.example.LoginProject.dto.GenreDTO;
 import com.example.LoginProject.entity.Film;
 import com.example.LoginProject.entity.Genre;
 
@@ -17,10 +18,22 @@ public class FilmMapperDTO {
                 film.getDescription(),
                 film.getDuration(),
                 film.getGenres().stream()
-                        .map(Genre::getId)
-                        .collect(Collectors.toSet())
+                        .map(g -> {
+                            GenreDTO genreDTO = new GenreDTO();
+                            genreDTO.setId(g.getId());
+                            genreDTO.setName(g.getName());
+                            return genreDTO;
+                        })
+                .collect(Collectors.toSet())
         );
 
+    }
+
+    public static GenreDTO mapGenreToGenreDTO(Genre genre){
+        return new GenreDTO(
+                genre.getId(),
+                genre.getName()
+        );
     }
 
 }

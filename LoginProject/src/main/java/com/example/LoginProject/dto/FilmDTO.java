@@ -16,6 +16,6 @@ public class FilmDTO {
     private String title;
     private String description;
     private int duration;
-    private Set<Long> genresIds;
+    private Set<GenreDTO> genres;
 
 }

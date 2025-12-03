@@ -7,6 +7,7 @@ import { Dashboard } from './pages/Dashboard';
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { loginResponse } from './types';
+import { notification } from 'antd';
 
 interface contextInterface {
   store:loginResponse,
@@ -23,7 +24,25 @@ export const AppContext = createContext<contextInterface>({
   setStore: () => {}
 });
 
+notification.config({
+    duration: 3,
+    top: 70,
+});
+
+export const openNotification = (
+    type: 'success' | 'error' | 'info',
+    title: string,
+    description?: string, 
+    )=> {
+    notification[type]({
+        title,
+        description,
+        placement: 'topRight',
+    });
+};
+
 const App = () => {
+
 
   const [store, setStore] = useState<loginResponse>({
     token:"",

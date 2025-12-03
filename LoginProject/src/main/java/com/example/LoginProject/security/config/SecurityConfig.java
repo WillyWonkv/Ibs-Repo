@@ -49,7 +49,8 @@ public class SecurityConfig {
                                 "/user/register"
                                 ).permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/film/**"
+                                "/film/**",
+                                "/genre/**"
                                 ).permitAll()
                         .anyRequest().authenticated()
 

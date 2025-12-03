@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
 import { handleLoginService } from "../service/UsersService";
-import { AppContext } from "../App";
+import { AppContext, openNotification } from "../App";
 import { loginResponse } from "../types";
 
 type FiledType = {
@@ -33,10 +33,11 @@ export const SignInForm = () => {
                     roles: response.roles,
                     permissions: response.permissions,
                 }));
+                openNotification("success","Logged in")
                 navigate("/", {replace:true});
             }).catch(err => {
                 console.error("Login failed", err);
-                alert("Login failed");
+                openNotification("error","Login failed","Please check your credentials and try again.");
             }).finally(() => {
                 setLoading(false);
             });
