@@ -23,6 +23,7 @@ public class GenreService {
                 log.warn("No genres found");
                 throw new EmptyListException("No genres found");
             }
+            log.info("Genres found");
             return genres;
         } catch (EmptyListException e) {
             log.warn("Empty list exception");

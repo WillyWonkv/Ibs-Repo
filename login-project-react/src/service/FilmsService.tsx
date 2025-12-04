@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "./AxiosSettings"
 
 export interface Film{
@@ -16,7 +17,7 @@ export interface Genre{
 
 export const handleGetAllGenresService = async (): Promise<Genre[]> => {
     try{
-        const resp = await api.get<Genre[]>("/genre");
+        const resp = await axios.get<Genre[]>("http://localhost:8080/genre");
         return resp.data;
     }catch(err){
         console.error(err);
@@ -26,7 +27,7 @@ export const handleGetAllGenresService = async (): Promise<Genre[]> => {
 
 export const handleGetAllFilmsService = async (): Promise<Film[]> => {
     try{
-        const resp = await api.get<Film[]>("/film");
+        const resp = await axios.get<Film[]>("http://localhost:8080/film");
         return resp.data;
     }catch(err){
         console.error(err);
@@ -57,6 +58,28 @@ export const handleCreateFilmService = async (film: Film) => {
         await api.post(`/film`, film);
     } catch (err) {
         console.error(err);
+    }
+}
+
+export const handleGetFilmByGenreService = async (id: number): Promise<Film[]> => {
+    try{
+        const resp = await axios.get<Film[]>(`http://localhost:8080/film/genre/${id}`);
+        return resp.data;
+    }catch(err){
+        console.error(err);
+        return [];
+    }
+}
+
+export const handleGetFilmByTitleService = async (title: string): Promise<Film[]> => {
+    try{
+        const resp = await axios.get<Film[]>(`http://localhost:8080/film/search`,{
+            params: { title }
+        });
+        return resp.data;
+    }catch(err){
+        console.error(err);
+        return [];
     }
 }
 

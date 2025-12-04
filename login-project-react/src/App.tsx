@@ -19,7 +19,8 @@ export const AppContext = createContext<contextInterface>({
     token:"",
     username:"",
     roles:[],
-    permissions:[]
+    permissions:[],
+    films:[]
   },
   setStore: () => {}
 });
@@ -43,13 +44,26 @@ export const openNotification = (
 
 const App = () => {
 
-
   const [store, setStore] = useState<loginResponse>({
     token:"",
     username:"",
     roles:[],
-    permissions:[]
+    permissions:[],
+    films:[]
   });
+
+  useEffect(() => {
+    if(store.token){
+      localStorage.setItem("store", JSON.stringify(store));
+    }
+  }, [store]);
+
+  useEffect(() => {
+    const localStore = localStorage.getItem("store");
+    if (localStore) {
+      setStore(JSON.parse(localStore));
+    }
+  }, []);
   
   return ( 
     <AppContext.Provider value={{store,setStore}}>

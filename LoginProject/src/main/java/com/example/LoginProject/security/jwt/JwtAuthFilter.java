@@ -34,23 +34,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        //Se non c'è l'header o non c'è il Bearer, passa al filtro successivo subito
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        // Estrarre il token e lo username in modo chiaro
-        final String authToken = authHeader.substring(7);
-        final String username = jwtService.extractUsername(authToken);
 
         //Se abbiamo username e non c’è già un’auth nel contesto
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (authHeader != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            final String authToken = authHeader.substring(7);
 
             // Validare il token rispetto all’utente
-            if(jwtService.validateToken(authToken, userDetails)){
+            if(jwtService.validateToken(authToken)){
+
+                // Estrarre il token e lo username in modo chiaro
+
+                final String username = jwtService.extractUsername(authToken);
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -63,6 +60,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 // Impostare l’autenticazione nel SecurityContext
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            }else{
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         }
 

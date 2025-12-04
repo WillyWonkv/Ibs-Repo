@@ -1,10 +1,11 @@
 import { ControlOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutlined, YoutubeFilled } from "@ant-design/icons";
-import { Button, Dropdown, Flex, MenuProps } from "antd";
+import { AutoComplete, Button, Dropdown, Flex, Input, MenuProps, Spin } from "antd";
 import  "../components/TopBar.css"
 import React, { useContext, useEffect, useState } from "react";
 import { replace, useNavigate } from "react-router-dom";
 import Search from "antd/es/input/Search";
-import { AppContext } from "../App";
+import { AppContext, openNotification } from "../App";
+import { Film, handleGetFilmByTitleService } from "../service/FilmsService";
 
 
 export const TopBar = () => {
@@ -12,6 +13,8 @@ export const TopBar = () => {
     const navigate = useNavigate();
     const [loading,setLoading] = useState<boolean>(false);
     const {setStore,store} = useContext(AppContext);
+    const [options, setOptions] = useState<{value:string}[]>([]);
+    const [filmSearch, setFilmSearch] = useState<Film[]>([]);
 
     const buttonStyle: React.CSSProperties = {
         color:"white",
@@ -27,6 +30,25 @@ export const TopBar = () => {
             permissions:[]
         });
         navigate("/", {replace:true});
+    }
+
+    const fetchFilms = async (title:string) => {
+        if(!title){
+            setOptions([]);
+            return;
+        }
+        setLoading(true);
+        handleGetFilmByTitleService(title)
+        .then(response => {
+            setOptions(response.map(film => ({value: film.title})));
+            setFilmSearch(response);
+        })
+        .catch(err => {
+            console.error("Error fetching films by title", err);
+        })
+        .finally(() => {
+            setLoading(false);
+        });    
     }
 
 
@@ -90,6 +112,7 @@ export const TopBar = () => {
                                 fontSize:"16px", 
                             }}
                         />}
+                        onClick={() => {window.location.href = "/";}}
                     >HOME</Button>
 
                     <Button
@@ -107,15 +130,22 @@ export const TopBar = () => {
             </Flex>
             
             <Flex  flex={1} justify="flex-start">
-                <Search 
-                    className="searchbar"
-                    placeholder="Search..."
-                    enterButton
-                    loading={loading}
-                    size="middle"
-                    onSearch={() => (console.log("click search"))}
-                    style={{width:"100%", maxWidth:"400px"}}
-                />                      
+                <AutoComplete
+                    style={{width:300,height:32}}
+                    options={options}
+                    onChange={fetchFilms}
+                    >
+                    <Input.Search 
+                        size="middle" 
+                        placeholder="Search films..."
+                        loading={loading}
+                        style={{borderRadius:16,height:32}}
+                        onSearch={() => {
+                            setStore(prev => ({...prev, films: filmSearch}));
+                            setOptions([]);
+                        }}
+                        />
+                </AutoComplete>
             </Flex>
 
             <Flex>
@@ -161,4 +191,8 @@ export const TopBar = () => {
 
     );
 
+}
+
+function debounce(fetchFilms: (title: string) => Promise<void>, arg1: number) {
+    throw new Error("Function not implemented.");
 }

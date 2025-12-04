@@ -1,5 +1,6 @@
 package com.example.LoginProject.service;
 
+import com.example.LoginProject.Specification.FilmSpecification;
 import com.example.LoginProject.dto.FilmDTO;
 import com.example.LoginProject.entity.Film;
 import com.example.LoginProject.entity.Genre;
@@ -30,6 +31,7 @@ public class FilmService {
                 log.warn("No films found");
                 throw new EmptyListException("Film List is Empty");
             }
+            log.info("Films found");
             return films;
         }catch (Exception e){
             log.error(e.getMessage());
@@ -117,6 +119,36 @@ public class FilmService {
 
         }catch (Exception e){
             log.error("Error updating film", e);
+            throw e;
+        }
+    }
+
+    public List<Film> findFilmByGenre(long genreId){
+        try{
+            List<Film> filmsFiltered = filmRepository.findAll(FilmSpecification.findFilmByGenre(genreId));
+            if(filmsFiltered.isEmpty()){
+                log.warn("No films found for genre {}", genreId);
+                throw new EmptyListException("Film List is Empty");
+            }
+            log.info("Films found successfully with id {}", genreId);
+            return filmsFiltered;
+        }catch (Exception e){
+            log.error("Error getting films by genre", e);
+            throw e;
+        }
+    }
+
+    public List<Film> findFilmByTitle(String title){
+        try {
+            List<Film> filmsFiltered = filmRepository.findAll(FilmSpecification.findFilmByTitle(title));
+            if(filmsFiltered.isEmpty()){
+                log.warn("No films found for title {}", title);
+                throw new EmptyListException("Film List is Empty");
+            }
+            log.info("{} Films found successfully with title {}",filmsFiltered.size(), title);
+            return filmsFiltered;
+        }catch (Exception e){
+            log.error("Error getting films by title", e);
             throw e;
         }
     }

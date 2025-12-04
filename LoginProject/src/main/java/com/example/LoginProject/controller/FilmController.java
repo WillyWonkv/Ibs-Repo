@@ -35,6 +35,22 @@ public class FilmController {
         return ResponseEntity.ok(FilmMapperDTO.mapFilmToFilmDTO(filmService.findFilmById(id)));
     }
 
+    @GetMapping("/genre/{id}")
+    public ResponseEntity<List<FilmDTO>> getFilmByGenere(@PathVariable long id) {
+        List<FilmDTO> films = filmService.findFilmByGenre(id).stream()
+                .map(FilmMapperDTO::mapFilmToFilmDTO)
+                .toList();
+        return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FilmDTO>> getFilmByTitle(@RequestParam String title) {
+        List<FilmDTO> films = filmService.findFilmByTitle(title).stream()
+                .map(FilmMapperDTO::mapFilmToFilmDTO)
+                .toList();
+        return ResponseEntity.ok(films);
+    }
+
     @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping
     public ResponseEntity<FilmDTO> saveFilm(@RequestBody FilmDTO film) {

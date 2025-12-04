@@ -48,23 +48,3 @@
     background-color: white !important;
 }
 
-.searchbar .ant-input{
-    background-color: transparent;
-    color: white;
-    border-color: #464646;
-    border-radius: 20px;
-}
-.searchbar .ant-input::placeholder{
-    color: white;
-}
-
-.searchbar .ant-btn{
-    background-color: #464646;
-    color: white;
-    border: none;
-    border-radius: 20px;
-}
-
-.searchbar .ant-btn:hover{
-    background-color: #464646 !important;
-}

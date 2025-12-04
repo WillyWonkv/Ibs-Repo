@@ -42,6 +42,9 @@ public class SecurityConfig {
 
         return http.csrf(AbstractHttpConfigurer::disable)
                 //.httpBasic(Customizer.withDefaults())
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(new RestAuthenticationEntryPoint()))
+
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
