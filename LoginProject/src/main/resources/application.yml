@@ -14,6 +14,9 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
+  servlet:
+    multipart:
+      enabled: true
 
 server:
   port: 8080
@@ -23,3 +26,6 @@ jwt:
 
 cors:
   allowed: http://localhost:3000, http://localhost:3001
+
+film-project:
+  cover-path: C:\Users\User\Documents\AndreaPiccirillo\Ibs-Repo\LoginProject\src\main\resources\uploads

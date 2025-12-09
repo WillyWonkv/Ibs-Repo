@@ -55,7 +55,9 @@ export const handleUpdateFilmService = async (film: Film) => {
 
 export const handleCreateFilmService = async (film: Film) => {
     try {
-        await api.post(`/film`, film);
+        const formData = new FormData();
+        formData.append("film", JSON.stringify(film));
+        await api.post(`/film`, formData)
     } catch (err) {
         console.error(err);
     }

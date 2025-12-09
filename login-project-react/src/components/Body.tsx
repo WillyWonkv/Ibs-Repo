@@ -1,10 +1,11 @@
 
 import "./Body.css"
-import { Button, Card, Dropdown, Flex, Input, InputNumber, Menu, Select, Spin } from "antd"
-import { use, useContext, useEffect, useState } from "react"
+import { Button, Card, Dropdown, Flex, Form, GetProp, Input, InputNumber, Menu, Select, Spin, Upload, UploadFile, UploadProps } from "antd"
+import { useContext, useEffect, useState } from "react"
 import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleUpdateFilmService } from "../service/FilmsService"
-import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusCircleOutlined } from "@ant-design/icons"
+import { DeleteOutlined, EditOutlined, EllipsisOutlined, InboxOutlined, LoadingOutlined, PlusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons"
 import { AppContext, openNotification } from "../App"
+import { url } from "inspector"
 
 
 export const Body = () =>{
@@ -62,7 +63,7 @@ export const Body = () =>{
 
     const handleSaveEdit = async () => {
 
-        try {            
+        try {
             await handleUpdateFilmService(editedFilmData as Film);
             setFilms(prev => prev.map(f => f.id === editedFilmData.id ? {...f, ...editedFilmData} as Film : f));
             setEditingFilmId(null);
@@ -134,7 +135,8 @@ export const Body = () =>{
                         items: [
                             { 
                                 key: 'grid',
-                                label: (<div
+                                label: (
+                                <div
                                     style={{
                                         display:"grid",
                                         gridTemplateColumns: "repeat(3, 1fr)",
@@ -221,6 +223,10 @@ export const Body = () =>{
                                 >
                                     {editingFilmId === film.id ? (
                                         <>
+
+                                            <span style={{fontSize:"12px"}}>Foto:</span>
+
+
                                             <span style={{fontSize:"12px"}}>Title:</span>
                                             <Input 
                                                 value={editedFilmData.title || ""}
@@ -346,6 +352,10 @@ export const Body = () =>{
                                             <br/>
                                             <br/>
                                             
+                                            <span style={{fontSize:"12px"}}>Cover:</span>
+
+                                            
+
                                             <span style={{fontSize:"12px"}}>Title:</span>
                                             <Input 
                                                 value={newFilmData.title || ""}

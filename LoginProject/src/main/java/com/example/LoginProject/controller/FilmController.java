@@ -5,13 +5,19 @@ import com.example.LoginProject.dto.FilmDTO;
 import com.example.LoginProject.dto.mapperDTO.FilmMapperDTO;
 import com.example.LoginProject.service.FilmService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,10 +58,14 @@ public class FilmController {
     }
 
     @PreAuthorize("hasAuthority('CREATE')")
-    @PostMapping
-    public ResponseEntity<FilmDTO> saveFilm(@RequestBody FilmDTO film) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<FilmDTO> saveFilm(
+            @RequestPart("film") FilmDTO film,
+            @RequestPart("file") MultipartFile file) throws IOException
+    {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(FilmMapperDTO.mapFilmToFilmDTO(filmService.saveFilm(film)));
+                .body(FilmMapperDTO.mapFilmToFilmDTO(filmService.saveFilm(film, file.getInputStream())));
+
     }
 
     @PreAuthorize("hasAuthority('DELETE')")
