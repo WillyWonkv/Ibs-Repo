@@ -12,11 +12,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -82,23 +85,54 @@ public class FilmService {
 
             Path upPath = Paths.get(coverPath);
 
-            if(!Files.exists(upPath)){
-                Files.createDirectories(upPath);
-            }
-
-            String filename = UUID.randomUUID().toString();
-            Path filePath = upPath.resolve(filename);
-
-            Files.copy(file, filePath, StandardCopyOption.REPLACE_EXISTING);
-
+            String filename = saveCoverFile(file);
             film.setCoverSrc(filename);
-
 
             Film saved = filmRepository.save(film);
             log.info("Film saved successfully with id {}", saved.getId());
             return saved;
         }catch (Exception e){
             log.error("Error saving film", e);
+            throw e;
+        }
+    }
+
+    @Transactional
+    public Film updateFilm(FilmDTO filmDTO, InputStream file) throws IOException {
+        try{
+
+            Film film = filmRepository.findById(filmDTO.getId())
+                    .orElseThrow(() -> {
+                        log.error("Film Not Found with id {}", filmDTO.getId());
+                        return new EntityNotFoundException("Film Not Found");
+                    });
+
+            film.setCoverSrc(filmDTO.getCoverSrc());
+            film.setTitle(filmDTO.getTitle());
+            film.setDescription(filmDTO.getDescription());
+            film.setDuration(filmDTO.getDuration());
+            film.setGenres(filmDTO.getGenres().stream()
+                    .map(g -> genreRepository.findById(g.getId())
+                            .orElseThrow(() -> new RuntimeException("Genre not found")))
+                    .collect(Collectors.toSet()));
+
+            if(file != null){
+
+                try {
+                    Files.deleteIfExists(Paths.get(coverPath, filmDTO.getCoverSrc()));
+                } catch (IOException e) {
+                    log.warn("Can't delete file, cover not found", e);
+                }
+
+                String filename = saveCoverFile(file);
+                film.setCoverSrc(filename);
+            }
+
+            log.info("Film modified successfully with id {}", filmDTO.getId());
+            return filmRepository.save(film);
+
+        }catch (Exception e){
+            log.error("Error updating film", e);
             throw e;
         }
     }
@@ -114,6 +148,13 @@ public class FilmService {
                         });
 
             film.getGenres().clear();
+
+            try {
+                Files.deleteIfExists(Paths.get(coverPath, film.getCoverSrc()));
+            } catch (IOException e) {
+                log.warn("cover not found", e);
+            }
+
             filmRepository.deleteById(id);
             log.info("Film deleted successfully with id {}", id);
 
@@ -123,33 +164,6 @@ public class FilmService {
         }
     }
 
-    @Transactional
-    public Film updateFilm(FilmDTO filmDTO){
-        try{
-
-            Film film = filmRepository.findById(filmDTO.getId())
-                    .orElseThrow(() -> {
-                       log.error("Film Not Found with id {}", filmDTO.getId());
-                       return new EntityNotFoundException("Film Not Found");
-                    });
-
-            film.setCoverSrc(filmDTO.getCoverSrc());
-            film.setTitle(filmDTO.getTitle());
-            film.setDescription(filmDTO.getDescription());
-            film.setDuration(filmDTO.getDuration());
-            film.setGenres(filmDTO.getGenres().stream()
-                    .map(g -> genreRepository.findById(g.getId())
-                            .orElseThrow(() -> new RuntimeException("Genre not found")))
-            .collect(Collectors.toSet()));
-
-            log.info("Film modified successfully with id {}", filmDTO.getId());
-            return filmRepository.save(film);
-
-        }catch (Exception e){
-            log.error("Error updating film", e);
-            throw e;
-        }
-    }
 
     public List<Film> findFilmByGenre(long genreId){
         try{
@@ -179,6 +193,39 @@ public class FilmService {
             log.error("Error getting films by title", e);
             throw e;
         }
+    }
+
+    public Resource getFilmCover(String filename) throws IOException {
+
+        Path path = Paths.get(coverPath).resolve(filename);
+
+        if (!filename.toLowerCase().endsWith(".jpg") && !filename.toLowerCase().endsWith(".jpeg")) {
+            throw new IllegalArgumentException("Only JPG/JPEG files are allowed");
+        }
+
+        if(!Files.exists(path)){
+            throw new FileNotFoundException("Cover Not Found");
+        }
+
+        return new UrlResource(path.toUri());
+    }
+
+    private String saveCoverFile(InputStream file) throws IOException {
+        if(file == null) return null;
+
+        Path upPath = Paths.get(coverPath);
+
+        if(!Files.exists(upPath)){
+            Files.createDirectories(upPath);
+        }
+
+        String filename = UUID.randomUUID().toString() + ".jpg";
+        Path filePath = upPath.resolve(filename);
+
+        Files.copy(file, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return filename;
+
     }
 
 }

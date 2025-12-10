@@ -25,7 +25,7 @@ api.interceptors.response.use(function onFulfilled(response) {
   }, function onRejected(error) {
     if(error.status === 401){
         localStorage.clear();
-        window.location.href = "/";
+        window.location.href = "/users/login";
         openNotification("error","Token expired")
     }
     return Promise.reject(error);

@@ -8,6 +8,7 @@ export interface Film{
     description:string;
     duration:number;
     genres:Genre[];
+    cover?: File;
 }
 
 export interface Genre{
@@ -21,7 +22,7 @@ export const handleGetAllGenresService = async (): Promise<Genre[]> => {
         return resp.data;
     }catch(err){
         console.error(err);
-        return [];
+        throw err;
     }   
 }
 
@@ -31,7 +32,7 @@ export const handleGetAllFilmsService = async (): Promise<Film[]> => {
         return resp.data;
     }catch(err){
         console.error(err);
-        return [];
+        throw err
     }
 }
 
@@ -41,25 +42,40 @@ export const handleDeleteFilmService = async (id: number): Promise<boolean> => {
         return true;
     } catch (err) {
         console.error(err);
-        return false;
+        throw err
     }
 };
 
 export const handleUpdateFilmService = async (film: Film) => {
     try {
-        await api.put(`/film/${film.id}`, film);
+        const formData = new FormData();
+        formData.append("film", new Blob([JSON.stringify(film)], { type: "application/json" }));
+        
+        if(film.cover){
+            formData.append("file", film.cover);
+        }
+       
+        await api.put(`/film`, formData)
+  
     } catch (err) {
         console.error(err);
+        throw err
     }
 }
 
 export const handleCreateFilmService = async (film: Film) => {
     try {
         const formData = new FormData();
-        formData.append("film", JSON.stringify(film));
+        formData.append("film", new Blob([JSON.stringify(film)], {type: "application/json"}));
+
+        if(film.cover){
+            formData.append("file", film.cover)
+        }
+
         await api.post(`/film`, formData)
     } catch (err) {
         console.error(err);
+        throw err
     }
 }
 
@@ -69,7 +85,7 @@ export const handleGetFilmByGenreService = async (id: number): Promise<Film[]> =
         return resp.data;
     }catch(err){
         console.error(err);
-        return [];
+        throw err
     }
 }
 
@@ -81,7 +97,7 @@ export const handleGetFilmByTitleService = async (title: string): Promise<Film[]
         return resp.data;
     }catch(err){
         console.error(err);
-        return [];
+        throw err
     }
 }
 
