@@ -14,10 +14,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +33,20 @@ public class FilmController {
                 .toList();
 
         return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<List<FilmDTO>> getAllFilms(
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+
+        List<FilmDTO> films = filmService.findFilmsByPage(page, size).stream()
+                .map(FilmMapperDTO::mapFilmToFilmDTO)
+                .toList();
+
+        return ResponseEntity.ok(films);
+
     }
 
     @GetMapping("/{id}")
@@ -54,6 +67,7 @@ public class FilmController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
+
                 .body(filmService.getFilmCover(filename));
     }
 

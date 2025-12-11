@@ -2,8 +2,7 @@ import { ControlOutlined, EllipsisOutlined, HomeFilled, LogoutOutlined, UserOutl
 import { AutoComplete, Button, Dropdown, Flex, Input, MenuProps, Spin } from "antd";
 import  "../components/TopBar.css"
 import React, { useContext, useEffect, useState } from "react";
-import { replace, useNavigate } from "react-router-dom";
-import Search from "antd/es/input/Search";
+import { useNavigate } from "react-router-dom";
 import { AppContext, openNotification } from "../App";
 import { Film, handleGetFilmByTitleService } from "../service/FilmsService";
 
@@ -23,6 +22,7 @@ export const TopBar = () => {
     
     const logout =()=>{
         localStorage.removeItem("token");
+        localStorage.removeItem("store");
         setStore({
             token:"",
             username:"",

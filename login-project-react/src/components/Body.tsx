@@ -1,6 +1,6 @@
 
 import "./Body.css"
-import { Button, Card, Dropdown, Flex, Input, InputNumber, Select, Spin, } from "antd"
+import { Button, Card, Dropdown, Flex, Input, InputNumber, Popconfirm, Select, Spin, } from "antd"
 import { useContext, useEffect, useState } from "react"
 import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleUpdateFilmService } from "../service/FilmsService"
 import { DeleteOutlined, DisconnectOutlined, EditOutlined, InboxOutlined, PlusCircleOutlined, } from "@ant-design/icons"
@@ -226,7 +226,8 @@ export const Body = () =>{
                         {films.map((film) => (
                             <Card 
                                 key={film.id}
-                                cover={
+                                cover={editingFilmId === film.id ? (null) : (
+
                                     <div style={{ position: "relative", width: "100%", height: 375 }}>
                                         {imgLoading && (
                                             <div style={{ 
@@ -247,8 +248,8 @@ export const Body = () =>{
                                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                             onLoad={() => setImgLoading(false)}
                                         />
-                                    </div>
-                                }
+                                    </div>  
+                                )}
                                 hoverable
                                 variant="borderless"
                                 style={{
@@ -263,10 +264,20 @@ export const Body = () =>{
                                     onClick={() => {
                                         setEditingFilmId(film.id);
                                         setEditedFilmData(film);
+                                        fetchGenres()
                                     }}/>,
-                                    <DeleteOutlined
-                                        key="delete" 
-                                        onClick={() => deleteFilm(film.id)}/>
+                                    <Popconfirm
+                                        key="delete"
+                                        title="Delete Film"
+                                        description="Are you sure to delete this film?"
+                                        okText="Yes"
+                                        cancelText="No"
+                                        placement="topRight"
+                                        onConfirm={() => {deleteFilm(film.id)}}
+                                    >
+                                        <DeleteOutlined/>
+                                    </Popconfirm>
+
                                 ] : []}
                             >
                                 {editingFilmId === film.id ? (
@@ -498,7 +509,10 @@ export const Body = () =>{
                                     <Button 
                                         variant="link" 
                                         color="default" 
-                                        onClick={() => setIsAddingNewFilm(true)}
+                                        onClick={() => {
+                                            setIsAddingNewFilm(true)
+                                            fetchGenres()
+                                        }}
                                         style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)"}}
                                     >
                                         <PlusCircleOutlined style={{fontSize:"30px"}} />

@@ -85,7 +85,7 @@ export const handleGetFilmByGenreService = async (id: number): Promise<Film[]> =
         return resp.data;
     }catch(err){
         console.error(err);
-        throw err
+        return [];
     }
 }
 

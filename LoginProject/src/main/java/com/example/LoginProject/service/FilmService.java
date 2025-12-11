@@ -3,7 +3,6 @@ package com.example.LoginProject.service;
 import com.example.LoginProject.Specification.FilmSpecification;
 import com.example.LoginProject.dto.FilmDTO;
 import com.example.LoginProject.entity.Film;
-import com.example.LoginProject.entity.Genre;
 import com.example.LoginProject.exception.EmptyListException;
 import com.example.LoginProject.repository.FilmRepository;
 import com.example.LoginProject.repository.GenreRepository;
@@ -14,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +26,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -57,6 +55,23 @@ public class FilmService {
         }
     }
 
+    public List<Film> findFilmsByPage(int page, int size) {
+
+        try{
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Film> films = filmRepository.findAll(pageable);
+            if(films.isEmpty()){
+                log.warn("No films found");
+            }
+            log.info("Films found");
+            return films.getContent();
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+
+    }
+
     public Film findFilmById(Long id){
         try{
             return filmRepository.findById(id)
@@ -82,8 +97,6 @@ public class FilmService {
                     .map(g -> genreRepository.findById(g.getId())
                             .orElseThrow(() -> new RuntimeException("Genre not found")))
                     .collect(Collectors.toSet()));
-
-            Path upPath = Paths.get(coverPath);
 
             String filename = saveCoverFile(file);
             film.setCoverSrc(filename);
@@ -219,7 +232,7 @@ public class FilmService {
             Files.createDirectories(upPath);
         }
 
-        String filename = UUID.randomUUID().toString() + ".jpg";
+        String filename = UUID.randomUUID() + ".jpg";
         Path filePath = upPath.resolve(filename);
 
         Files.copy(file, filePath, StandardCopyOption.REPLACE_EXISTING);
