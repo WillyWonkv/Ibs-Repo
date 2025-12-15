@@ -36,6 +36,22 @@ export const handleGetAllFilmsService = async (): Promise<Film[]> => {
     }
 }
 
+export const handleGetAllFilmsPageService = async (curretPage: number, size: number): Promise<Film[]> => {
+    try {
+        const resp = await axios.get<Film[]>("http://localhost:8080/film/page", {
+            params: {
+                page: curretPage - 1,
+                size: size
+            }
+        });
+        return resp.data;
+    }catch(err){
+        console.error(err);
+        throw err
+    }
+
+}
+
 export const handleDeleteFilmService = async (id: number): Promise<boolean> => {
     try {
         await api.delete(`/film/${id}`);

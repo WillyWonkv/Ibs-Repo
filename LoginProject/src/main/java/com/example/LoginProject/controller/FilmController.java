@@ -14,8 +14,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -85,8 +85,15 @@ public class FilmController {
             @RequestPart("film") FilmDTO film,
             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException
     {
+
+        InputStream inputStream = null;
+
+        if (file != null && !file.isEmpty()) {
+            inputStream = file.getInputStream();
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(FilmMapperDTO.mapFilmToFilmDTO(filmService.saveFilm(film, file.getInputStream())));
+                .body(FilmMapperDTO.mapFilmToFilmDTO(filmService.saveFilm(film, inputStream)));
 
     }
 
@@ -103,7 +110,14 @@ public class FilmController {
             @RequestPart("film") FilmDTO film,
             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException
     {
-        return ResponseEntity.ok(FilmMapperDTO.mapFilmToFilmDTO(filmService.updateFilm(film, file.getInputStream())));
+
+        InputStream inputStream = null;
+
+        if (file != null && !file.isEmpty()) {
+            inputStream = file.getInputStream();
+        }
+
+        return ResponseEntity.ok(FilmMapperDTO.mapFilmToFilmDTO(filmService.updateFilm(film, inputStream)));
     }
 
 }

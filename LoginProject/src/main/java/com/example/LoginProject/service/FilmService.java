@@ -16,6 +16,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
@@ -58,7 +59,11 @@ public class FilmService {
     public List<Film> findFilmsByPage(int page, int size) {
 
         try{
-            Pageable pageable = PageRequest.of(page, size);
+            Pageable pageable = PageRequest.of(
+                    page,
+                    size,
+                    Sort.by(Sort.Direction.ASC, "id")
+                    );
             Page<Film> films = filmRepository.findAll(pageable);
             if(films.isEmpty()){
                 log.warn("No films found");

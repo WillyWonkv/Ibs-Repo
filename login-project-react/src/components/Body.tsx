@@ -1,8 +1,8 @@
 
 import "./Body.css"
-import { Button, Card, Dropdown, Flex, Input, InputNumber, Popconfirm, Select, Spin, } from "antd"
+import { Button, Card, Dropdown, Flex, Input, InputNumber, Pagination, Popconfirm, Select, Spin, } from "antd"
 import { useContext, useEffect, useState } from "react"
-import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleUpdateFilmService } from "../service/FilmsService"
+import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsPageService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleUpdateFilmService } from "../service/FilmsService"
 import { DeleteOutlined, DisconnectOutlined, EditOutlined, InboxOutlined, PlusCircleOutlined, } from "@ant-design/icons"
 import { AppContext, openNotification } from "../App"
 import Dragger from "antd/es/upload/Dragger"
@@ -23,8 +23,29 @@ export const Body = () =>{
     const [editingFilmId, setEditingFilmId] = useState<number | null>(null);
     const [editedFilmData, setEditedFilmData] = useState<Partial<Film>>({});
 
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(6);
+    const [total, setTotal] = useState(0);
 
     const {store} = useContext(AppContext);
+
+    const fetchFilmsPage = () => {
+        setLoading(true);
+        setError(false);
+
+        handleGetAllFilmsPageService(page, size)
+        .then(response => {
+            setFilms(response);
+        })
+        .catch(err => {
+            console.error("Failed to fetch films", err);
+            setError(true);
+            openNotification('error', 'Failed to fetch films');
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }
 
     const fetchFilms = ()=>{
         setLoading(true);
@@ -44,6 +65,7 @@ export const Body = () =>{
     };
 
     const fetchGenres = ()=>{
+
         handleGetAllGenresService()
         .then(response => {
             setGenres(response);
@@ -116,8 +138,8 @@ export const Body = () =>{
     }
   
     useEffect(() => {
-        fetchFilms();
-    }, [])
+        fetchFilmsPage();
+    }, [page])
 
     useEffect(() => {
         if(store.films && store.films.length > 0){
@@ -227,6 +249,7 @@ export const Body = () =>{
                             <Card 
                                 key={film.id}
                                 cover={editingFilmId === film.id ? (null) : (
+                                    
 
                                     <div style={{ position: "relative", width: "100%", height: 375 }}>
                                         {imgLoading && (
@@ -521,8 +544,22 @@ export const Body = () =>{
                                 )}
                             </Card>
                             )
-                        }
-                                
+                        }    
+                    </div>
+                    <div
+                        style={{
+                            margin: "20px 0 50px 0",
+                        }}
+                    >
+                        <br></br>
+                        <Pagination
+                            simple={{ readOnly: true }}
+                            current={page}
+                            pageSize={size}
+                            total={50}
+                            onChange={(newPage) => setPage(newPage)}
+                            showSizeChanger={false}
+                        />
                     </div>
                 </>
             )}
