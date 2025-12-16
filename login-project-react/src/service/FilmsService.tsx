@@ -16,6 +16,14 @@ export interface Genre{
     name:string;
 }
 
+export interface PageResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  number: number; 
+  size: number;   
+}
+
 export const handleGetAllGenresService = async (): Promise<Genre[]> => {
     try{
         const resp = await axios.get<Genre[]>("http://localhost:8080/genre");
@@ -36,9 +44,9 @@ export const handleGetAllFilmsService = async (): Promise<Film[]> => {
     }
 }
 
-export const handleGetAllFilmsPageService = async (curretPage: number, size: number): Promise<Film[]> => {
+export const handleGetAllFilmsPageService = async (curretPage: number, size: number): Promise<PageResponse<Film>> => {
     try {
-        const resp = await axios.get<Film[]>("http://localhost:8080/film/page", {
+        const resp = await axios.get<PageResponse<Film>>("http://localhost:8080/film/page", {
             params: {
                 page: curretPage - 1,
                 size: size
@@ -48,6 +56,23 @@ export const handleGetAllFilmsPageService = async (curretPage: number, size: num
     }catch(err){
         console.error(err);
         throw err
+    }
+
+}
+
+export const handleGetFilmsByGenrePageService = async (id: number, curretPage: number, size: number): Promise<PageResponse<Film>> => {
+
+    try {
+        const resp = await axios.get<PageResponse<Film>>(`http://localhost:8080/film/genre/page/${id}`, {
+            params: {
+                page: curretPage - 1,
+                size: size
+            }
+        })
+        return resp.data;
+    }catch(err){
+        console.error(err);
+        throw err;
     }
 
 }

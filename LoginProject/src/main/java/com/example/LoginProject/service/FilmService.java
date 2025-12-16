@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
@@ -56,7 +57,7 @@ public class FilmService {
         }
     }
 
-    public List<Film> findFilmsByPage(int page, int size) {
+    public Page<Film> findFilmsByPage(int page, int size) {
 
         try{
             Pageable pageable = PageRequest.of(
@@ -69,7 +70,7 @@ public class FilmService {
                 log.warn("No films found");
             }
             log.info("Films found");
-            return films.getContent();
+            return films;
         }catch (Exception e){
             log.error(e.getMessage());
             throw e;
@@ -168,7 +169,9 @@ public class FilmService {
             film.getGenres().clear();
 
             try {
-                Files.deleteIfExists(Paths.get(coverPath, film.getCoverSrc()));
+                if(film.getCoverSrc() != null){
+                    Files.deleteIfExists(Paths.get(coverPath, film.getCoverSrc()));
+                }
             } catch (IOException e) {
                 log.warn("cover not found", e);
             }
@@ -178,6 +181,23 @@ public class FilmService {
 
         }catch (Exception e){
             log.error("Error deleting film", e);
+            throw e;
+        }
+    }
+
+
+    public Page<Film> findFilmsByGenrePage(long genreId, int page, int size) {
+        try{
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
+            Specification<Film> spec = FilmSpecification.findFilmByGenre(genreId);
+            Page<Film> films = filmRepository.findAll(spec, pageable);
+            if(films.isEmpty()){
+                log.warn("No films found for genre {}", genreId);
+            }
+            log.info("Films found successfully with id {}", genreId);
+            return films;
+        }catch (Exception e){
+            log.error("Error finding films by genre", e);
             throw e;
         }
     }

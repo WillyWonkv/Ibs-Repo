@@ -44,13 +44,18 @@ export const openNotification = (
 
 const App = () => {
 
-  const [store, setStore] = useState<loginResponse>({
-    token:"",
-    username:"",
-    roles:[],
-    permissions:[],
-    films:[]
-  });
+  const [store, setStore] = useState<loginResponse>(() => {
+  const localStore = localStorage.getItem("store");
+  return localStore
+    ? JSON.parse(localStore)
+    : {
+        token:"",
+        username:"",
+        roles:[],
+        permissions:[],
+        films:[]
+      };
+});
 
   useEffect(() => {
     if(store.token){
@@ -58,13 +63,6 @@ const App = () => {
     }
   }, [store]);
 
-  useEffect(() => {
-    const localStore = localStorage.getItem("store");
-    if (localStore) {
-      setStore(JSON.parse(localStore));
-    }
-  }, []);
-  
   return ( 
     <AppContext.Provider value={{store,setStore}}>
         <Routes>

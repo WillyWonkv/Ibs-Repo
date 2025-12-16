@@ -3,9 +3,11 @@ package com.example.LoginProject.controller;
 import com.example.LoginProject.dto.FilmDTO;
 
 import com.example.LoginProject.dto.mapperDTO.FilmMapperDTO;
+import com.example.LoginProject.entity.Film;
 import com.example.LoginProject.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +38,13 @@ public class FilmController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<List<FilmDTO>> getAllFilms(
+    public ResponseEntity<Page<FilmDTO>> getAllFilms(
             @RequestParam int page,
             @RequestParam int size
     ) {
 
-        List<FilmDTO> films = filmService.findFilmsByPage(page, size).stream()
-                .map(FilmMapperDTO::mapFilmToFilmDTO)
-                .toList();
+        Page<FilmDTO> films = filmService.findFilmsByPage(page, size)
+                .map(FilmMapperDTO::mapFilmToFilmDTO);
 
         return ResponseEntity.ok(films);
 
@@ -60,6 +61,19 @@ public class FilmController {
                 .map(FilmMapperDTO::mapFilmToFilmDTO)
                 .toList();
         return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/genre/page/{id}")
+    public ResponseEntity<Page<FilmDTO>> getFilmByGenrePage(
+            @PathVariable long id,
+            @RequestParam int size,
+            @RequestParam int page
+            ){
+
+        Page<FilmDTO> films = filmService.findFilmsByGenrePage(id, page, size)
+                .map(FilmMapperDTO::mapFilmToFilmDTO);
+        return ResponseEntity.ok(films);
+
     }
 
     @GetMapping("/cover/{filename}")

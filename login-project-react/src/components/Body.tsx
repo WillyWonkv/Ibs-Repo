@@ -2,7 +2,7 @@
 import "./Body.css"
 import { Button, Card, Dropdown, Flex, Input, InputNumber, Pagination, Popconfirm, Select, Spin, } from "antd"
 import { useContext, useEffect, useState } from "react"
-import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsPageService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleUpdateFilmService } from "../service/FilmsService"
+import { Film, Genre, handleCreateFilmService, handleDeleteFilmService, handleGetAllFilmsPageService, handleGetAllFilmsService, handleGetAllGenresService, handleGetFilmByGenreService, handleGetFilmsByGenrePageService, handleUpdateFilmService } from "../service/FilmsService"
 import { DeleteOutlined, DisconnectOutlined, EditOutlined, InboxOutlined, PlusCircleOutlined, } from "@ant-design/icons"
 import { AppContext, openNotification } from "../App"
 import Dragger from "antd/es/upload/Dragger"
@@ -24,7 +24,7 @@ export const Body = () =>{
     const [editedFilmData, setEditedFilmData] = useState<Partial<Film>>({});
 
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(6);
+    const [size] = useState(6);
     const [total, setTotal] = useState(0);
 
     const {store} = useContext(AppContext);
@@ -32,10 +32,15 @@ export const Body = () =>{
     const fetchFilmsPage = () => {
         setLoading(true);
         setError(false);
+    
+        const computedSize = store.roles?.includes("ADMIN")
+        ? size - 1
+        : size;
 
-        handleGetAllFilmsPageService(page, size)
+        handleGetAllFilmsPageService(page, computedSize)
         .then(response => {
-            setFilms(response);
+            setFilms(response.content);
+            setTotal(response.totalElements);
         })
         .catch(err => {
             console.error("Failed to fetch films", err);
@@ -46,23 +51,6 @@ export const Body = () =>{
             setLoading(false);
         });
     }
-
-    const fetchFilms = ()=>{
-        setLoading(true);
-        setError(false);
-        handleGetAllFilmsService()
-        .then(response => {
-            setFilms(response);
-        })
-        .catch(err => {
-            console.error("Failed to fetch films", err);
-            setError(true);
-            openNotification('error', 'Failed to fetch films');
-        })
-        .finally(() => {
-            setLoading(false);
-        });
-    };
 
     const fetchGenres = ()=>{
 
@@ -80,7 +68,7 @@ export const Body = () =>{
 
         try {
             await handleDeleteFilmService(id);
-            setFilms(prev => prev.filter(f => f.id !== id));
+            fetchFilmsPage()
             openNotification('success', 'Film deleted successfully');
         }catch (err) {
             console.error("Failed to delete film", err);
@@ -96,7 +84,7 @@ export const Body = () =>{
             setEditedFilmData({});
             setEditingFilmId(null);
             openNotification('success', 'Film updated successfully');
-            fetchFilms();
+            fetchFilmsPage();
         }catch (err) {
             console.error("Failed to update film", err);
             openNotification('error', 'Failed to update film');
@@ -110,7 +98,7 @@ export const Body = () =>{
             await handleCreateFilmService(newFilmData as Film);
             setNewFilmData({});
             setIsAddingNewFilm(false);
-            fetchFilms();
+            fetchFilmsPage();
         }catch (err) {
             console.error("Failed to create film", err);
             openNotification('error', 'Failed to create film');
@@ -119,17 +107,24 @@ export const Body = () =>{
 
     const handleFilmsByGenre = async (genreId: number) => {
         setLoading(true);
+        setError(false);
 
-        handleGetFilmByGenreService(genreId)
+        const computedSize = store.roles?.includes("ADMIN")
+        ? size - 1
+        : size;
+
+        handleGetFilmsByGenrePageService(genreId, page, computedSize)
         .then(response => {
-            if(response.length === 0){
+            if(response.content.length === 0){
                 openNotification('info', 'No films found for the selected genre');
                 setFilms([]);
             }
-            setFilms(response); 
+            setFilms(response.content);
+            setTotal(response.totalElements);
         })
         .catch(err => {
             console.error("Failed to fetch films by genre", err);
+            setError(true);
             openNotification('error', 'Failed to fetch films by genre');
         })
         .finally(() => {
@@ -138,8 +133,10 @@ export const Body = () =>{
     }
   
     useEffect(() => {
+
         fetchFilmsPage();
-    }, [page])
+
+    }, [store.token, store.roles, page, size])
 
     useEffect(() => {
         if(store.films && store.films.length > 0){
@@ -208,7 +205,10 @@ export const Body = () =>{
                                                 key={0}
                                                 type="text"
                                                 size="small"
-                                                onClick={() => {fetchFilms()}}
+                                                onClick={() => {
+                                                    setPage(1)
+                                                    fetchFilmsPage()
+                                                }}
                                             >
                                                 All Genres
                                             </Button>}
@@ -556,7 +556,7 @@ export const Body = () =>{
                             simple={{ readOnly: true }}
                             current={page}
                             pageSize={size}
-                            total={50}
+                            total={total}
                             onChange={(newPage) => setPage(newPage)}
                             showSizeChanger={false}
                         />
